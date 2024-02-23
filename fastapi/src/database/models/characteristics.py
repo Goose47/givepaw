@@ -62,7 +62,9 @@ class Breed(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    
+
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
+
     
 class Region(Base):
     __tablename__ = "regions"
@@ -89,6 +91,17 @@ class Avatar(Base):
 
     photo_path: Mapped[str] = mapped_column(String, index=True, nullable=True)
     photo_thumb: Mapped[str] = mapped_column(String, index=True, nullable=True)
+
+
+class PetBloodGroup(Base):
+    __tablename__ = "pet_blood_groups"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    blood_group: Mapped[str] = mapped_column(String, index=True, nullable=False)
+
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
+    rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"), nullable=False)
+
 
 # TODO: Проверить что нет лишнего unique
 # TODO: Перенести модельки в ассоциативные
