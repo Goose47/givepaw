@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import ForeignKey, Integer, String, Float
 from sqlalchemy.orm import Mapped, mapped_column
 from base import Base
 
@@ -23,6 +23,8 @@ class User(Base):
     # vk
     # tg
 
+    # TODO: СДЕЛАТЬ СОЦ. СЕТИ
+
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
 
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
@@ -45,6 +47,7 @@ class Pet(Base):
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
+    weight: Mapped[float] = mapped_column(Float, nullable=False)
 
 
 class PetBloodGroup(Base):
@@ -80,8 +83,10 @@ class Breed(Base):
 class PetVaccination(Base):
     __table__ = "pet_vaccination"
 
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
     vaccination_id: Mapped[int] = mapped_column(ForeignKey("vaccinations.id"), nullable=False)
     
+
