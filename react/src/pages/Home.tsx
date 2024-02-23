@@ -4,9 +4,8 @@ import HomeHeader from '../components/Home/HomeHeader';
 const Home = () => {
   return (
     <div className="Home">
-      <div className="container">
-        <HomeHeader />
-      </div>
+      <HomeHeader />
+      <HomeRecipients />
     </div>
   );
 };

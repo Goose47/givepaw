@@ -1,9 +1,9 @@
 .Footer {
-  padding-left: 15px;
-  padding-right: 15px;
   position: relative;
-  background: #cce2ff;
+  max-width: 1200px;
+  margin: auto;
   margin-top: 30px;
+  padding: 15px 15px 30px;
   &__Boxes {
     margin-left: -15px;
     margin-right: -15px;
@@ -11,8 +11,52 @@
     flex-wrap: wrap;
   }
   &__Box {
-    width: 25%;
-    flex: 0 0 25%;
+    width: 20%;
+    flex: 0 0 20%;
+    padding-left: 15px;
+    padding-right: 15px;
+    h3 {
+      font-weight: 500;
+      font-size: 22px;
+      color: $dark;
+      margin-bottom: 10px;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      li {
+        list-style: none;
+        margin-bottom: 6px;
+        a {
+          font-size: 14px;
+          color: $grey;
+          text-decoration: none;
+        }
+      }
+    }
   }
+  &__Message {
+    background: $medium;
+    color: #fff;
+    padding: 15px;
+    font-size: 12px;
+    div {
+      max-width: 1200px;
+      margin: auto;
+    }
+  }
+}
 
+@media (max-width: 1230px) {
+  .Footer {
+    padding: 0 0 30px;
+    &__Boxes {
+      display: block;
+      margin: 0;
+    }
+    &__Box {
+      width: 100%;
+      flex: 0 0 100%;
+    }
+  }
 }

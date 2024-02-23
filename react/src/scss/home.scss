@@ -67,3 +67,24 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .HomeHeader__Wrapper {
+    margin: 0;
+    h1 {
+      font-size: 24px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .HomeHeader {
+    &__Buttons {
+      display: block;
+    }
+    &__Button {
+      margin: auto auto 15px;
+    }
+  }
+}
