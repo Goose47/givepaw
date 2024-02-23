@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import { ConfigProvider } from 'antd';
 import axios from "axios";
 
-axios.defaults.baseURL = "https://api.uvuv643.ru"
+axios.defaults.baseURL = "https://dev.api.uvuv643.ru"
 
 function App() {
   const router = createBrowserRouter([
