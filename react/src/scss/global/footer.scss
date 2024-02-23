@@ -2,6 +2,8 @@
   padding-left: 15px;
   padding-right: 15px;
   position: relative;
+  background: #cce2ff;
+  margin-top: 30px;
   &__Boxes {
     margin-left: -15px;
     margin-right: -15px;
@@ -12,4 +14,5 @@
     width: 25%;
     flex: 0 0 25%;
   }
+
 }

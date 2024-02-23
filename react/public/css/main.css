@@ -20,3 +20,7 @@ p {
   padding-left: 15px;
   padding-right: 15px;
 }
+body, html {
+  margin: 0;
+  padding: 0;
+}
