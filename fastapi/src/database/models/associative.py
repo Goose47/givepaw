@@ -31,7 +31,7 @@ class User(Base):
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
     city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
 
-    avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
+    avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
 
 
