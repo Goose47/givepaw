@@ -6,6 +6,8 @@ const RecipientForm = () => {
   const [reason, setReason] = useState('');
   const [veterinaryСlinic, setVeterinaryСlinic] = useState('');
   const [bloodAmount, setBloodAmount] = useState('');
+  const [bloodComponent, setBloodComponent] = useState('');
+  const [donorAmount, setDonorAmount] = useState('');
   const [deadline, setDeadline] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
