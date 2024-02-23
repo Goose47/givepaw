@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
+import Header from "./components/global/Header";
+import Footer from "./components/global/Footer";
 
 interface RouterWrapperProps {
   children: ReactNode;

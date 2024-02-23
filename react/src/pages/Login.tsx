@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Back from "../../icons/Back";
-import Field from "../utils/dropdown/Field";
+import Back from "../icons/Back";
+import Field from "../components/global/dropdown/Field";
 import axios from "axios";
 
 const Login = () => {

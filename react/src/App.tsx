@@ -1,9 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RouterWrapper from "./RouterWrapper";
-import Menu from "./components/Header/Header";
-import Home from "./components/Home/Home";
-import Login from "./components/Login/Login";
+import Menu from "./components/global/Header";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
 
 export const APP_URL = "http://localhost:3000/";
 

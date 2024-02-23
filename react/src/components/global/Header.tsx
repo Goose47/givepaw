@@ -1,14 +1,14 @@
 import React from "react";
-import Dropdown from "../utils/dropdown/Dropdown";
+import Dropdown from "./dropdown/Dropdown";
 import Communicate from "../../icons/Communicate";
 import Languages from "../../icons/Languages";
-import DropdownItem from "../utils/dropdown/DropdownItem";
+import DropdownItem from "./dropdown/DropdownItem";
 import Flights from "../../icons/Flights";
 import Cars from "../../icons/Cars";
 import Packages from "../../icons/Packages";
 import Activities from "../../icons/Activities";
 import Cruises from "../../icons/Cruises";
-import SmallButton from "../utils/buttons/SmallButton";
+import SmallButton from "./buttons/SmallButton";
 
 const Header = () => {
   return (
@@ -62,7 +62,7 @@ const Header = () => {
                   English
                 </button>
                 <a
-                  href="/"
+                  href="/public"
                   className="uitk-button uitk-button-medium uitk-button-has-text uitk-button-as-link uitk-button-tertiary uitk-layout-flex-item global-navigation-nav-button uitk-layout-flex-item-flex-basis-zero uitk-layout-flex-item-flex-grow-0"
                 >
                   List your property
