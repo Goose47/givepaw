@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy import ForeignKey, Integer, String, Float
 from sqlalchemy.orm import Mapped, mapped_column
 from base import Base
@@ -48,6 +50,7 @@ class Pet(Base):
     name: Mapped[str] = mapped_column(String, nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     weight: Mapped[float] = mapped_column(Float, nullable=False)
+    user_id: Mapped[int] = mapped_column(Integer, nullable=False)
 
 
 class PetBloodGroup(Base):
@@ -80,3 +83,11 @@ class Breed(Base):
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
 
 
+class Demand(Base):
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    reason_search_id: Mapped[int] = mapped_column(ForeignKey("reasons_search.id"), nullable=False)
+    blood_component_id: Mapped[int] = mapped_column(ForeignKey("blood_components.id"), nullable=False)
+    blood_amount: Mapped[int] = mapped_column(Integer, nullable=False)
+    donor_amount: Mapped[int] = mapped_column(Integer, nullable=False)
+    pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
+    end_actual_date: Mapped[datetime.date] = mapped_column(nullable=False)
