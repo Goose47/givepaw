@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
-from src.schemas import pydantic_schemas as schemas
+from src.schemas import location as schemas
 from src.database.models import associative as models
 
 router = APIRouter(

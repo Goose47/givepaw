@@ -166,6 +166,7 @@ class Recipient(Base):
     end_actual_date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
+# TODO: SCHEDULE
 class Clinic(Base):
     __tablename__ = "clinics"
     extend_existing = True
