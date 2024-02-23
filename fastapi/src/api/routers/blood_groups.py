@@ -9,7 +9,7 @@ from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 router = APIRouter(
-    prefix="/blood_group",
+    prefix="/",
     tags=["blood_group"],
 )
 
