@@ -1,5 +1,4 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from base import Base
 
@@ -63,14 +62,20 @@ class Breed(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
+<<<<<<< HEAD
+
+=======
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
 
     
+>>>>>>> a1df19adc09652f17f13b1339ef44896915ec56f
 class Region(Base):
     __tablename__ = "regions"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+<<<<<<< HEAD
+=======
 
 
 class UsersConfig(Base):
@@ -109,3 +114,4 @@ class PetVaccination(Base):
 
 # TODO: Проверить что нет лишнего unique
 # TODO: Перенести модельки в ассоциативные
+>>>>>>> a1df19adc09652f17f13b1339ef44896915ec56f
