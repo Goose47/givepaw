@@ -16,7 +16,7 @@ class BloodComponent(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
-    icon: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    icon: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=True)
 
 
 class UserRole(Base):
@@ -34,7 +34,7 @@ class Vaccination(Base):
 
 
 class City(Base):
-    __tablename__ = "user_roles"
+    __tablename__ = "cities"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -62,9 +62,52 @@ class Breed(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
+<<<<<<< HEAD
 
+=======
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
+
+    
+>>>>>>> a1df19adc09652f17f13b1339ef44896915ec56f
 class Region(Base):
     __tablename__ = "regions"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+<<<<<<< HEAD
+=======
+
+
+class UsersConfig(Base):
+    __tablename__ = "users_configs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    phone_number_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+    social_networks_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+    email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+
+
+class Avatar(Base):
+    __tablename__ = "avatars"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    photo_path: Mapped[str] = mapped_column(String, index=True, nullable=True)
+    photo_thumb: Mapped[str] = mapped_column(String, index=True, nullable=True)
+
+
+class PetBloodGroup(Base):
+    __tablename__ = "pet_blood_groups"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    blood_group: Mapped[str] = mapped_column(String, index=True, nullable=False)
+
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
+    rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"), nullable=False)
+
+
+# TODO: Проверить что нет лишнего unique
+# TODO: Перенести модельки в ассоциативные
+>>>>>>> a1df19adc09652f17f13b1339ef44896915ec56f
