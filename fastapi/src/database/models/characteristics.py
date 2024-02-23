@@ -16,7 +16,7 @@ class BloodComponent(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
-    icon: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=True)
+    icon: Mapped[str] = mapped_column(String)
 
 
 class UserRole(Base):
@@ -28,13 +28,6 @@ class UserRole(Base):
 
 class Vaccination(Base):
     __tablename__ = "vaccinations"
-
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-
-
-class ReasonSearch(Base):
-    __tablename__ = "reasons_search"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -59,8 +52,15 @@ class Avatar(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
-    photo_path: Mapped[str] = mapped_column(String, index=True, nullable=True)
-    photo_thumb: Mapped[str] = mapped_column(String, index=True, nullable=True)
+    photo_path: Mapped[str] = mapped_column(String)
+    photo_thumb: Mapped[str] = mapped_column(String)
 
 
 # TODO: Проверить что нет лишнего unique
+
+
+class BloodGroup(Base):
+    __tablename__ = "blood_groups"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
