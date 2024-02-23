@@ -51,7 +51,8 @@ async def get_breeds():
 
         return [breed.BreedResponse(id=v.id,
                                     title=v.title,
-                                    pet_type=PetType(id=v.pet_type.id, title=v.pet_type.title)) for v in breeds]
+                                    pet_type=PetType(id=v.pet_type.id, title=v.pet_type.title, icon=v.pet_type.icon))
+                for v in breeds]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
