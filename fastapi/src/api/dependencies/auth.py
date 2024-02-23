@@ -17,7 +17,7 @@ class Auth:
     async def check_access_token(self, request: Request):
         access_token = request.cookies.get('jwt_access_token')
         if access_token is None:
-            raise HTTPException(detail='Access token is not present', status_code=401)
+            raise HTTPException(detail='Access token is not presento', status_code=401)
         _, user = await self.check_token(access_token, TokenType.ACCESS)
         request.state.user = user
 
