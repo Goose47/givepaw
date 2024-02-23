@@ -1,5 +1,4 @@
-from sqlalchemy import Boolean, Column, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from base import Base
 
@@ -62,7 +61,6 @@ class Avatar(Base):
 
     photo_path: Mapped[str] = mapped_column(String, index=True, nullable=True)
     photo_thumb: Mapped[str] = mapped_column(String, index=True, nullable=True)
-
 
 
 # TODO: Проверить что нет лишнего unique
