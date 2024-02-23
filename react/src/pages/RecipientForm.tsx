@@ -1,5 +1,6 @@
-import { useState } from "react";
-import Field from "../components/global/dropdown/Field";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Input } from 'antd';
+import { Button } from 'antd';
 
 const RecipientForm = () => {
   const [reason, setReason] = useState("");
@@ -7,40 +8,40 @@ const RecipientForm = () => {
   const [bloodAmount, setBloodAmount] = useState("");
   const [deadline, setDeadline] = useState("");
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
+      set(e.target.value);
+  }
+
   return (
     <div>
       <div>Форма реципиента</div>
       <div>
-        <Field
-          label={"Причина поиска животного-донора"}
-          id={"reason"}
-          type="text"
+        <Input
+          placeholder={"Причина поиска животного-донора"}
           value={reason}
-          setValue={setReason}
-        />
-        <Field
-          label={"Ветеринарная клиника"}
-          id={"veterinaryСlinic"}
           type="text"
+          onChange={(e) => handleChange(e, setReason)}
+        />
+        <Input
+          placeholder={"Ветеринарная клиника"}
           value={veterinaryСlinic}
-          setValue={setVeterinaryСlinic}
+          type="text"
+          onChange={(e) => handleChange(e, setVeterinaryСlinic)}
         />
-        <Field
-          label={"Количество крови"}
-          id={"bloodAmount"}
-          type="number"
+        <Input
+          placeholder={"Количество крови"}
           value={bloodAmount}
-          setValue={setBloodAmount}
+          type="number"
+          onChange={(e) => handleChange(e, setBloodAmount)}
         />
-        <Field
-          label={"Дата, до которой поиск актуален"}
-          id={"deadline"}
-          type="date"
+        <div>Дата, до которой поиск актуален</div>
+        <Input
+          placeholder={"Дата, до которой поиск актуален"}
           value={deadline}
-          setValue={setDeadline}
+          type="date"
+          onChange={(e) => handleChange(e, setDeadline)}
         />
-
-        <button>Отправить заявку</button>
+        <Button>Отправить заявку</Button>
       </div>
     </div>
   );
