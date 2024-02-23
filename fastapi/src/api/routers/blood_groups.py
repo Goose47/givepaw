@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.get(
-    "/blood_group/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
+    "/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
 )
 async def get_blood_group(request: Request, pet_type_id: int):
     try:
@@ -26,7 +26,7 @@ async def get_blood_group(request: Request, pet_type_id: int):
             schemas.PetBloodGroupSchema(
                 id=pet_blood_group.id,
                 blood_group=schemas.BloodGroup(
-                    id=pet_blood_group.blood_group.id, title=pet_blood_group.blood_group
+                    id=pet_blood_group.blood_group.id, title=pet_blood_group.blood_group.title
                 ),
                 rhesus_type=schemas.RhesusType(
                     id=pet_blood_group.rhesus.id, title=pet_blood_group.rhesus.title
@@ -36,6 +36,4 @@ async def get_blood_group(request: Request, pet_type_id: int):
         ]
 
     except Exception as e:
-        raise HTTPException(
-            status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"}
-        )
+        raise Exception
