@@ -8,6 +8,7 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 from src.schemas import pet_type, vaccination, breed
 from src.database import models
+from src.schemas.pet_type import PetType
 
 router = APIRouter(
     prefix="/pets",
@@ -44,13 +45,13 @@ async def get_vaccinations():
 
 @router.get('/breeds', response_model=List[breed.Breed])
 async def get_breeds():
-    # try:
-    breeds: List[models.Breed] = await SqlAlchemyRepository(db_manager.get_session,
-                                                            model=models.Breed).get_multi()
+    try:
+        breeds: List[models.Breed] = await SqlAlchemyRepository(db_manager.get_session,
+                                                                model=models.Breed).get_multi()
 
-    return [breed.Breed(id=v.id,
-                        title=v.title) for v in breeds]
+        return [breed.BreedResponse(id=v.id,
+                                    title=v.title,
+                                    pet_type=PetType(id=v.pet_type.id, title=v.pet_type.title)) for v in breeds]
 
-    # except Exception as e:
-    # raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
-    # raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail=e.detail)
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
