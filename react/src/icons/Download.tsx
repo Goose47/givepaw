@@ -1,0 +1,14 @@
+import React from 'react'
+
+export default function Download() {
+    return <>
+        <svg className="uitk-icon uitk-icon-leading"
+             aria-describedby="undefined-description" aria-label="Download the app button"
+             role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+        ><title id="undefined-title">Download
+            the app button</title>
+            <desc id="undefined-description">Download button with download icon</desc>
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7ZM5 18v2h14v-2H5Z"></path>
+        </svg>
+    </>
+}

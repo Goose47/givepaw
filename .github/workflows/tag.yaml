@@ -1,0 +1,25 @@
+name: Tag
+
+# Push to docker hub when tag is pushed
+on:
+  push:
+   tags:
+     - '*'
+jobs:
+  push-docker:
+    runs-on: [ ubuntu-latest ]
+    env:
+      USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      NAME: ${{ secrets.DOCKER_NAME }}
+    steps:
+      # Logging in to docker hub
+      - name: Login to docker.io
+        run: echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+      # Getting the code
+      - uses: actions/checkout@v4
+      # Building the image with tag {branch_name}
+      - name: Build image
+        run: docker build -t $USERNAME/$NAME:${GITHUB_REF:11} ./fastapi
+      # Push to docker hub with tag {branch_name}
+      - name: Push image to docker.io
+        run: docker push $USERNAME/$NAME:${GITHUB_REF:11}

@@ -1,0 +1,25 @@
+name: Prod
+
+# Runs tests on push in main and update prod server
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  deploy-ssh:
+    runs-on: [ubuntu-latest]
+    environment: must-review
+    steps:
+      - name: Run command on remote server
+        uses: D3rHase/ssh-command-action@v0.2.2
+        with:
+          host: ${{secrets.SSH_PROD_HOST}}
+          user: ${{secrets.SSH_PROD_USER}}
+          private_key: ${{secrets.SSH_PROD_PRIVATE_KEY}}
+          command: |
+            cd ${{ secrets.PROD_PROJECT_FOLDER }};
+            git pull;
+            docker compose build;
+            docker compose down;
+            docker compose up -d;
+            docker exec givepaw_fastapi alembic upgrade head

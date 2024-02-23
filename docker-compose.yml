@@ -1,0 +1,67 @@
+version: '3'
+services:
+
+  nginx:
+    image: nginx:alpine
+    container_name: givepaw_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./certbot/www:/var/www/certbot/
+      - ./certbot/conf:/etc/letsencrypt/
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - givepaw
+
+  fastapi:
+    container_name: givepaw_fastapi
+    restart: unless-stopped
+    build:
+      context: ./fastapi
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./fastapi:/app
+    networks:
+      - givepaw
+
+  react:
+    container_name: givepaw_react
+    restart: unless-stopped
+    build:
+      context: ./react
+      dockerfile: Dockerfile
+    networks:
+      - givepaw
+
+  postgres:
+    container_name: givepaw_postgres
+    restart: unless-stopped
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./pgsql/.env
+    volumes:
+      - givepaw-pgsql-volume:/var/lib/postgresql/data
+    networks:
+      - givepaw
+
+  certbot:
+    image: certbot/certbot
+    container_name: givepaw_certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot/ --email uvuv.space@gmail.com -d api.uvuv643.ru -d uvuv643.ru --agree-tos --cert-name givepaw
+
+networks:
+  givepaw:
+    driver: bridge
+
+volumes:
+  givepaw-pgsql-volume:
+    driver: local

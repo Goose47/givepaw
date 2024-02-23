@@ -1,0 +1,24 @@
+name: Dev
+
+# Runs tests on any push except main
+on:
+  push:
+    branches:
+      - 'dev'
+jobs:
+  deploy-ssh:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Run command on remote server
+        uses: D3rHase/ssh-command-action@v0.2.2
+        with:
+          host: ${{secrets.SSH_DEV_HOST}}
+          user: ${{secrets.SSH_DEV_USER}}
+          private_key: ${{secrets.SSH_DEV_PRIVATE_KEY}}
+          command: |
+            cd ${{ secrets.DEV_PROJECT_FOLDER }};
+            git pull;
+            docker compose build;
+            docker compose down;
+            docker compose up -d;
+            docker exec givepaw_fastapi alembic upgrade head
