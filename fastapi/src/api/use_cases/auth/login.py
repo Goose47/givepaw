@@ -10,7 +10,7 @@ from src.database.session_manager import db_manager
 class LoginUseCase:
     @staticmethod
     async def login(data: LoginUser):
-        user = await LoginUseCase.authenticate_user(data.email, data.password)
+        user = await LoginUseCase.authenticate_user(data.username, data.password)
         if not user:
             raise Exception("Incorrect username or password")
 
