@@ -82,3 +82,11 @@ class Breed(Base):
 
 class PetVaccination(Base):
     __table__ = "pet_vaccination"
+
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
+    vaccination_id: Mapped[int] = mapped_column(ForeignKey("vaccinations.id"), nullable=False)
+    
+
