@@ -9,13 +9,13 @@ from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 router = APIRouter(
-    prefix="/",
+    prefix="/blood_group",
     tags=["blood_group"],
 )
 
 
 @router.get(
-    "/blood_group/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
+    "/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
 )
 async def get_blood_group(request: Request, pet_type_id: int):
     try:
