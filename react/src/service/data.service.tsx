@@ -45,19 +45,19 @@ export const veterinaryClinics = async () => {
 };
 
 export const sendDonor = async () => {
-    try {
-      const response = await axios.post('donors');
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  
-export const sendRecipient = async (reason: string ) => {
-    try {
-      const response = await axios.post('recipients');
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  try {
+    const response = await axios.post('donors');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const sendRecipient = async (reason: string) => {
+  try {
+    const response = await axios.post('recipients');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
