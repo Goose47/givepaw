@@ -1,5 +1,4 @@
 from src.database.models import User
-from src.repository.crud.entities.user import user_repo
 from src.utils.crypt import Crypt
 from src.utils.jwt.jwt_auth import JWT
 from src.api.payloads.auth.login import LoginPayload

@@ -70,11 +70,11 @@ class Pet(Base):
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     weight: Mapped[float] = mapped_column(Float, nullable=False)
 
-    user_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
 
-    vaccinations: Mapped[List["PetVaccination"]] = relationship(uselist=True, lazy="selectin",
-                                                                secondary="pet__vaccinations")
+    vaccinations: Mapped[List["Vaccination"]] = relationship(uselist=True, lazy="selectin",
+                                                             secondary="pet__vaccinations")
 
 
 class PetBloodGroup(Base):
@@ -83,8 +83,8 @@ class PetBloodGroup(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
-    blood_group_id: Mapped[int] = mapped_column(Integer, index=True)
-    blood_group: Mapped["PetBloodGroup"] = relationship(uselist=False, lazy="selectin")
+    blood_group_id: Mapped[int] = mapped_column(ForeignKey("blood_groups.id"), index=True)
+    blood_group: Mapped["BloodGroup"] = relationship(uselist=False, lazy="selectin")
 
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
     pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")

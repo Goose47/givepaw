@@ -2,8 +2,7 @@ from fastapi import Request, HTTPException
 from jose import JWTError
 from typing import Optional
 
-from src.repository.crud.entities.user import user_repo
-from src.database.models.entities.user import User
+
 from src.utils.jwt.jwt_auth import JWT
 from src.utils.jwt.token_type import TokenType
 from src.config.jwt.config import settings_jwt

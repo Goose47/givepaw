@@ -1,9 +1,7 @@
 from src.api.payloads.auth.register import RegisterPayload
-from src.database.models.entities.user import User
-from src.repository.crud.entities.user import user_repo
 from src.utils.crypt import Crypt
 
-
+"""
 class RegisterUseCase:
     @staticmethod
     async def register(payload: RegisterPayload) -> User:
@@ -18,3 +16,4 @@ class RegisterUseCase:
         user = await user_repo.create(payload)  # todo diana он хочет пудантик
 
         return user
+"""
