@@ -59,6 +59,11 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             offset: int = 0
     ) -> list[ModelType]:
         async with self._session_factory() as session:
-            stmt = select(self.model).order_by(*order).limit(limit).offset(offset)
+            order_column = getattr(self.model, order, None)
+
+            if order_column is None:
+                raise ValueError(f"Invalid order column: {order}")
+
+            stmt = select(self.model).order_by(order_column).limit(limit).offset(offset)
             row = await session.execute(stmt)
             return row.scalars().all()

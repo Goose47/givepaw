@@ -1,6 +1,7 @@
 from fastapi.responses import JSONResponse
 
 
+
 class ApiResponse:
     @staticmethod
     def success(message: str = 'OK'):

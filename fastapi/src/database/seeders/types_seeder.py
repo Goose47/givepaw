@@ -1,6 +1,4 @@
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.database.models import AdType, BookingType, FilterType, TransactionType
 from src.database.seeders.generic_seeder import GenericSeeder
 
 

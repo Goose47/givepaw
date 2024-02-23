@@ -1,5 +1,3 @@
-
-
 class BasePayload:
     @classmethod
     def get_fields(cls):
