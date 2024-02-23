@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
-from src.schemas import characteristics as schemas
+from src.schemas import pydantic_schemas as schemas
 from src.database.models import associative as models
 
 router = APIRouter(
@@ -20,7 +20,11 @@ async def get_pet_types():
         types: List[models.City] = await SqlAlchemyRepository(db_manager.get_session,
                                                               model=models.City).get_multi()
 
-        return [schemas.City(id=t.id, title=t.title, region=t.region) for t in types]
+        return [schemas.City(id=t.id,
+                             title=t.title,
+                             region=schemas.Region(id=t.region.id,
+                                                   title=t.region.title)
+                             ) for t in types]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": e.with_traceback})
