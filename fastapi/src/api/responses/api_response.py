@@ -1,8 +1,8 @@
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
 
 
-class ApiResponse(BaseModel):
+
+class ApiResponse:
     @staticmethod
     def success(message: str = 'OK'):
         return JSONResponse(
