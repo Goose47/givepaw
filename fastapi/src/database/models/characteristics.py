@@ -62,5 +62,4 @@ class Avatar(Base):
     photo_path: Mapped[str] = mapped_column(String, index=True, nullable=True)
     photo_thumb: Mapped[str] = mapped_column(String, index=True, nullable=True)
 
-
 # TODO: Проверить что нет лишнего unique

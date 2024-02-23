@@ -1,7 +1,7 @@
 import datetime
 
-from sqlalchemy import ForeignKey, Integer, String, Float
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy import ForeignKey, Integer, String, Float, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from base import Base
 
 
@@ -19,8 +19,9 @@ class User(Base):
     email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
     password: Mapped[str] = mapped_column(String, nullable=False)
-    user_role_id: Mapped[int] = mapped_column(ForeignKey("user_roles.id"), nullable=False)
 
+    user_role_id: Mapped[int] = mapped_column(ForeignKey("user_roles.id"), nullable=False)
+    user_role: Mapped["UserRole"] = relationship(uselist=False, lazy="selectin")
     # google
     # vk
     # tg
@@ -39,13 +40,15 @@ class City(Base):
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
     region_id: Mapped[int] = mapped_column(ForeignKey("regions.id"), nullable=False)
+    region: Mapped["Region"] = relationship(uselist=False, lazy="selectin")
 
 
 class Pet(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    pet_blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"), nullable=False)
+    blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"))
     breed_id: Mapped[int] = mapped_column(ForeignKey("breeds.id"), nullable=False)
-
+    breed: Mapped[str] = mapped_column(String)
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"))
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -57,10 +60,10 @@ class PetBloodGroup(Base):
     __tablename__ = "pet_blood_groups"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    blood_group: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    blood_group: Mapped[str] = mapped_column(String, index=True)
 
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
-    rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"), nullable=False)
+    rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"))
 
 
 class UsersConfig(Base):
@@ -72,6 +75,14 @@ class UsersConfig(Base):
     email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+
+
+class UserNetwork(Base):
+    __tablename__ = "user_networks"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    telegram: Mapped[str] = mapped_column(String)
+    vk: Mapped[str] = mapped_column(String)
 
 
 class Breed(Base):
@@ -89,6 +100,7 @@ class Demand(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
     reason_search_id: Mapped[int] = mapped_column(ForeignKey("reasons_search.id"), nullable=False)
+    information: Mapped[int] = mapped_column(Text)
     blood_component_id: Mapped[int] = mapped_column(ForeignKey("blood_components.id"), nullable=False)
 
     blood_amount: Mapped[int] = mapped_column(Integer, nullable=False)
