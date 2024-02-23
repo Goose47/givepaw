@@ -12,9 +12,8 @@ class RegisterUser(BaseModel):
     email: str
     password: str
 
-    user_role_id: int
     city_id: int
-    avatar_id: Optional[int]
+    avatar: Optional[any]
 
 
 class UserType(BaseModel):
