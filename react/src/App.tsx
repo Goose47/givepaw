@@ -2,7 +2,7 @@ import React from 'react';
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RouterWrapper from "./RouterWrapper";
 import Menu from "./components/Menu/Menu";
-import Login from "./components/login/Login";
+import Login from "./components/Login/Login";
 
 export const APP_URL = 'http://localhost:3000/'
 
