@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from src.api.routers import mock_routes, auth, pets, cities, blood_groups
+from src.api.routers import mock_routes, auth, pets, cities, blood_groups, donors, recipients
 
 
 def create_routes(app: FastAPI):
@@ -9,4 +9,6 @@ def create_routes(app: FastAPI):
     app.include_router(pets.router)
     app.include_router(cities.router)
     app.include_router(blood_groups.router)
+    app.include_router(donors.router)
+    app.include_router(recipients.router)
     return app

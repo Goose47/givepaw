@@ -3,7 +3,6 @@ from fastapi.responses import JSONResponse
 from http import HTTPStatus
 
 from src.api.dependencies.auth import Auth
-from src.api.responses.api_response import ApiResponse
 from src.api.use_cases.auth import *
 from src.schemas.auth import *
 
