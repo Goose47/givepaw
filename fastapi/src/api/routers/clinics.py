@@ -21,7 +21,8 @@ async def get_pet_types():
                                                                   model=models.Clinic).get_multi()
 
         return [schemas.Clinic(id=clinic.id,
-                               addres=clinic.title,
+                               title=clinic.title,
+                               addres=clinic.address,
                                phone=clinic.phone,
                                email=clinic.email,
                                city=schemas.City(id=clinic.city.id,

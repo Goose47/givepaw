@@ -14,6 +14,7 @@ class City(BaseModel):
 
 class Clinic(BaseModel):
     id: int
+    title: str
     address: str
     email: str
     phone: str
