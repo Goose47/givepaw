@@ -1,16 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import DropdownIcon from "../../../icons/DropdownIcon";
-import Stays from "../../../icons/Stays";
-import Flights from "../../../icons/Flights";
-import Cars from "../../../icons/Cars";
-import Packages from "../../../icons/Packages";
-import Activities from "../../../icons/Activities";
-import Cruises from "../../../icons/Cruises";
-import DropdownItem from "./DropdownItem";
+import { BsChevronDown, BsDropbox } from "react-icons/bs";
 
 interface DropdownProps {
   children: React.ReactNode;
-  title: string;
+  title: React.ReactNode;
 }
 
 function Dropdown(props: DropdownProps) {
@@ -45,25 +39,23 @@ function Dropdown(props: DropdownProps) {
       <div
         onClick={handleClickInside}
         ref={componentRef}
-        className="uitk-layout-flex-item uitk-layout-flex-item-flex-basis-zero uitk-layout-flex-item-flex-grow-0 uitk-menu uitk-menu-mounted"
+        className="Dropdown"
         id=""
       >
         <button
           onClick={handleOpenDropdown}
-          title="More travel"
-          data-testid="header-menu-button"
-          aria-expanded="false"
-          data-context="global_navigation"
           type="button"
-          className="uitk-button uitk-button-medium uitk-button-has-text uitk-button-tertiary uitk-menu-trigger global-navigation-nav-button"
+          className="Dropdown__Button"
         >
           {props.title}
-          <DropdownIcon />
+          <span className="Icon__Small">
+            <BsChevronDown />
+          </span>
         </button>
         <div
           className={
-            `uitk-menu-container uitk-menu-pos-left uitk-menu-container-autoposition uitk-menu-container-has-intersection-root-el ` +
-            (expanded ? "uitk-menu-open" : "")
+            `Dropdown__Content` +
+            (expanded ? "_active" : "")
           }
           aria-hidden="true"
           style={{ width: "375px" }}

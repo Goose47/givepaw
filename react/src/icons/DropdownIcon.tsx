@@ -4,7 +4,7 @@ export default function DropdownIcon() {
   return (
     <>
       <svg
-        className="uitk-icon uitk-icon-trailing uitk-icon-small"
+        className="Icon__Small"
         aria-describedby="header-menu-expand_more-description"
         role="img"
         viewBox="0 0 24 24"

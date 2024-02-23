@@ -8,13 +8,13 @@ interface DropdownItemProps {
 function DropdownItem(props: DropdownItemProps) {
   return (
     <>
-      <div className="uitk-layout-flex-item uitk-list uitk-layout-flex-item-flex-basis-zero uitk-layout-flex-item-flex-grow-0">
+      <div className="DropdownItem">
         <a
           href={props.to}
           rel=""
-          className="uitk-link uitk-list-item uitk-link-align-left uitk-link-layout-default uitk-link-medium"
+          className="DropdownItem__Link"
         >
-          <div className="uitk-text uitk-type-300 uitk-text-default-theme">
+          <div className="DropdownItem__Title">
             {props.children}
           </div>
         </a>
