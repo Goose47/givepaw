@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { Input } from 'antd';
-import { Button } from 'antd';
+import { Input } from "antd";
+import { Button } from "antd";
 
 const RecipientForm = () => {
   const [reason, setReason] = useState("");
@@ -8,9 +8,12 @@ const RecipientForm = () => {
   const [bloodAmount, setBloodAmount] = useState("");
   const [deadline, setDeadline] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
-      set(e.target.value);
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    set: Dispatch<SetStateAction<any>>,
+  ) => {
+    set(e.target.value);
+  };
 
   return (
     <div>

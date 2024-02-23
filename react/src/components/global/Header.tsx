@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Dropdown from "./dropdown/Dropdown";
 import DropdownItem from "./dropdown/DropdownItem";
 import SmallButton from "./buttons/SmallButton";
-import { BsGeoAltFill, BsChevronDown  } from "react-icons/bs";
+import { BsGeoAltFill, BsChevronDown } from "react-icons/bs";
 
 const Header = () => {
   return (
@@ -15,7 +15,16 @@ const Header = () => {
         </div>
       </div>
       <div className="Header__Right">
-        <Dropdown title={<><span className="Icon__Small Icon__Small--Before"><BsGeoAltFill /></span><span>Ваш регион</span></>} >
+        <Dropdown
+          title={
+            <>
+              <span className="Icon__Small Icon__Small--Before">
+                <BsGeoAltFill />
+              </span>
+              <span>Ваш регион</span>
+            </>
+          }
+        >
           <DropdownItem to="hello">Hello</DropdownItem>
           <DropdownItem to="hello">Hello1</DropdownItem>
           <DropdownItem to="hello">Hell2o</DropdownItem>

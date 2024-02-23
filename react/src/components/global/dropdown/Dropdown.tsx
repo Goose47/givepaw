@@ -53,10 +53,7 @@ function Dropdown(props: DropdownProps) {
           </span>
         </button>
         <div
-          className={
-            `Dropdown__Content` +
-            (expanded ? "_active" : "")
-          }
+          className={`Dropdown__Content` + (expanded ? "_active" : "")}
           aria-hidden="true"
           style={{ width: "375px" }}
         >
