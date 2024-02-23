@@ -5,7 +5,6 @@ from fastapi import FastAPI
 from src.api.responses.api_response import ApiResponse
 from src.api.routers.base import create_routes
 from src.config.app.config import settings_app
-from src.utils.validator.exceptions import AppValidationException
 
 
 def get_application() -> FastAPI:
