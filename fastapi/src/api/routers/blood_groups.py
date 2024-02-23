@@ -36,6 +36,4 @@ async def get_blood_group(request: Request, pet_type_id: int):
         ]
 
     except Exception as e:
-        raise HTTPException(
-            status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"}
-        )
+        raise Exception
