@@ -17,3 +17,6 @@ class City(BaseModel):
     title: str
     region: Region
 
+
+
+

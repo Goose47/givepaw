@@ -126,7 +126,17 @@ class Breed(Base):
     pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
 
 
-class Demand(Base):
+class Donor(Base):
+    __tablename__ = "donors"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
+
+    city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
+
+
+class Recipient(Base):
     __tablename__ = "demands"
     extend_existing = True
 
