@@ -1,13 +1,12 @@
 from http import HTTPStatus
-from typing import List, Dict
+from typing import List
 
 from fastapi import APIRouter, HTTPException
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
-from src.schemas import characteristics as schemas
+from src.schemas import pydantic_schemas as schemas
 from src.database.models import characteristics as models
-from src.schemas.characteristics import PetType
 
 router = APIRouter(
     prefix="/pets",
