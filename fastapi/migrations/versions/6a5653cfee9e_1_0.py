@@ -1,8 +1,8 @@
-"""first revision
+"""1.0
 
-Revision ID: 9a4584ad0776
+Revision ID: 6a5653cfee9e
 Revises: 
-Create Date: 2024-02-23 16:31:51.827431
+Create Date: 2024-02-23 19:28:44.185005
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '9a4584ad0776'
+revision: str = '6a5653cfee9e'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -42,6 +42,7 @@ def upgrade() -> None:
     op.create_table('pet_types',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('title', sa.String(), nullable=False),
+    sa.Column('icon', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_pet_types_title'), 'pet_types', ['title'], unique=True)
@@ -96,6 +97,7 @@ def upgrade() -> None:
     sa.Column('blood_group_id', sa.Integer(), nullable=False),
     sa.Column('pet_type_id', sa.Integer(), nullable=False),
     sa.Column('rhesus_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['blood_group_id'], ['blood_groups.id'], ),
     sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.id'], ),
     sa.ForeignKeyConstraint(['rhesus_id'], ['rhesus.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -115,6 +117,24 @@ def upgrade() -> None:
     op.create_index(op.f('ix_clinics_email'), 'clinics', ['email'], unique=True)
     op.create_index(op.f('ix_clinics_phone'), 'clinics', ['phone'], unique=True)
     op.create_index(op.f('ix_clinics_title'), 'clinics', ['title'], unique=True)
+    op.create_table('users',
+    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
+    sa.Column('surname', sa.String(), nullable=False),
+    sa.Column('name', sa.String(), nullable=False),
+    sa.Column('patronymic', sa.String(), nullable=False),
+    sa.Column('username', sa.String(), nullable=False),
+    sa.Column('email', sa.String(), nullable=False),
+    sa.Column('password', sa.String(), nullable=False),
+    sa.Column('user_role_id', sa.Integer(), nullable=False),
+    sa.Column('city_id', sa.Integer(), nullable=False),
+    sa.Column('avatar_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['avatar_id'], ['avatars.id'], ),
+    sa.ForeignKeyConstraint(['city_id'], ['cities.id'], ),
+    sa.ForeignKeyConstraint(['user_role_id'], ['user_roles.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
+    op.create_index(op.f('ix_users_username'), 'users', ['username'], unique=True)
     op.create_table('pets',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('blood_group_id', sa.Integer(), nullable=False),
@@ -130,26 +150,21 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['blood_group_id'], ['pet_blood_groups.id'], ),
     sa.ForeignKeyConstraint(['breed_id'], ['breeds.id'], ),
     sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('users',
+    op.create_table('users_configs',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('surname', sa.String(), nullable=False),
-    sa.Column('name', sa.String(), nullable=False),
-    sa.Column('patronymic', sa.String(), nullable=False),
-    sa.Column('username', sa.String(), nullable=False),
-    sa.Column('email', sa.String(), nullable=False),
-    sa.Column('password', sa.String(), nullable=False),
-    sa.Column('user_role_id', sa.Integer(), nullable=False),
-    sa.Column('city_id', sa.Integer(), nullable=False),
-    sa.Column('avatar_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['avatar_id'], ['avatars.id'], ),
-    sa.ForeignKeyConstraint(['city_id'], ['cities.id'], ),
-    sa.ForeignKeyConstraint(['user_role_id'], ['user_roles.id'], ),
+    sa.Column('phone_number_status', sa.Integer(), nullable=False),
+    sa.Column('social_networks_status', sa.Integer(), nullable=False),
+    sa.Column('email_status', sa.Integer(), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=True)
-    op.create_index(op.f('ix_users_username'), 'users', ['username'], unique=True)
+    op.create_index(op.f('ix_users_configs_email_status'), 'users_configs', ['email_status'], unique=False)
+    op.create_index(op.f('ix_users_configs_phone_number_status'), 'users_configs', ['phone_number_status'], unique=False)
+    op.create_index(op.f('ix_users_configs_social_networks_status'), 'users_configs', ['social_networks_status'], unique=False)
     op.create_table('demands',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('reason', sa.Text(), nullable=False),
@@ -171,33 +186,21 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['vaccination_id'], ['vaccinations.id'], ),
     sa.PrimaryKeyConstraint('pet_id', 'vaccination_id')
     )
-    op.create_table('users_configs',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('phone_number_status', sa.Integer(), nullable=False),
-    sa.Column('social_networks_status', sa.Integer(), nullable=False),
-    sa.Column('email_status', sa.Integer(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_index(op.f('ix_users_configs_email_status'), 'users_configs', ['email_status'], unique=False)
-    op.create_index(op.f('ix_users_configs_phone_number_status'), 'users_configs', ['phone_number_status'], unique=False)
-    op.create_index(op.f('ix_users_configs_social_networks_status'), 'users_configs', ['social_networks_status'], unique=False)
     # ### end Alembic commands ###
 
 
 def downgrade() -> None:
     # ### commands auto generated by Alembic - please adjust! ###
+    op.drop_table('pet__vaccinations')
+    op.drop_table('demands')
     op.drop_index(op.f('ix_users_configs_social_networks_status'), table_name='users_configs')
     op.drop_index(op.f('ix_users_configs_phone_number_status'), table_name='users_configs')
     op.drop_index(op.f('ix_users_configs_email_status'), table_name='users_configs')
     op.drop_table('users_configs')
-    op.drop_table('pet__vaccinations')
-    op.drop_table('demands')
+    op.drop_table('pets')
     op.drop_index(op.f('ix_users_username'), table_name='users')
     op.drop_index(op.f('ix_users_email'), table_name='users')
     op.drop_table('users')
-    op.drop_table('pets')
     op.drop_index(op.f('ix_clinics_title'), table_name='clinics')
     op.drop_index(op.f('ix_clinics_phone'), table_name='clinics')
     op.drop_index(op.f('ix_clinics_email'), table_name='clinics')

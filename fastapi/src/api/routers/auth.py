@@ -5,7 +5,6 @@ from http import HTTPStatus
 from src.api.dependencies.auth import Auth
 from src.api.responses.api_response import ApiResponse
 from src.api.use_cases.auth import *
-from src.database.models import User
 from src.schemas.auth import *
 
 
@@ -15,10 +14,10 @@ router = APIRouter(
 )
 
 
-@router.post("/register", response_model=RegisterUser)
+@router.post("/register", response_model=UserType)
 async def register(user: RegisterUser):
     try:
-        user: User = await RegisterUseCase.register(user)
+        user: UserType = await RegisterUseCase.register(user)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
     return user
@@ -50,7 +49,7 @@ async def refresh(request: Request, auth: Auth = Depends()):
     try:
         access_token, refresh_token = await RefreshUseCase.refresh(payload)
     except Exception as e:
-        return ApiResponse.error(str(e), 401)
+        raise HTTPException(status_code=HTTPStatus.UNAUTHORIZED)
 
     return format_jwt_response(access_token, refresh_token)
 
