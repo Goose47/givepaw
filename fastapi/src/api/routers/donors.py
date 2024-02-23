@@ -28,12 +28,7 @@ async def index():
 async def store(data: DonorCreateType):
     try:
         donor: Donor = await SqlAlchemyRepository(db_manager.get_session, model=Donor).create(data)
-        return donor  # todo test
-        return DonorViewType(
-            id=donor.id,
-            pet_id=donor.pet_id,
-            city_id=donor.city_id,
-        )
+        return donor
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))

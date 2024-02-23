@@ -1,13 +1,15 @@
 from http import HTTPStatus
 from typing import List
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request, Depends
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 from src.schemas import pet_type, vaccination, breed
 from src.database import models
+
+from src.api.dependencies.auth import Auth
 
 router = APIRouter(
     prefix="/pets",
@@ -53,3 +55,15 @@ async def get_breeds():
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+
+
+@router.get('/my', response_model=List[pet_type.PetType])
+async def get_my(request: Request, auth: Auth = Depends()):
+    await auth.check_access_token(request)
+    try:
+        pets: List[models.Pet] = await SqlAlchemyRepository(db_manager.get_session, model=models.Breed)\
+            .get_multi(user_id=request.state.user.id)
+        return pets
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
