@@ -17,12 +17,12 @@ router = APIRouter(
 )
 
 
-@router.get('/pet_types', response_model=List[PetType])
+@router.get('/pet_types', response_model=List[schemas.PetType])
 async def get_pet_types():
     try:
         types: List[models.PetType] = await SqlAlchemyRepository(db_manager.get_session,
                                                                  model=models.PetType).get_multi()
-        types = [schemas.PetType(id=t.id, title=t.title) for t in types]
+
+        return [schemas.PetType(id=t.id, title=t.title) for t in types]
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"couse": "Artem"})
-    return types
