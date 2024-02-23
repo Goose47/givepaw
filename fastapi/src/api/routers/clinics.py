@@ -22,7 +22,7 @@ async def get_pet_types():
 
         return [schemas.Clinic(id=clinic.id,
                                title=clinic.title,
-                               addres=clinic.address,
+                               address=clinic.address,
                                phone=clinic.phone,
                                email=clinic.email,
                                city=schemas.City(id=clinic.city.id,
