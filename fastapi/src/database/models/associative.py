@@ -34,6 +34,10 @@ class User(Base):
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
 
+    user_network: Mapped["UserNetwork"] = relationship(uselist=False, lazy="selectin")
+
+    user_config: Mapped["UserConfig"] = relationship(uselist=False, lazy="selectin")
+
 
 class City(Base):
     __tablename__ = "cities"
@@ -93,7 +97,7 @@ class PetBloodGroup(Base):
     rhesus: Mapped["Rhesus"] = relationship(uselist=False, lazy="selectin")
 
 
-class UsersConfig(Base):
+class UserConfig(Base):
     __tablename__ = "users_configs"
     extend_existing = True
 
@@ -113,6 +117,9 @@ class UserNetwork(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     telegram: Mapped[str] = mapped_column(String)
     vk: Mapped[str] = mapped_column(String)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
 
 
 class Breed(Base):
