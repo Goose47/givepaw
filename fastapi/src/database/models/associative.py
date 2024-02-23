@@ -137,7 +137,7 @@ class Donor(Base):
 
 
 class Recipient(Base):
-    __tablename__ = "demands"
+    __tablename__ = "recipient"
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
