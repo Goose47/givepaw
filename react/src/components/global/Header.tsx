@@ -1,16 +1,16 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { Button, Select } from "antd";
-import { BsGeoAltFill } from "react-icons/bs";
-import axios from "axios";
-import { APP_URL } from "../../App";
+import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Select } from 'antd';
+import { BsGeoAltFill } from 'react-icons/bs';
+import axios from 'axios';
+import { APP_URL } from '../../App';
 
 const Header = () => {
   const [cities, setCities] = useState<any[]>([]);
 
   useEffect(() => {
     axios
-      .get(APP_URL + "/mock/pet_blood_group/1")
+      .get(APP_URL + '/mock/pet_blood_group/1')
       .then((response) => {
         if (response.status === 200 && response.data) {
           setCities(response.data);
@@ -45,8 +45,7 @@ const Header = () => {
                 return {
                   label: (
                     <>
-                      {item.rhesus_type.title}{" "}
-                      <span>{item.rhesus_type.title}</span>
+                      {item.rhesus_type.title} <span>{item.rhesus_type.title}</span>
                     </>
                   ),
                   value: item.rhesus_type.id,

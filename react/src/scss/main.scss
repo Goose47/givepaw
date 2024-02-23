@@ -1,10 +1,10 @@
-@import "variables.scss";
+@import 'variables.scss';
 
-@import "global/header.scss";
-@import "global/icons.scss";
-@import "global/dropdown.scss";
+@import 'global/header.scss';
+@import 'global/icons.scss';
+@import 'global/dropdown.scss';
 
-@import "home.scss";
+@import 'home.scss';
 
 .ant-select-arrow {
   svg {

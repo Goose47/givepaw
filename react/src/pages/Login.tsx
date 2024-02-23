@@ -1,16 +1,13 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
-import axios from "axios";
-import { Button } from "antd";
-import { Input } from "antd";
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import axios from 'axios';
+import { Button } from 'antd';
+import { Input } from 'antd';
 
 const Login = () => {
-  const [login, setLogin] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    set: Dispatch<SetStateAction<any>>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
   };
 
@@ -22,17 +19,12 @@ const Login = () => {
     <>
       <div>
         <Input
-          placeholder={"Номер телефона или Email"}
+          placeholder={'Номер телефона или Email'}
           value={login}
           type="text"
           onChange={(e) => handleChange(e, setLogin)}
         />
-        <Input
-          placeholder={"Пароль"}
-          value={password}
-          type="text"
-          onChange={(e) => handleChange(e, setPassword)}
-        />
+        <Input placeholder={'Пароль'} value={password} type="text" onChange={(e) => handleChange(e, setPassword)} />
         <Button>Войти</Button>
       </div>
     </>

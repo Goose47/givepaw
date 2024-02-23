@@ -1,17 +1,17 @@
-import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RouterWrapper from "./RouterWrapper";
-import Menu from "./components/global/Header";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import { ConfigProvider } from "antd";
+import React from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import RouterWrapper from './RouterWrapper';
+import Menu from './components/global/Header';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import { ConfigProvider } from 'antd';
 
-export const APP_URL = "https://dev.api.uvuv643.ru/";
+export const APP_URL = 'https://dev.api.uvuv643.ru/';
 
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: (
         <RouterWrapper>
           <Home />
@@ -19,7 +19,7 @@ function App() {
       ),
     },
     {
-      path: "/sign-in",
+      path: '/sign-in',
       element: (
         <RouterWrapper>
           <Login />
@@ -33,9 +33,9 @@ function App() {
       <ConfigProvider
         theme={{
           token: {
-            fontFamily: "Inter",
+            fontFamily: 'Inter',
             fontSize: 14,
-            colorPrimary: "#f63e3e",
+            colorPrimary: '#f63e3e',
           },
         }}
       >
