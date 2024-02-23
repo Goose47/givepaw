@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name uvuv643.ru;
+  server_name {server_name};
 
   location /.well-known/acme-challenge/ {
     root /var/www/certbot;
@@ -13,10 +13,10 @@ server {
 
 server {
   listen 443 ssl;
-  server_name uvuv643.ru;
+  server_name {server_name};
 
-  ssl_certificate /etc/letsencrypt/live/givepaw/fullchain.pem; # managed by Certbot
-  ssl_certificate_key /etc/letsencrypt/live/givepaw/privkey.pem; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/{name}/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/{name}/privkey.pem; # managed by Certbot
 
   location / {
       proxy_pass http://givepaw_react:80;
@@ -25,7 +25,7 @@ server {
 
 server {
   listen 80;
-  server_name api.uvuv643.ru;
+  server_name {api_server_name};
 
   location /.well-known/acme-challenge/ {
     root /var/www/certbot;
@@ -38,10 +38,10 @@ server {
 
 server {
   listen 443 ssl;
-  server_name api.uvuv643.ru;
+  server_name {api_server_name};
 
-  ssl_certificate /etc/letsencrypt/live/givepaw/fullchain.pem; # managed by Certbot
-  ssl_certificate_key /etc/letsencrypt/live/givepaw/privkey.pem; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/{name}/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/{name}/privkey.pem; # managed by Certbot
 
   charset utf-8;
 
@@ -50,7 +50,7 @@ server {
   set $cors_header "";
   set $cors_method "";
 
-  if ($http_origin = "https://uvuv643.ru") {
+  if ($http_origin = "https://{server_name}}") {
       set $cors_origin $http_origin;
       set $cors_cred   true;
       set $cors_header $http_access_control_request_headers;
