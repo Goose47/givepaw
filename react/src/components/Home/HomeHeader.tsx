@@ -1,4 +1,6 @@
 import React from 'react';
+import { BiDonateBlood } from 'react-icons/bi';
+import { MdHealing } from 'react-icons/md';
 
 const HomeHeader = () => {
   return (
@@ -13,6 +15,24 @@ const HomeHeader = () => {
             Вы готовы помогать другим животным и хотите узнать больше подробностей про донорство? <br />
             Вам нужна кровь или другие препараты для питомца и хотите узнать, как ее получить?
           </p>
+        </div>
+      </div>
+      <div className="HomeHeader__Buttons">
+        <div className="HomeHeader__Button">
+          <div>
+            <div className="HomeHeader__Button__Icon">
+              <BiDonateBlood />
+            </div>
+            <div>Стать донором</div>
+          </div>
+        </div>
+        <div className="HomeHeader__Button">
+          <div>
+            <div className="HomeHeader__Button__Icon">
+              <MdHealing />
+            </div>
+            <div>Нужна кровь</div>
+          </div>
         </div>
       </div>
     </div>

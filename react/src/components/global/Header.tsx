@@ -10,7 +10,7 @@ const Header = () => {
 
   useEffect(() => {
     axios
-      .get(APP_URL + '/mock/pet_blood_group/1')
+      .get(APP_URL + 'mock/pet_blood_group/1')
       .then((response) => {
         if (response.status === 200 && response.data) {
           setCities(response.data);

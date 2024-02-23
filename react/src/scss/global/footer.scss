@@ -1,0 +1,15 @@
+.Footer {
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+  &__Boxes {
+    margin-left: -15px;
+    margin-right: -15px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__Box {
+    width: 25%;
+    flex: 0 0 25%;
+  }
+}

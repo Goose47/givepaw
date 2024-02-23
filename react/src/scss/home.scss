@@ -1,26 +1,69 @@
 .HomeHeader {
-  height: 400px;
   width: 100%;
+
   &__Wrapper {
     position: relative;
     height: 400px;
     margin: 30px;
   }
+
   &__Background {
     opacity: 0.4;
     position: absolute;
     width: 100%;
     height: 100%;
+
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
   }
+
   &__Content {
     position: absolute;
     bottom: 30px;
     padding-left: 30px;
     padding-right: 30px;
+  }
+
+  &__Buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  &__Button {
+    border: 1px solid $medium;
+    border-radius: 20px;
+    flex: 0 0 200px;
+    width: 200px;
+    height: 100px;
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    margin-left: 10px;
+    color: $dark;
+    transition: 0.3s;
+    cursor: pointer;
+
+    &__Icon {
+      font-size: 30px;
+      text-align: center;
+      color: $medium;
+      margin-bottom: 5px;
+    }
+
+    &:hover {
+      color: white;
+      background: $medium;
+    }
+
+    &:hover &__Icon {
+      color: white;
+    }
   }
 }
