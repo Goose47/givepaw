@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import axios from 'axios';
 import { Button } from 'antd';
 import { Input } from 'antd';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [login, setLogin] = useState<string>('');
@@ -26,6 +27,7 @@ const Login = () => {
         />
         <Input placeholder={'Пароль'} value={password} type="text" onChange={(e) => handleChange(e, setPassword)} />
         <Button>Войти</Button>
+        <Link to={'/register'}> Нет аккаунта? Зарегистрироваться</Link>
       </div>
     </>
   );

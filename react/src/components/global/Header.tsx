@@ -52,7 +52,9 @@ const Header = () => {
                 };
               })}
             />
-            <Button type="primary">Войти</Button>
+            <Button type="primary">
+              <Link to={'/login'}>Войти</Link>{' '}
+            </Button>
           </div>
         </div>
       </div>

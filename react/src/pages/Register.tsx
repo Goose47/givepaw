@@ -3,6 +3,7 @@ import type { UploadProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { Button, message, Upload } from 'antd';
 import { Dispatch, SetStateAction, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -55,6 +56,7 @@ const Register = () => {
           <Button icon={<UploadOutlined />}>Загрузите аватарку</Button>
         </Upload>
         <Button>Зарегистрироваться</Button>
+        <Link to={'/login'}>Уже есть аккаунт? Войти</Link>
       </div>
     </div>
   );

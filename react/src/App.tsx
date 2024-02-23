@@ -1,11 +1,11 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RouterWrapper from './RouterWrapper';
-import Menu from './components/global/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import { ConfigProvider } from 'antd';
 import axios from 'axios';
+import Register from './pages/Register';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 
@@ -20,10 +20,18 @@ function App() {
       ),
     },
     {
-      path: '/sign-in',
+      path: '/login',
       element: (
         <RouterWrapper>
           <Login />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/register',
+      element: (
+        <RouterWrapper>
+          <Register />
         </RouterWrapper>
       ),
     },
