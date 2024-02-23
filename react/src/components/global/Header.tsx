@@ -13,7 +13,7 @@ const Header = () => {
       if (response.status === 200 && response.data) {
         setCities(response.data);
       }
-    });
+    }).catch(error => console.error(error));
   }, []);
 
   return (
