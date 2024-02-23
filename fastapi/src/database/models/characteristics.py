@@ -17,7 +17,7 @@ class BloodComponent(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
-    icon: Mapped[str] =  mapped_column(String, unique=True, index=True, nullable=False)
+    icon: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
 
 class UserRole(Base):
