@@ -5,7 +5,8 @@ from src.database.models import Base
 
 
 class PetVaccination(Base):
-    __table__ = "pet__vaccinations"
+    __tablename__ = "pet__vaccinations"
+    extend_existing = True
 
-    pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
-    vaccination_id: Mapped[int] = mapped_column(ForeignKey("vaccinations.id"), nullable=False)
+    pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False, primary_key=True)
+    vaccination_id: Mapped[int] = mapped_column(ForeignKey("vaccinations.id"), nullable=False, primary_key=True)

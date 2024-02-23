@@ -3,11 +3,12 @@ from typing import List
 
 from sqlalchemy import ForeignKey, Integer, String, Float, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from base import Base
+from src.database.models.base import Base
 
 
 class User(Base):
     __tablename__ = "users"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
@@ -36,6 +37,7 @@ class User(Base):
 
 class City(Base):
     __tablename__ = "cities"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -45,6 +47,9 @@ class City(Base):
 
 
 class Pet(Base):
+    __tablename__ = "pets"
+    extend_existing = True
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
     blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"))
@@ -68,12 +73,13 @@ class Pet(Base):
     user_id: Mapped[int] = mapped_column(Integer, nullable=False)
     user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
 
-    vaccinations: Mapped[List["Vaccination"]] = relationship(uselist=True, lazy="selectin",
-                                                             secondary="pet__vaccinations")
+    vaccinations: Mapped[List["PetVaccination"]] = relationship(uselist=True, lazy="selectin",
+                                                                secondary="pet__vaccinations")
 
 
 class PetBloodGroup(Base):
     __tablename__ = "pet_blood_groups"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
@@ -89,6 +95,7 @@ class PetBloodGroup(Base):
 
 class UsersConfig(Base):
     __tablename__ = "users_configs"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     phone_number_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
@@ -101,6 +108,7 @@ class UsersConfig(Base):
 
 class UserNetwork(Base):
     __tablename__ = "user_networks"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     telegram: Mapped[str] = mapped_column(String)
@@ -109,6 +117,7 @@ class UserNetwork(Base):
 
 class Breed(Base):
     __tablename__ = "breeds"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -119,6 +128,7 @@ class Breed(Base):
 
 class Demand(Base):
     __tablename__ = "demands"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
@@ -141,6 +151,7 @@ class Demand(Base):
 
 class Clinic(Base):
     __tablename__ = "clinics"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)

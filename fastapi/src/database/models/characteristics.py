@@ -1,10 +1,12 @@
-from sqlalchemy import Boolean, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
-from base import Base
+from sqlalchemy import Integer, String
+
+from sqlalchemy.orm import Mapped, mapped_column
+from src.database.models.base import Base
 
 
 class PetType(Base):
     __tablename__ = "pet_types"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -12,6 +14,7 @@ class PetType(Base):
 
 class BloodComponent(Base):
     __tablename__ = "blood_components"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -21,6 +24,7 @@ class BloodComponent(Base):
 
 class UserRole(Base):
     __tablename__ = "user_roles"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -28,6 +32,7 @@ class UserRole(Base):
 
 class Vaccination(Base):
     __tablename__ = "vaccinations"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -35,6 +40,7 @@ class Vaccination(Base):
 
 class Rhesus(Base):
     __tablename__ = "rhesus"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -42,6 +48,7 @@ class Rhesus(Base):
 
 class Region(Base):
     __tablename__ = "regions"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -49,6 +56,7 @@ class Region(Base):
 
 class Avatar(Base):
     __tablename__ = "avatars"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
@@ -61,6 +69,7 @@ class Avatar(Base):
 
 class BloodGroup(Base):
     __tablename__ = "blood_groups"
+    extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
