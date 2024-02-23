@@ -87,11 +87,16 @@ class Demand(Base):
     __tablename__ = "demands"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
     reason_search_id: Mapped[int] = mapped_column(ForeignKey("reasons_search.id"), nullable=False)
     blood_component_id: Mapped[int] = mapped_column(ForeignKey("blood_components.id"), nullable=False)
+
     blood_amount: Mapped[int] = mapped_column(Integer, nullable=False)
     donor_amount: Mapped[int] = mapped_column(Integer, nullable=False)
+
     pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
+
+    clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
     end_actual_date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
@@ -105,4 +110,3 @@ class Clinic(Base):
     phone: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
-
