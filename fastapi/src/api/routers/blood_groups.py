@@ -15,8 +15,8 @@ router = APIRouter(
 )
 
 
-@router.get("/blood_group/{animal_type}", response_model=list[schemas.PetBloodGroupSchema])
-async def mock_blood_group(request: Request, animal_type: str):
+@router.get("/blood_group/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema])
+async def get_blood_group(request: Request, pet_type_id: int):
     try:
         blood_groups: List[models.PetBloodGroup] = await SqlAlchemyRepository(db_manager.get_session,
                                                                               model=models.PetBloodGroup).get_multi()
