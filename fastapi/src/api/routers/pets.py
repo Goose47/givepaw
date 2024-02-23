@@ -5,8 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
-from src.schemas import pydantic_schemas as schemas
-from src.database.models import characteristics as models
+from src.schemas import pet_type
 
 router = APIRouter(
     prefix="/pets",
@@ -14,10 +13,10 @@ router = APIRouter(
 )
 
 
-@router.get('/pet_types', response_model=List[schemas.PetType])
+@router.get('/pet_types', response_model=List[PetType])
 async def get_pet_types():
     try:
-        types: List[models.PetType] = await SqlAlchemyRepository(db_manager.get_session,
+        types: List[PetType] = await SqlAlchemyRepository(db_manager.get_session,
                                                                  model=models.PetType).get_multi()
 
         return [schemas.PetType(id=t.id,

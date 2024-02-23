@@ -56,7 +56,8 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             self,
             order: str = "id",
             limit: int = 100,
-            offset: int = 0
+            offset: int = 0,
+            **filters
     ) -> list[ModelType]:
         async with self._session_factory() as session:
             order_column = getattr(self.model, order, None)
@@ -64,6 +65,6 @@ class SqlAlchemyRepository(AbstractRepository, Generic[ModelType, CreateSchemaTy
             if order_column is None:
                 raise ValueError(f"Invalid order column: {order}")
 
-            stmt = select(self.model).order_by(order_column).limit(limit).offset(offset)
+            stmt = select(self.model).filter_by(**filters).order_by(order_column).limit(limit).offset(offset)
             row = await session.execute(stmt)
             return row.scalars().all()
