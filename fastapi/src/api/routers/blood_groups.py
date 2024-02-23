@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.get(
-    "/blood_group/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
+    "/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
 )
 async def get_blood_group(request: Request, pet_type_id: int):
     try:
