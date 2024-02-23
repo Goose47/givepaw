@@ -49,7 +49,7 @@ async def refresh(request: Request, auth: Auth = Depends()):
     try:
         access_token, refresh_token = await RefreshUseCase.refresh(payload)
     except Exception as e:
-        return ApiResponse.error(str(e), 401)
+        raise HTTPException(status_code=HTTPStatus.UNAUTHORIZED)
 
     return format_jwt_response(access_token, refresh_token)
 
