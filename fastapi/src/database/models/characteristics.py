@@ -103,5 +103,9 @@ class PetBloodGroup(Base):
     rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"), nullable=False)
 
 
+class PetVaccination(Base):
+    __table__ = "pet_vaccination"
+
+
 # TODO: Проверить что нет лишнего unique
 # TODO: Перенести модельки в ассоциативные
