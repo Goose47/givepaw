@@ -1,6 +1,6 @@
 name: Dev
 
-# Runs tests on any push except main
+# Runs tests on any push  except main
 on:
   push:
     branches:
