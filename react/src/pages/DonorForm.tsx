@@ -13,6 +13,7 @@ const DonorForm = () => {
   const [breed, setBreed] = useState('');
   const [bloodGroup, setBloodGroup] = useState('');
   const [petName, setPetName] = useState('');
+  const [bloodComponent, setBloodComponent] = useState('');
   const [image, setImage] = useState(undefined);
   const [age, setAge] = useState('');
   const [weight, setWeight] = useState('');
@@ -63,13 +64,21 @@ const DonorForm = () => {
       <div>
         <div>Тип животного</div>
         <Radio.Group onChange={onChange} defaultValue="a">
+          <Radio.Button value="a">кот</Radio.Button>
+          <Radio.Button value="b">собака</Radio.Button>
+          <Radio.Button value="c">Beijing</Radio.Button>
+          <Radio.Button value="d">Chengdu</Radio.Button>
+        </Radio.Group>
+
+        <div>Группа крови</div>
+        <Radio.Group onChange={onChange} defaultValue="a">
           <Radio.Button value="a">Hangzhou</Radio.Button>
           <Radio.Button value="b">Shanghai</Radio.Button>
           <Radio.Button value="c">Beijing</Radio.Button>
           <Radio.Button value="d">Chengdu</Radio.Button>
         </Radio.Group>
 
-        <div>Группа крови</div>
+        <div>Компонент крови</div>
         <Radio.Group onChange={onChange} defaultValue="a">
           <Radio.Button value="a">Hangzhou</Radio.Button>
           <Radio.Button value="b">Shanghai</Radio.Button>
