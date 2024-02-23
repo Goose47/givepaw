@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 
+from src.schemas.pet_type import PetType
+
 
 class BreedResponse(BaseModel):
     id: int

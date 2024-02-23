@@ -28,17 +28,7 @@ async def index():
 async def store(data: RecipientCreateType):
     try:
         recipient: Recipient = await SqlAlchemyRepository(db_manager.get_session, model=Recipient).create(data)
-        return recipient  # todo test
-        return RecipientViewType(
-            id=recipient.id,
-            reason=recipient.reason,
-            blood_component_id=recipient.blood_component_id,
-            blood_amount=recipient.blood_amount,
-            donor_amount=recipient.donor_amount,
-            pet_id=recipient.pet_id,
-            clinic_id=recipient.clinic_id,
-            end_actual_date=recipient.end_actual_date,
-        )
+        return recipient
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
