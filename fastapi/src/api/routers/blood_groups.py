@@ -11,23 +11,31 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 router = APIRouter(
     prefix="/blood_group",
     tags=["blood_group"],
-
 )
 
 
-@router.get("/blood_group/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema])
+@router.get(
+    "/blood_group/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
+)
 async def get_blood_group(request: Request, pet_type_id: int):
     try:
-        blood_groups: List[models.PetBloodGroup] = await SqlAlchemyRepository(db_manager.get_session,
-                                                                              model=models.PetBloodGroup).get_multi()
-        return [schemas.PetBloodGroupSchema(
-            id=pet_blood_group.id,
-            blood_group=schemas.BloodGroup(id=pet_blood_group.blood_group.id,
-                                           title=pet_blood_group.blood_group),
-            rhesus_type=schemas.RhesusType(id=pet_blood_group.rhesus.id,
-                                           title=pet_blood_group.rhesus.title)
-        )
-            for pet_blood_group in blood_groups]
+        blood_groups: List[models.PetBloodGroup] = await SqlAlchemyRepository(
+            db_manager.get_session, model=models.PetBloodGroup
+        ).get_multi(pet_type_id=pet_type_id)
+        return [
+            schemas.PetBloodGroupSchema(
+                id=pet_blood_group.id,
+                blood_group=schemas.BloodGroup(
+                    id=pet_blood_group.blood_group.id, title=pet_blood_group.blood_group
+                ),
+                rhesus_type=schemas.RhesusType(
+                    id=pet_blood_group.rhesus.id, title=pet_blood_group.rhesus.title
+                ),
+            )
+            for pet_blood_group in blood_groups
+        ]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+        raise HTTPException(
+            status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"}
+        )
