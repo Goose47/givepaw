@@ -15,8 +15,8 @@ server {
   listen 443 ssl;
   server_name {server_name};
 
-  ssl_certificate /etc/letsencrypt/live/{name}/fullchain.pem; # managed by Certbot
-  ssl_certificate_key /etc/letsencrypt/live/{name}/privkey.pem; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/givepaw/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/givepaw/privkey.pem; # managed by Certbot
 
   location / {
       proxy_pass http://givepaw_react:80;
@@ -40,8 +40,8 @@ server {
   listen 443 ssl;
   server_name {api_server_name};
 
-  ssl_certificate /etc/letsencrypt/live/{name}/fullchain.pem; # managed by Certbot
-  ssl_certificate_key /etc/letsencrypt/live/{name}/privkey.pem; # managed by Certbot
+  ssl_certificate /etc/letsencrypt/live/givepaw/fullchain.pem; # managed by Certbot
+  ssl_certificate_key /etc/letsencrypt/live/givepaw/privkey.pem; # managed by Certbot
 
   charset utf-8;
 
