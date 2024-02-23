@@ -1,12 +1,56 @@
 .Header {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 14px;
+  &__Wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   &__Left {
-
+    display: flex;
+    align-items: center;
+    a {
+      color: $grey;
+      margin-right: 25px;
+      text-decoration: none;
+    }
   }
   &__Right {
+    display: flex;
+    align-items: center;
+    .ant-btn {
+      margin-left: 15px;
+    }
+  }
+  &__Logo {
+    margin-right: 30px;
+  }
+}
 
+@media (max-width: 768px) {
+  .Header {
+    &__Wrapper {
+      display: block;
+    }
+    &__Right {
+      margin-top: 15px;
+      justify-content: center;
+    }
+    &__Logo {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+    &__Left {
+      display: block;
+      a {
+        margin-right: 0;
+        display: block;
+        text-align: center;
+        margin-bottom: 5px;
+      }
+    }
   }
 }

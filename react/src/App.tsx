@@ -4,8 +4,9 @@ import RouterWrapper from "./RouterWrapper";
 import Menu from "./components/global/Header";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import { ConfigProvider } from "antd";
 
-export const APP_URL = "http://localhost:3000/";
+export const APP_URL = "https://dev.api.uvuv643.ru/";
 
 function App() {
   const router = createBrowserRouter([
@@ -29,9 +30,19 @@ function App() {
 
   return (
     <>
-      <React.StrictMode>
-        <RouterProvider router={router} />
-      </React.StrictMode>
+      <ConfigProvider
+        theme={{
+          token: {
+            fontFamily: "Inter",
+            fontSize: 14,
+            colorPrimary: "#f63e3e",
+          },
+        }}
+      >
+        <React.StrictMode>
+          <RouterProvider router={router} />
+        </React.StrictMode>
+      </ConfigProvider>
     </>
   );
 }

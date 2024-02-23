@@ -1,27 +1,59 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import Dropdown from "./dropdown/Dropdown";
-import DropdownItem from "./dropdown/DropdownItem";
-import SmallButton from "./buttons/SmallButton";
-import { BsGeoAltFill, BsChevronDown  } from "react-icons/bs";
+import { Button, Select } from "antd";
+import { BsGeoAltFill } from "react-icons/bs";
+import axios from "axios";
+import { APP_URL } from "../../App";
 
 const Header = () => {
+  const [cities, setCities] = useState<any[]>([]);
+
+  useEffect(() => {
+    axios.get(APP_URL + "/mock/pet_blood_group/1").then((response) => {
+      if (response.status === 200 && response.data) {
+        setCities(response.data);
+      }
+    });
+  }, []);
+
   return (
     <header className="Header">
-      <div className="Header__Left">
-        <div className="Header__Logo">
-          <Link to="/haha">Как стать донором?</Link>
-          <Link to="/haha">Как сдать кровь?</Link>
+      <div className="container">
+        <div className="Header__Wrapper">
+          <div className="Header__Left">
+            <div className="Header__Logo">
+              <img src="images/logo.svg" alt="Donor Search" />
+            </div>
+            <Link to="/haha">Как стать донором?</Link>
+            <Link to="/haha">Как сдать кровь?</Link>
+          </div>
+          <div className="Header__Right">
+            <Select
+              showSearch
+              onClick={(e) => e?.stopPropagation()}
+              placeholder={
+                <div className="Select__Placeholder">
+                  <BsGeoAltFill />
+                  <span className="Select__Placeholder__Title">Ваш регион</span>
+                </div>
+              }
+              optionFilterProp="search"
+              options={cities.map((item) => {
+                return {
+                  label: (
+                    <>
+                      {item.rhesus_type.title}{" "}
+                      <span>{item.rhesus_type.title}</span>
+                    </>
+                  ),
+                  value: item.rhesus_type.id,
+                  search: item.rhesus_type.title,
+                };
+              })}
+            />
+            <Button type="primary">Войти</Button>
+          </div>
         </div>
-      </div>
-      <div className="Header__Right">
-        <Dropdown title={<><span className="Icon__Small Icon__Small--Before"><BsGeoAltFill /></span><span>Ваш регион</span></>} >
-          <DropdownItem to="hello">Hello</DropdownItem>
-          <DropdownItem to="hello">Hello1</DropdownItem>
-          <DropdownItem to="hello">Hell2o</DropdownItem>
-          <DropdownItem to="hello">Hell3o</DropdownItem>
-        </Dropdown>
-        <SmallButton to="/sign-in">Войти</SmallButton>
       </div>
     </header>
   );
