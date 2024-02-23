@@ -9,11 +9,14 @@ const Header = () => {
   const [cities, setCities] = useState<any[]>([]);
 
   useEffect(() => {
-    axios.get(APP_URL + "/mock/pet_blood_group/1").then((response) => {
-      if (response.status === 200 && response.data) {
-        setCities(response.data);
-      }
-    }).catch(error => console.error(error));
+    axios
+      .get(APP_URL + "/mock/pet_blood_group/1")
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          setCities(response.data);
+        }
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   return (

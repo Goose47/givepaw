@@ -3,6 +3,10 @@ import { UploadOutlined } from "@ant-design/icons";
 import type { UploadProps } from "antd";
 import { Button, message, Upload } from "antd";
 import { Input } from "antd";
+import { Select, Space } from "antd";
+import type { SelectProps } from "antd";
+import type { RadioChangeEvent } from "antd";
+import { Flex, Radio } from "antd";
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState("");
@@ -13,6 +17,14 @@ const DonorForm = () => {
   const [age, setAge] = useState("");
   const [weight, setWeight] = useState("");
   const [vaccinations, setVaccinations] = useState([]);
+
+  const handleSelectChange = (value: string[]) => {
+    console.log(`selected ${value}`);
+  };
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log(`radio checked:${e.target.value}`);
+  };
 
   const props: UploadProps = {
     name: "file",
@@ -32,10 +44,16 @@ const DonorForm = () => {
     },
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    set: Dispatch<SetStateAction<any>>,
-  ) => {
+  const options: SelectProps["options"] = [];
+
+  for (let i = 10; i < 36; i++) {
+    options.push({
+      label: i.toString(36) + i,
+      value: i.toString(36) + i,
+    });
+  }
+
+  const handleChange = (e: any, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
   };
 
@@ -43,23 +61,31 @@ const DonorForm = () => {
     <div>
       <div>Форма донора</div>
       <div>
-        <Input
-          placeholder={"Тип животного"}
-          value={animalType}
-          type="text"
-          onChange={(e) => handleChange(e, setAnimalType)}
-        />
-        <Input
+        <div>Тип животного</div>
+        <Radio.Group onChange={onChange} defaultValue="a">
+          <Radio.Button value="a">Hangzhou</Radio.Button>
+          <Radio.Button value="b">Shanghai</Radio.Button>
+          <Radio.Button value="c">Beijing</Radio.Button>
+          <Radio.Button value="d">Chengdu</Radio.Button>
+        </Radio.Group>
+
+        <div>Группа крови</div>
+        <Radio.Group onChange={onChange} defaultValue="a">
+          <Radio.Button value="a">Hangzhou</Radio.Button>
+          <Radio.Button value="b">Shanghai</Radio.Button>
+          <Radio.Button value="c">Beijing</Radio.Button>
+          <Radio.Button value="d">Chengdu</Radio.Button>
+        </Radio.Group>
+
+        <Select
           placeholder={"Порода"}
-          value={breed}
-          type="text"
           onChange={(e) => handleChange(e, setBreed)}
-        />
-        <Input
-          placeholder={"Группа крови"}
-          value={bloodGroup}
-          type="number"
-          onChange={(e) => handleChange(e, setBloodGroup)}
+          options={[
+            { value: "jack", label: "Jack" },
+            { value: "lucy", label: "Lucy" },
+            { value: "Yiminghe", label: "yiminghe" },
+            { value: "disabled", label: "Disabled", disabled: true },
+          ]}
         />
         <Input
           placeholder={"Кличка"}
@@ -83,7 +109,17 @@ const DonorForm = () => {
           <Button icon={<UploadOutlined />}>Загрузите фото животного</Button>
         </Upload>
 
-        {/* <Field label={"Прививки"} id={"vaccinations"} value={vaccinations} setValue={setVaccinations}/> */}
+        <Space style={{ width: "100%" }} direction="vertical">
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="Прививки"
+            defaultValue={vaccinations}
+            onChange={handleSelectChange}
+            options={options}
+          />
+        </Space>
 
         <Button>Отправить заявку</Button>
       </div>
