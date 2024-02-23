@@ -80,3 +80,12 @@ class Breed(Base):
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
 
 
+class Clinics(Base):
+    __tablename__ = "clinics"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
+    address: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    phone: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
