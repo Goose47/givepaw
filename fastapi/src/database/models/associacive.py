@@ -25,7 +25,7 @@ class User(Base):
     # vk
     # tg
 
-    # TODO: СДЕЛАТЬ СОЦ. СЕТИ
+    # TODO: СДЕЛАТЬ СОЦ. СЕТИ, НОВАЯ ТАБЛИЦА
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
 
@@ -84,6 +84,8 @@ class Breed(Base):
 
 
 class Demand(Base):
+    __tablename__ = "demands"
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     reason_search_id: Mapped[int] = mapped_column(ForeignKey("reasons_search.id"), nullable=False)
     blood_component_id: Mapped[int] = mapped_column(ForeignKey("blood_components.id"), nullable=False)
@@ -91,3 +93,14 @@ class Demand(Base):
     donor_amount: Mapped[int] = mapped_column(Integer, nullable=False)
     pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
     end_actual_date: Mapped[datetime.date] = mapped_column(nullable=False)
+
+
+class Clinic(Base):
+    __tablename__ = "clinics"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
+    address: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    phone: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
