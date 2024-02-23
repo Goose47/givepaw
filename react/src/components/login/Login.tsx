@@ -3,7 +3,7 @@ import Back from '../../icons/Back'
 import Field from '../utils/dropdown/Field'
 import axios from "axios";
 
-function Login() {
+const Login = () => {
 
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")

@@ -10,7 +10,7 @@ import Activities from "../../icons/Activities";
 import Cruises from "../../icons/Cruises";
 import SmallButton from "../utils/buttons/SmallButton";
 
-function Menu() {
+const Header = () => {
     return (
         <header className="global-navigation-site-header">
             <div className="global-navigation-site-header-container">
@@ -67,4 +67,4 @@ function Menu() {
     )
 }
 
-export default Menu
+export default Header

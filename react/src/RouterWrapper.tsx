@@ -1,4 +1,6 @@
 import React, {ReactNode} from 'react'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
 
 interface RouterWrapperProps {
     children : ReactNode
@@ -7,9 +9,14 @@ interface RouterWrapperProps {
 function RouterWrapper(props : RouterWrapperProps) {
 
     return (
-        <div className="container">
-            { props.children }
-        </div>
+        <>
+            <Header/>
+            <div className="container">
+                { props.children }
+            </div>
+            <Footer/>
+        </>
+        
 
     )
 
