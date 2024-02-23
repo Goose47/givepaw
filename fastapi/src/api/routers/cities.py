@@ -20,7 +20,11 @@ async def get_pet_types():
         types: List[models.City] = await SqlAlchemyRepository(db_manager.get_session,
                                                               model=models.City).get_multi()
 
-        return [schemas.City(id=t.id, title=t.title, region=t.region) for t in types]
+        return [schemas.City(id=t.id,
+                             title=t.title,
+                             region=schemas.Region(id=t.region.id,
+                                                   title=t.region.title)
+                             ) for t in types]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": e.with_traceback()})
+        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": e.with_traceback})
