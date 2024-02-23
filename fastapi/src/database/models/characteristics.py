@@ -17,7 +17,7 @@ class BloodComponent(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
-    icon: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    icon: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=True)
 
 
 class UserRole(Base):
@@ -80,6 +80,15 @@ class UsersConfig(Base):
     email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+
+
+class Avatar(Base):
+    __tablename__ = "avatars"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    photo_path: Mapped[str] = mapped_column(String, index=True, nullable=True)
+    photo_thumb: Mapped[str] = mapped_column(String, index=True, nullable=True)
 
 # TODO: Проверить что нет лишнего unique
 # TODO: Перенести модельки в ассоциативные
