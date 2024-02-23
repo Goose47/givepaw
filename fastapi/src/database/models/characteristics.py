@@ -35,7 +35,7 @@ class Vaccination(Base):
 
 
 class City(Base):
-    __tablename__ = "user_roles"
+    __tablename__ = "cities"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
@@ -70,3 +70,16 @@ class Region(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
+
+class UsersConfig(Base):
+    __tablename__ = "users_configs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+    phone_number_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+    social_networks_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+    email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+
+# TODO: Проверить что нет лишнего unique
+# TODO: Перенести модельки в ассоциативные
