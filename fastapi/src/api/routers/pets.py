@@ -57,7 +57,7 @@ async def get_breeds(pet_type_id: int):
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
 
 
-@router.get('/my', response_model=List[pet_type.PetType])
+@router.get('/my', response_model=List[models.Pet])
 async def get_my(request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
