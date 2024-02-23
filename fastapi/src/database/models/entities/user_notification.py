@@ -13,9 +13,9 @@ class UserNotification(AbstractBaseEntityModelTime):
     description: Mapped[str] = mapped_column(Text, nullable=False)
 
     notification_type: Mapped[str] = mapped_column(Text,
-                                                             nullable=False)  # ПОЛИМОРФНЫЙ. "models/entities/category/booking"
+                                                   nullable=False)  # ПОЛИМОРФНЫЙ. "models/entities/category/booking"
     notification_content: Mapped[int] = mapped_column(Text,
-                                                                nullable=False)  # ПОЛИМОРФНЫЙ  # TODO: Тюм, разберись, пж
+                                                      nullable=False)  # ПОЛИМОРФНЫЙ  # TODO: Тюм, разберись, пж
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     user: Mapped["User"] = relationship(back_populates="notifications", uselist=False, lazy="selectin")

@@ -1,4 +1,5 @@
 import datetime
+from typing import List
 
 from sqlalchemy import ForeignKey, Integer, String, Float, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -26,11 +27,11 @@ class User(Base):
     # vk
     # tg
 
-    # TODO: СДЕЛАТЬ СОЦ. СЕТИ, НОВАЯ ТАБЛИЦА
-
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
+    city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
 
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
+    avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
 
 
 class City(Base):
@@ -45,25 +46,45 @@ class City(Base):
 
 class Pet(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
     blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"))
+    blood_group: Mapped["PetBloodGroup"] = relationship(uselist=False, lazy="selectin")
+
     breed_id: Mapped[int] = mapped_column(ForeignKey("breeds.id"), nullable=False)
+    _breed: Mapped["Breed"] = relationship(uselist=False, lazy="selectin")
+
     breed: Mapped[str] = mapped_column(String)
+
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"))
+    pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
+
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
+    avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
+
     name: Mapped[str] = mapped_column(String, nullable=False)
     age: Mapped[int] = mapped_column(Integer, nullable=False)
     weight: Mapped[float] = mapped_column(Float, nullable=False)
+
     user_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
+
+    vaccinations: Mapped[List["Vaccination"]] = relationship(uselist=True, lazy="selectin",
+                                                             secondary="pet__vaccinations")
 
 
 class PetBloodGroup(Base):
     __tablename__ = "pet_blood_groups"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    blood_group: Mapped[str] = mapped_column(String, index=True)
+
+    blood_group_id: Mapped[int] = mapped_column(Integer, index=True)
+    blood_group: Mapped["PetBloodGroup"] = relationship(uselist=False, lazy="selectin")
 
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
+    pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
+
     rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"))
+    rhesus: Mapped["Rhesus"] = relationship(uselist=False, lazy="selectin")
 
 
 class UsersConfig(Base):
@@ -75,6 +96,7 @@ class UsersConfig(Base):
     email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
 
 
 class UserNetwork(Base):
@@ -92,6 +114,7 @@ class Breed(Base):
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
+    pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
 
 
 class Demand(Base):
@@ -99,16 +122,20 @@ class Demand(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
-    reason_search_id: Mapped[int] = mapped_column(ForeignKey("reasons_search.id"), nullable=False)
-    information: Mapped[int] = mapped_column(Text)
+    reason: Mapped[str] = mapped_column(Text)
+
     blood_component_id: Mapped[int] = mapped_column(ForeignKey("blood_components.id"), nullable=False)
+    blood_component: Mapped["BloodComponent"] = relationship(uselist=False, lazy="selectin")
 
     blood_amount: Mapped[int] = mapped_column(Integer, nullable=False)
     donor_amount: Mapped[int] = mapped_column(Integer, nullable=False)
 
     pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
+    pet: Mapped["Pet"] = relationship(uselist=False, lazy="selectin")
 
     clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
+    clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
+
     end_actual_date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
@@ -122,3 +149,4 @@ class Clinic(Base):
     phone: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
+    city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
