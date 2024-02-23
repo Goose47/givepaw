@@ -6,6 +6,8 @@ import Login from './pages/Login';
 import { ConfigProvider } from 'antd';
 import axios from 'axios';
 import Register from './pages/Register';
+import RecipientForm from './pages/RecipientForm';
+import DonorForm from './pages/DonorForm';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 
@@ -32,6 +34,22 @@ function App() {
       element: (
         <RouterWrapper>
           <Register />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/recipient-form',
+      element: (
+        <RouterWrapper>
+          <RecipientForm />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/donor-form',
+      element: (
+        <RouterWrapper>
+          <DonorForm />
         </RouterWrapper>
       ),
     },

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BiDonateBlood } from 'react-icons/bi';
 import { MdHealing } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 const HomeHeader = () => {
   return (
@@ -18,22 +19,27 @@ const HomeHeader = () => {
         </div>
       </div>
       <div className="HomeHeader__Buttons">
-        <div className="HomeHeader__Button">
-          <div>
-            <div className="HomeHeader__Button__Icon">
-              <BiDonateBlood />
+        <Link to={'donor-form'}>
+          <div className="HomeHeader__Button">
+            <div>
+              <div className="HomeHeader__Button__Icon">
+                <BiDonateBlood />
+              </div>
+              <div>Стать донором</div>
             </div>
-            <div>Стать донором</div>
           </div>
-        </div>
-        <div className="HomeHeader__Button">
-          <div>
-            <div className="HomeHeader__Button__Icon">
-              <MdHealing />
+        </Link>
+        <Link to={'recipient-form'}>
+          <div className="HomeHeader__Button">
+            <div>
+              <div className="HomeHeader__Button__Icon">
+                <MdHealing />
+              </div>
+
+              <div>Нужна кровь</div>
             </div>
-            <div>Нужна кровь</div>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );
