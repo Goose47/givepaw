@@ -30,7 +30,7 @@ class MockPetBloodGroupSchema(BaseModel):
     rhesus_type: MockRhesusType
 
 
-@router.get("/pet_blood_group/pet_id}", response_model=list[MockPetBloodGroupSchema])
+@router.get("/pet_blood_group/{pet_id}", response_model=list[MockPetBloodGroupSchema])
 async def mock_blood_group(request: Request, pet_id: int):
     animal = random.choice(["кошка", "собака", "пингвин"])
     return [MockPetBloodGroupSchema(
