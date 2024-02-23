@@ -8,6 +8,7 @@ import axios from 'axios';
 import Register from './pages/Register';
 import RecipientForm from './pages/RecipientForm';
 import DonorForm from './pages/DonorForm';
+import Mockup from './pages/Mockup';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 
@@ -50,6 +51,14 @@ function App() {
       element: (
         <RouterWrapper>
           <DonorForm />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '*',
+      element: (
+        <RouterWrapper>
+          <Mockup />
         </RouterWrapper>
       ),
     },
