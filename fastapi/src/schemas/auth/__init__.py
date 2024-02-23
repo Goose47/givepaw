@@ -3,18 +3,16 @@ from typing import Optional
 
 
 class RegisterUser(BaseModel):
+    username: str
+
     name: str
     surname: str
     patronymic: str
-    username: str
+
     email: str
     password: str
 
     user_role_id: int
-    # google
-    # vk
-    # tg
-
     city_id: int
     avatar_id: Optional[int]
 
