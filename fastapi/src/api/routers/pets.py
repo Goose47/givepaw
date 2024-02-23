@@ -8,7 +8,7 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 from src.schemas import pet_type, vaccination, breed
 from src.database import models
-from src.schemas.pet_type import PetType
+from src.schemas.pets import PetViewType
 
 from src.api.dependencies.auth import Auth
 
@@ -57,7 +57,7 @@ async def get_breeds(pet_type_id: int):
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
 
 
-@router.get('/my', response_model=List[models.Pet])
+@router.get('/my', response_model=List[PetViewType])
 async def get_my(request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
