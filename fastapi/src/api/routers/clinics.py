@@ -9,7 +9,7 @@ from src.schemas import clinics_schemas as schemas
 from src.database.models import associative as models
 
 router = APIRouter(
-    prefix="/clinic",
+    prefix="/clinics",
     tags=["clinics"],
 )
 
