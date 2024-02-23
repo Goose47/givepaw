@@ -45,16 +45,13 @@ async def get_vaccinations():
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
 
 
-@router.get('/breeds', response_model=List[breed.BreedResponse])
-async def get_breeds():
+@router.get('/breeds/{pet_type_id}', response_model=List[breed.BreedResponse])
+async def get_breeds(pet_type_id: int):
     try:
         breeds: List[models.Breed] = await SqlAlchemyRepository(db_manager.get_session,
-                                                                model=models.Breed).get_multi()
+                                                                model=models.Breed).get_multi(pet_type_id=pet_type_id)
 
-        return [breed.BreedResponse(id=v.id,
-                                    title=v.title,
-                                    pet_type=PetType(id=v.pet_type.id, title=v.pet_type.title, icon=v.pet_type.icon))
-                for v in breeds]
+        return [breed.BreedResponse(id=v.id, title=v.title) for v in breeds]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
