@@ -24,6 +24,11 @@ class RegisterUseCase:
         hashed_password = crypt.hash(data.password)
         data.user_role_id = 1  # todo enum
 
+        storage = Storage()
+        path = storage.save(avatar, 'avatars')
+        avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
+            .create(AvatarCreate(photo_path=path, photo_thumb=path))
+
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(RegisterUser(
             username=data.username,
             name=data.name,
@@ -32,23 +37,18 @@ class RegisterUseCase:
             email=data.email,
             password=hashed_password,
             city_id=data.city_id,
-            user_role_id=1,
+            user_role_id=avatar.id,
         ))
         await SqlAlchemyRepository(db_manager.get_session, model=UserConfig)\
             .create(UserConfigCreateType(user_id=user.id))
         await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork)\
             .create(UserNetworksCreateType(user_id=user.id))
 
-        storage = Storage()
-        path = storage.save(avatar, 'avatars')
-        avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar)\
-            .create(AvatarCreate(photo_path=path, photo_thumb=path))
+        # class UpdateUserAvatar(BaseModel):
+        #     avatar_id: int
 
-        class UpdateUserAvatar(BaseModel):
-            avatar_id: int
-
-        await SqlAlchemyRepository(db_manager.get_session, model=User)\
-            .update(data=UpdateUserAvatar(avatar_id=avatar.id), id=user.id)
+        # await SqlAlchemyRepository(db_manager.get_session, model=User)\
+        #     .update(UpdateUserAvatar(avatar_id=avatar.id), id=user.id)
 
         return UserType(
             id=user.id,
