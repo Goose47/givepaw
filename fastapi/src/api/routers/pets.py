@@ -75,7 +75,7 @@ async def get_my(request: Request, auth: Auth = Depends()):
     #await auth.check_access_token(request)
     try:
         my_pets: List[models.Pet] = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet) \
-            .get_multi(user_id=request.state.user.id)
+            .get_multi(user_id=17)
 
         return [MyPetResponse(
             id=pet.id,
