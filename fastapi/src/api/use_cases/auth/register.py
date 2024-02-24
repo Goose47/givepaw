@@ -30,7 +30,7 @@ class RegisterUseCase:
             path = storage.save(avatar, 'avatars')
             avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
                 .create(AvatarCreate(photo_path=path, photo_thumb=path))
-        with open('huy.txt', 'rw') as f:
+        with open('huy.txt', 'w') as f:
             f.write(avatar)
 
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(RegisterUser(
