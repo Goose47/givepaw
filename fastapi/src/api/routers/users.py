@@ -25,7 +25,7 @@ async def get_my(request: Request, auth: Auth = Depends()):
 
         id=user_id)
 
-    user_role = UserRole(id=user_info.user_role.id, title=user_info.user_role.title)
+    """user_role = UserRole(id=user_info.user_role.id, title=user_info.user_role.title)
 
     region = Region(id=user_info.city.region.id, title=user_info.city.region.title)
     city = City(id=user_info.city.id, title=user_info.city.title, region=region)
@@ -44,7 +44,8 @@ async def get_my(request: Request, auth: Auth = Depends()):
     return user.UserProfile(id=user_info.id, surname=user_info.surname, name=user_info.name,
                             patronymic=user_info.patronymic, username=user_info.username,
                             email=user_info.email, user_role=user_role, city=city, avatar=avatar,
-                            user_network=user_network, user_config=user_config)
+                            user_network=user_network, user_config=user_config)"""
+    return user_info
 
     # except Exception as e:
     # raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
