@@ -19,7 +19,7 @@ const Login = () => {
     dispatch(fetchLogin({ username, password }) as any).then(() => {
       setTimeout(() => {
         window.location.replace("https://uvuv643.ru/profile");
-      }, 500)
+      }, 300)
     });
   };
 

@@ -23,7 +23,11 @@ const Register = () => {
   const handleRegister = () => {
     
     dispatch(fetchRegister({username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
-      navigate(`/profile`)
+      () => {
+        setTimeout(() => {
+          window.location.replace("https://uvuv643.ru/profile");
+        }, 300)
+      }
     );
   };
 
