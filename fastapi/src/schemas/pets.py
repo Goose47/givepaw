@@ -83,7 +83,7 @@ class CreatePet(BaseModel):
     vaccinations: Optional[List[PetVaccinationCreate]]
 
     avatar_id: Optional[int] = None
-
+    ## as_form не нужен
     @classmethod
     def as_form(
             cls,
