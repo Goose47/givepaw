@@ -9,7 +9,7 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import user
 from src.schemas.location import create_city
 from src.schemas.user import create_user_role, create_avatar, \
-    create_user_network, create_user_config, UserUpdate, create_user
+    create_user_network, create_user_config, UserUpdate, create_user, UserChangePassword
 
 router = APIRouter(
     prefix="/users",
@@ -63,7 +63,7 @@ async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depe
 
 
 @router.put("/user/change_password", response_model=user.UserProfile)
-async def update_user_password(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
+async def update_user_password(request: Request, data_user: UserChangePassword, auth: Auth = Depends()):
     try:
         await auth.check_access_token(request)
         user: models.User = await SqlAlchemyRepository(db_manager.get_session,
