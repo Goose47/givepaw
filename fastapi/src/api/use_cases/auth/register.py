@@ -17,7 +17,6 @@ class RegisterUseCase:
         crypt = Crypt()
 
         hashed_password = crypt.hash(data.password)
-        data.password = hashed_password
         data.user_role_id = 1  # todo enum
 
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(RegisterUser(
