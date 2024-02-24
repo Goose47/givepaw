@@ -1,3 +1,4 @@
+import datetime
 from http import HTTPStatus
 from typing import List
 
@@ -29,6 +30,26 @@ async def store(data: recipients.RecipientCreate):
     try:
         recipient: Recipient = await SqlAlchemyRepository(db_manager.get_session, model=Recipient).create(data)
         return recipient
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.get('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
+async def sort_recep_by_data():
+    try:
+        recipient: list[Recipient] = await SqlAlchemyRepository(db_manager.get_session, model=Recipient).get_multi("end_actual_date")
+        return [
+            recipients.RecipientForSortByData(
+                avatar=rec.pet.avatar.photo_path,
+                name=rec.pet.name,
+                blood_group=rec.pet.blood_group.blood_group.title,
+                place=rec.clinic.address,
+                deadline=rec.end_actual_date,
+                reason=rec.reason
+            ) for rec in recipient
+            if rec.end_actual_date >= datetime.date.today()
+        ]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))

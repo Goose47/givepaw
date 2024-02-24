@@ -26,3 +26,13 @@ class RecipientCreate(BaseModel):
     pet_id: int
     clinic_id: int
     end_actual_date: datetime.date
+
+
+class RecipientForSortByData(BaseModel):
+    id: int
+    avatar: str
+    name: str
+    blood_group: str
+    place: str
+    deadline: str
+    reason: str
