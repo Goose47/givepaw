@@ -106,3 +106,13 @@ class UserNetworksCreateType(BaseModel):
     vk: Optional[str] = None
 
     user_id: int
+
+
+class UserUpdate(BaseModel):
+    surname: Optional[str] = None
+    name: Optional[str] = None
+    patronymic: [str] = None
+    username: Optional[str] = None
+    email: Optional[str] = None
+    city_id: Optional[int] = None
+    # avatar: Optional[Avatar] = None
