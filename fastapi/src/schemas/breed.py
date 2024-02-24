@@ -13,4 +13,4 @@ class Breed(BaseModel):
 
 
 def create_breed(breed):
-    return Breed(id=breed.id, title=breed.title)
+    return BreedResponse(id=breed.id, title=breed.title)
