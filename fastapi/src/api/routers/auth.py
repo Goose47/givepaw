@@ -13,9 +13,8 @@ router = APIRouter(
 
 
 @router.post("/register")
-# async def register(user: RegisterUser = Depends(RegisterUser.as_form), avatar: Optional[Annotated[bytes, File()]] = None):
-async def register(user: RegisterUser = Depends(RegisterUser.as_form)):
-    avatar = user.avatar
+async def register(user: RegisterUser = Depends(RegisterUser.as_form), avatar: Optional[UploadFile] = File()):
+# async def register(user: RegisterUser = Depends(RegisterUser.as_form)):
     try:
         registered_user: UserType = await RegisterUseCase.register(user, avatar)
         access_token, refresh_token, user = await LoginUseCase.login(
