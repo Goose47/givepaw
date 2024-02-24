@@ -47,8 +47,8 @@ class RegisterUseCase:
         class UpdateUserAvatar(BaseModel):
             avatar_id: int
 
-        await SqlAlchemyRepository(db_manager.get_session, model=User) \
-            .update(UpdateUserAvatar(avatar_id=avatar.id), id=user.id)
+        await SqlAlchemyRepository(db_manager.get_session, model=User)\
+            .update(data=UpdateUserAvatar(avatar_id=avatar.id), id=user.id)
 
         return UserType(
             id=user.id,
