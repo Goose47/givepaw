@@ -53,3 +53,16 @@ async def get_breeds():
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+
+
+@router.get('/blood_components', response_model=List[bloo])
+async def get_breeds():
+    try:
+        breeds: List[models.Breed] = await SqlAlchemyRepository(db_manager.get_session,
+                                                                model=models.Breed).get_multi()
+
+        return [breed.Breed(id=v.id,
+                            title=v.title) for v in breeds]
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
