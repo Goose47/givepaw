@@ -8,7 +8,7 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 from src.schemas import pets, vaccination, breed, blood_group
 from src.database import models
-from src.schemas.pets import Pet, MyPetResponse, CreatePet, create_pet  # CreatePetRequest,
+from src.schemas.pets import Pet, MyPetResponse, CreatePet, create_pet, create_pet_model  # CreatePetRequest,
 from src.schemas.blood_group import create_blood_component
 
 from src.api.dependencies.auth import Auth
@@ -126,16 +126,16 @@ async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depend
     await auth.check_access_token(request)
     try:
         data.user_id = request.state.user.id
-        yes = 1
-        pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(data)
-        yes = 2
+        pet_data = create_pet_model(data)
+        pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)
+
         if len(data.vaccinations) > 0:
             vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.vaccination_id,
                                            vaccination_date=v.vaccination_date) for v in data.vaccinations]
             vaccinations = await SqlAlchemyRepository(db_manager.get_session,
                                                       model=models.PetVaccination).bulk_create(
                 vaccinations)
-        yes = 3
+
         return create_pet(pet)
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(yes))
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))

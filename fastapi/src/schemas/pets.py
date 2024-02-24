@@ -82,6 +82,25 @@ class CreatePet(BaseModel):
     vaccinations: Optional[List[PetVaccinationCreate]]
 
 
+class CreatePetModel(BaseModel):
+    blood_group_id: int
+    breed_id: Optional[int]
+    breed: Optional[str]
+    pet_type_id: int
+    avatar_id: Optional[int]
+    name: str
+    age: int
+    weight: float
+    user_id: int
+
+
+def create_pet_model(pet):
+    return CreatePetModel(blood_group_id=pet.blood_group_id, breed_id=pet.breed_id,
+                          breed=pet.breed, pet_type_id=pet.pet_type_id,
+                          avatar_id=pet.avatar_id, name=pet.name, age=pet.age,
+                          weight=pet.weight, user_id=pet.user_id)
+
+
 class MyPetResponse(BaseModel):
     id: int
     blood_group_title: str
