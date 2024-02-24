@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
 from src.schemas.blood_group_schemas import BloodGroup
+from src.schemas.breed import Breed
 
 
 class PetType(BaseModel):
@@ -10,15 +11,12 @@ class PetType(BaseModel):
 
 
 class Pet(BaseModel):
-    id:int
+    id: int
     blood_group: BloodGroup
+    breed: Breed
 
 
-
-id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-
-    blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"))
-    blood_group: Mapped["PetBloodGroup"] = relationship(uselist=False, lazy="selectin")
+"""
 
     breed_id: Mapped[int] = mapped_column(ForeignKey("breeds.id"), nullable=False)
     _breed: Mapped["Breed"] = relationship(uselist=False, lazy="selectin")
@@ -40,3 +38,5 @@ id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, n
 
     vaccinations: Mapped[List["Vaccination"]] = relationship(uselist=True, lazy="selectin",
                                                              secondary="pet__vaccinations")
+                                                             
+"""
