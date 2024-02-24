@@ -16,7 +16,7 @@ class RegisterUser(BaseModel):
 
     city_id: int
     user_role_id: Optional[int] = None
-    # todo avatar
+    avatar_id: Optional[int] = None
 
     @classmethod
     def as_form(
