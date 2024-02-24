@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Request, Depends
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
-from src.schemas import pet_type, vaccination, breed
+from src.schemas import pet, vaccination, breed
 from src.database import models
 from src.schemas.pets import PetViewType
 
@@ -18,15 +18,15 @@ router = APIRouter(
 )
 
 
-@router.get('/pet_types', response_model=List[pet_type.PetType])
+@router.get('/pet_types', response_model=List[pet.PetType])
 async def get_pet_types():
     try:
         types: List[models.PetType] = await SqlAlchemyRepository(db_manager.get_session,
                                                                  model=models.PetType).get_multi()
 
-        return [pet_type.PetType(id=t.id,
-                                 title=t.title,
-                                 icon=t.icon) for t in types]
+        return [pet.PetType(id=t.id,
+                            title=t.title,
+                            icon=t.icon) for t in types]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
@@ -61,7 +61,7 @@ async def get_breeds(pet_type_id: int):
 async def get_my(request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
-        pets: List[models.Pet] = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet)\
+        pets: List[models.Pet] = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet) \
             .get_multi(user_id=request.state.user.id)
         return pets
 

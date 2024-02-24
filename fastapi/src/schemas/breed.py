@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.schemas.pet_type import PetType
+from src.schemas.pet import PetType
 
 
 class BreedResponse(BaseModel):
