@@ -24,6 +24,6 @@ class DonorRecipient(Base):
     clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
     clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
 
-    date: Mapped[datetime.date] = mapped_column()
-    blood_amount: Mapped[float] = mapped_column()
+    date: Mapped[datetime.date] = mapped_column(nullable=False)
+    blood_amount: Mapped[float] = mapped_column(nullable=False, default=0)
     # status:
