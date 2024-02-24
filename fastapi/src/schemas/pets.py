@@ -30,6 +30,7 @@ class Pet(BaseModel):
     weight: float
     user: UserProfile
     vaccinations: List[Vaccination]
+    avatar_link: Optional[str] = None
 
 
 def create_pet_type(pet_type):
@@ -37,17 +38,19 @@ def create_pet_type(pet_type):
 
 
 def create_pet(pet):
-    pet = Pet(id=pet.id,
-              blood_group=create_pet_blood_group(pet.blood_group),
-              _breed=create_breed(pet._breed),
-              breed=pet.breed,
-              pet_type=create_pet_type(pet.pet_type),
-              name=pet.name,
-              age=pet.age,
-              weight=pet.weight,
-              user=create_user(pet.user),
-              vaccinations=create_vaccinations(pet.vaccinations)
-              )
+    pet = Pet(
+        id=pet.id,
+        blood_group=create_pet_blood_group(pet.blood_group),
+        _breed=create_breed(pet._breed),
+        breed=pet.breed,
+        pet_type=create_pet_type(pet.pet_type),
+        name=pet.name,
+        age=pet.age,
+        weight=pet.weight,
+        user=create_user(pet.user),
+        vaccinations=create_vaccinations(pet.vaccinations),
+        avatar_link=pet.avatar_link,
+    )
     return pet
 
 

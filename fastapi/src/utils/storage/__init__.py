@@ -19,7 +19,7 @@ class Storage:
 
     def save_from_base64(self, image: str, disk: str):
         file_data = base64.b64decode(image)
-        file_ext = imghdr.what(None, h=file_data)
+        file_ext = 'jpeg'
         filename = self.get_filename(file_ext)
         path_to_save = self.get_path(disk, filename)
 
