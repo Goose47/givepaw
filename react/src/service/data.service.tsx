@@ -61,3 +61,13 @@ export const sendRecipient = async (reason: string) => {
     console.error(error);
   }
 };
+
+// ADD AXIOS URL
+export const getPets = async () => {
+  try {
+    const response = await axios.get('pets/my');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

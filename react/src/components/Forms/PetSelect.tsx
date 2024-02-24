@@ -1,9 +1,22 @@
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPets, selectPets } from '../../redux/slices/PetsSlice';
 
 const PetSelect = () => {
-  useEffect(() => {});
+  const dispatch = useDispatch();
+  const pets = useSelector(selectPets);
 
-  return <div></div>;
+  useEffect(() => {
+    dispatch(fetchPets() as any);
+  }, []);
+
+  return (
+    <div>
+      {pets.map((item: any) => {
+        return <div>{item.name}</div>;
+      })}
+    </div>
+  );
 };
 
 export default PetSelect;
