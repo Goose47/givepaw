@@ -51,15 +51,3 @@
     left: 15px !important;
   }
 }
-
-.PetSelect {
-  .ant-select-item-option-content, .ant-select-selection-item {
-    display: flex;
-    align-items: center;
-    img {
-      width: 20px;
-      height: 20px;
-      margin-right: 15px;
-    }
-  }
-}

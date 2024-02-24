@@ -15,7 +15,7 @@ const Register = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
-  const [city, setCity] = useState<number>(-1);
+  const [city, setCity] = useState<number>(1);
   const [image, setImage] = useState(undefined);
   const dispatch = useDispatch();
   const navigate = useNavigate();
