@@ -12,7 +12,7 @@ export const register = async (
   image: any
 ) => {
   try {
-    const response = await axios.post('auth/register', {
+    const response: any = await axios.post('auth/register', {
       'username': username,
       'name': name,
       'phone': phone,
@@ -26,10 +26,12 @@ export const register = async (
       headers: {
         'Content-Type': "application/json"
       }
-    });
+    })
     return response.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error : any) {
+    if (error.response.status === 400) {
+      alert(error.response.data.detail)
+    }
   }
 };
 
