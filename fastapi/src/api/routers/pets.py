@@ -69,9 +69,10 @@ async def get_my(request: Request, auth: Auth = Depends()):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.post('/')
-async def create_pet(request: Request):
+@router.post('/', response_model=Pet)
+async def create_pet(new_pet: Pet):
     try:
-        huy = 'huy'
+        added_pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(new_pet)
+        return added_pet
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
