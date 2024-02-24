@@ -28,7 +28,7 @@ async def get_blood_group(request: Request, pet_type_id: int):
                 blood_group=schemas.BloodGroup(
                     id=pet_blood_group.blood_group.id, title=pet_blood_group.blood_group.title
                 ),
-                rhesus_type=schemas.RhesusType(
+                rhesus_type=schemas.Rhesus(
                     id=pet_blood_group.rhesus.id, title=pet_blood_group.rhesus.title
                 ),
             )
