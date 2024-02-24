@@ -30,8 +30,17 @@ const Login = () => {
           onChange={(e) => handleChange(e, setLogin)}
         />
         <label htmlFor="password">Ваш пароль</label>
-        <Input id="password" size="large" placeholder={'Пароль'} value={password} type="text" onChange={(e) => handleChange(e, setPassword)} />
-        <Button size="large" type="primary">Войти</Button>
+        <Input
+          id="password"
+          size="large"
+          placeholder={'Пароль'}
+          value={password}
+          type="text"
+          onChange={(e) => handleChange(e, setPassword)}
+        />
+        <Button size="large" type="primary">
+          Войти
+        </Button>
         <div className="Form__Link">
           <Link to={'/register'}> Нет аккаунта? Зарегистрироваться</Link>
         </div>

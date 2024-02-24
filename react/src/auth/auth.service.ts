@@ -24,6 +24,7 @@ export const register = async (
     const response = await axios.post('auth/register', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        withCredentials: true,
       },
     });
     return response.data;

@@ -1,16 +1,9 @@
-import { useEffect } from "react";
-
+import { useEffect } from 'react';
 
 const PetSelect = () => {
+  useEffect(() => {});
 
-    useEffect(()  => {
-        
-    })
-
-    return(<div>
-
-    </div>)
-
-}
+  return <div></div>;
+};
 
 export default PetSelect;

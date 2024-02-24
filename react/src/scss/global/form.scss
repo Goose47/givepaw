@@ -1,5 +1,4 @@
 .Form {
-
   max-width: 500px;
   margin: 100px auto 200px;
 
@@ -35,5 +34,13 @@
   .ant-upload-wrapper {
     display: block;
     margin-bottom: 30px;
+  }
+  &__City {
+    margin-bottom: 20px;
+    .ant-select {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+    }
   }
 }
