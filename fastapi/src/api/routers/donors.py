@@ -30,7 +30,8 @@ async def index():
 async def store(data: donors.DonorCreate):
     try:
         donor: models.Donor = await SqlAlchemyRepository(db_manager.get_session, model=associative.Donor).create(data)
-        return donor
+
+        return donors.Donor(id=donor.id, pet=donor.pet, city=donor.city)
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
