@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from pydantic import BaseModel
+from fastapi import Form
 
 from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group
 from src.schemas.breed import Breed, create_breed
@@ -24,12 +25,12 @@ class Pet(BaseModel):
     _breed: Optional[Breed]
     breed: Optional[str]
     pet_type: PetType
-    avatar: Avatar
     name: str
     age: int
     weight: float
     user: UserProfile
-    vaccinations: List[Vaccination]
+    vaccinations: List
+    avatar_link: Optional[str] = None
 
 
 def create_pet_type(pet_type):
@@ -37,49 +38,86 @@ def create_pet_type(pet_type):
 
 
 def create_pet(pet):
-    pet = Pet(id=pet.id,
-              blood_group=create_pet_blood_group(pet.blood_group),
-              _breed=create_breed(pet._breed),
-              breed=pet.breed,
-              pet_type=create_pet_type(pet.pet_type),
-              avatar=create_avatar(pet.avatar),
-              name=pet.name,
-              age=pet.age,
-              weight=pet.weight,
-              user=create_user(pet.user),
-              vaccinations=create_vaccinations(pet.vaccinations)
-              )
+    pet = Pet(
+        id=pet.id,
+        blood_group=create_pet_blood_group(pet.blood_group) if pet.blood_group else None,
+        _breed=create_breed(pet._breed) if pet._breed else None,
+        breed=pet.breed,
+        pet_type=create_pet_type(pet.pet_type) if pet.pet_type else None,
+        name=pet.name,
+        age=pet.age,
+        weight=pet.weight,
+        user=create_user(pet.user) if pet.user else None,
+        vaccinations=create_vaccinations(pet.vaccinations),
+        avatar_link=pet.avatar_link,
+    )
     return pet
-
-
-"""
-class CreatePetRequest(BaseModel):
-    blood_group: PetBloodGroup
-    breed_id: id
-    pet_type_id: int
-    avatar_id: int
-    name: str
-    age: int
-    weight: float
-    user_id: Optional[int]
-    vaccinations: List[Vaccination]
-
-    arbitrary_types_allowed = True
-
-"""
 
 
 class CreatePet(BaseModel):
     blood_group_id: int
     breed_id: Optional[int]
-    breed: Optional[str]
+    breed: Optional[str] = None
     pet_type_id: int
-    avatar_id: Optional[int]
+    avatar: Optional[str] = None
+    avatar_id: Optional[int] = None
     name: str
     age: int
     weight: float
-    user_id: int
+    user_id: Optional[int] = None
     vaccinations: Optional[List[PetVaccinationCreate]]
+
+    ## as_form не нужен
+    @classmethod
+    def as_form(
+            cls,
+            blood_group_id: int = Form(),
+            breed_id: Optional[int] = Form(None),
+            breed: Optional[str] = Form(None),
+            pet_type_id: int = Form(),
+            name: str = Form(),
+            age: int = Form(),
+            weight: float = Form(),
+            user_id: int = Form(),
+            # vaccinations: list[PetVaccinationCreate] = Form(),
+            vaccinations: list = Form(),
+    ):
+        return cls(
+            blood_group_id=blood_group_id,
+            breed_id=breed_id,
+            breed=breed,
+            pet_type_id=pet_type_id,
+            name=name,
+            age=age,
+            weight=weight,
+            user_id=user_id,
+            vaccinations=vaccinations,
+        )
+
+
+class CreatePetModel(BaseModel):
+    blood_group_id: int
+    breed_id: Optional[int]
+    breed: Optional[str] = None
+    pet_type_id: int
+    avatar_id: Optional[int] = None
+    name: str
+    age: int
+    weight: float
+    user_id: int = None
+
+
+def create_pet_model(pet):
+    return CreatePetModel(blood_group_id=pet.blood_group_id,
+                          breed_id=pet.breed_id,
+                          breed=pet.breed,
+                          pet_type_id=pet.pet_type_id,
+                          avatar_id=pet.avatar_id,
+                          name=pet.name,
+                          age=pet.age,
+                          weight=pet.weight,
+                          user_id=pet.user_id
+                          )
 
 
 class MyPetResponse(BaseModel):
@@ -87,8 +125,8 @@ class MyPetResponse(BaseModel):
     blood_group_title: str
     breed_title: str
     pet_type_title: str
-    avatar_path: str
+    avatar_link: Optional[str] = None
     name: str
     age: int
     weight: float
-    vaccinations: List[str]
+    vaccinations: List

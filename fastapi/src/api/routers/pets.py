@@ -1,18 +1,21 @@
 from http import HTTPStatus
 from typing import List
 
-from fastapi import APIRouter, HTTPException, Request, Depends
+from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 from src.schemas import pets, vaccination, breed, blood_group
 from src.database import models
-from src.schemas.pets import Pet, MyPetResponse, CreatePet, create_pet  # CreatePetRequest,
+from src.schemas.pets import Pet, MyPetResponse, CreatePet, create_pet, create_pet_model  # CreatePetRequest,
 from src.schemas.blood_group import create_blood_component
 
 from src.api.dependencies.auth import Auth
 from src.schemas.vaccination import PetVaccination
+from src.schemas.avatars import AvatarCreate
+from src.utils.storage import Storage
+from src.database.models.characteristics import Avatar
 
 router = APIRouter(
     prefix="/pets",
@@ -83,7 +86,7 @@ async def get_my(request: Request, auth: Auth = Depends()):
             blood_group_title=pet.blood_group.blood_group.title,
             breed_title=pet.breed if pet.breed else pet._breed.title,
             pet_type_title=pet.pet_type.title,
-            avatar_path=pet.avatar.photo_path,
+            avatar_link=pet.avatar_link,
             name=pet.name,
             age=pet.age,
             weight=pet.weight,
@@ -109,7 +112,7 @@ async def get_all(request: Request):
             blood_group_title=pet.blood_group.blood_group.title,
             breed_title=pet.breed if pet.breed else pet._breed.title,
             pet_type_title=pet.pet_type.title,
-            avatar_path=pet.avatar.photo_path,
+            avatar_link=pet.avatar_link,
             name=pet.name,
             age=pet.age,
             weight=pet.weight,
@@ -122,19 +125,35 @@ async def get_all(request: Request):
 
 
 @router.post('/', response_model=Pet)
-async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depends()):
-    await auth.check_access_token(request)
+async def create_user_pet(
+        request: Request,
+        data: CreatePet,
+        auth: Auth = Depends()
+):
+    # await auth.check_access_token(request)
     try:
-        data.user_id = request.state.user.id
+        avatar = None
+        if data.avatar:
+            storage = Storage()
+            try:
+                path = storage.save_from_base64(data.avatar, 'avatars')
+            except Exception as e:
+                raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail='Wrong image format')
+            avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
+                .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
-        pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(data)
+        data.avatar_id = avatar.id if avatar else None
+        # data.user_id = request.state.user.id
+        data.user_id = 17
+        pet_data = create_pet_model(data)
 
-        if len(data.vaccinations) > 0:
+        pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)
+
+        if len(data.vaccinations):
             vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.vaccination_id,
                                            vaccination_date=v.vaccination_date) for v in data.vaccinations]
-            vaccinations = await SqlAlchemyRepository(db_manager.get_session,
-                                                      model=models.PetVaccination).bulk_create(
-                vaccinations)
+            vaccinations = await SqlAlchemyRepository(db_manager.get_session, model=models.PetVaccination)\
+                .bulk_create(vaccinations)
 
         return create_pet(pet)
     except Exception as e:

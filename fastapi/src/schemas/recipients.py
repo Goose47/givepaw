@@ -21,10 +21,12 @@ class Recipient(BaseModel):
 
 def create_recipient(recipient):
     return Recipient(id=recipient.id, reason=recipient.reason,
-                     blood_component=create_blood_component(recipient.blood_component),
+                     blood_component=create_blood_component(
+                         recipient.blood_component) if recipient.blood_component else None,
                      blood_amount=recipient.blood_amount,
-                     donor_amount=recipient.donor_amount, pet=create_pet(recipient.pet),
-                     clinic=create_clinic(recipient.clinic),
+                     donor_amount=recipient.donor_amount,
+                     pet=create_pet(recipient.pet) if recipient.pet else None,
+                     clinic=create_clinic(recipient.clinic) if recipient.clinic else None,
                      end_actual_date=recipient.end_actual_date)
 
 

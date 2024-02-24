@@ -7,10 +7,10 @@ from src.database import models
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import user
-from src.schemas.location import Region, City, create_region, create_city
-from src.schemas.user import UserRole, Avatar, UserNetwork, UserConfig, create_user_role, create_avatar, \
-    create_user_network, create_user_config
-
+from src.schemas.location import create_city
+from src.schemas.user import create_user_role, create_avatar, \
+    create_user_network, create_user_config, UserUpdate, create_user, UserChangePassword
+from src.utils.crypt import Crypt
 router = APIRouter(
     prefix="/users",
     tags=["users"],
@@ -37,8 +37,46 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
 
         return user.UserProfile(id=user_info.id, surname=user_info.surname, name=user_info.name,
                                 patronymic=user_info.patronymic, username=user_info.username,
-                                email=user_info.email, user_role=user_role, city=city, avatar=avatar,
+                                email=user_info.email, user_role=user_role, city=city, avatar_link=user_info.avatar_link,
                                 user_network=user_network, user_config=user_config)
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.put("/user", response_model=user.UserProfile)
+async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
+    try:
+        await auth.check_access_token(request)
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session,
+                                                       model=models.User).get_single(id=request.state.user.id)
+        if not user:
+            raise Exception()
+
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session, model=models.User).update(data=data_user,
+                                                                                                         id=request.state.user.id)
+        user = create_user(user)
+        return user
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.put("/user/change_password", response_model=user.UserProfile)
+async def update_user_password(request: Request, data_user: UserChangePassword, auth: Auth = Depends()):
+    await auth.check_access_token(request)
+    try:
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session,
+                                                       model=models.User).get_single(id=request.state.user.id)
+        if not user:
+            raise Exception('User not found')
+        crypt = Crypt
+        data_user.password = crypt.hash(data_user.password)
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session, model=models.User)\
+            .update(data=data_user, id=request.state.user.id)
+        user = create_user(user)
+
+        return user
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
