@@ -1,23 +1,48 @@
-import React, { useState } from 'react';
-import '@egjs/react-flicking/dist/flicking.css';
-import Flicking from '@egjs/react-flicking';
+import React, { useEffect, useState } from 'react';
+import RecipientItem from '../Recipient/RecipientItem';
+import { Link } from 'react-router-dom';
+import { FaArrowRight } from 'react-icons/fa6';
+import axios from 'axios';
+
+export interface Recipient {
+  id: number;
+  avatar: string;
+  name: string;
+  blood_group: string;
+  place: string;
+  number_required: number;
+  deadline: string;
+  reason: string;
+}
 
 const HomeRecipientsLibrary = () => {
-  const [panels, setPanels] = useState([0, 1, 2, 3, 4]);
+  const [recipients, setRecipients] = useState<Recipient[]>([]);
+
+  useEffect(() => {
+    axios
+      .post('/recipients/sort_by_data', {
+        offset: 4,
+      })
+      .then((response) => {
+        setRecipients(response.data);
+      });
+  }, []);
 
   return (
     <div className="HomeRecipients">
-      <Flicking
-        align="prev"
-        circular={true}
-        onMoveEnd={(e) => {
-          console.log(e);
-        }}
-      >
-        <div className="flicking-panel has-background-primary has-text-white is-size-1 ">1</div>
-        <div className="flicking-panel has-background-primary has-text-white is-size-1 ">2</div>
-        <div className="flicking-panel has-background-primary has-text-white is-size-1 ">3</div>
-      </Flicking>
+      <h1>Потребность в донорах</h1>
+      <div className="HomeRecipients__Wrapper">
+        <div className="HomeRecipients__Row">
+          {recipients.map((recipient) => (
+            <div className="HomeRecipients__Item">
+              <RecipientItem recipient={recipient} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <Link to="recipients" className="HomeRecipients__Link">
+        Узнать больше <FaArrowRight />
+      </Link>
     </div>
   );
 };
