@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { login as enter, register } from '../../auth/auth.service';
+import { getUser } from '../../service/data.service';
 
+// check if backend fixed response
 export const fetchLogin = createAsyncThunk('user/fetchLogin', async (login: any, password: any) => {
   const res = await enter(login, password);
   return res;
@@ -18,6 +20,11 @@ export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data:
     data.city,
     data.image
   );
+  return res;
+});
+
+export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
+  const res = await getUser();
   return res;
 });
 
@@ -60,6 +67,19 @@ const UserSlice = createSlice({
         state.hasError = false;
       })
       .addCase(fetchRegister.rejected, (state, action) => {
+        state.hasError = true;
+        state.isLoading = false;
+      })
+      .addCase(fetchUser.pending, (state, action) => {
+        state.isLoading = true;
+        state.hasError = false;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.hasError = false;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
         state.hasError = true;
         state.isLoading = false;
       });

@@ -145,9 +145,11 @@ const Register = () => {
           </Button>
         </Upload>
 
-        <Button type="primary" size="large" onClick={handleRegister}>
-          Зарегистрироваться
-        </Button>
+        <Link to="/profile">
+          <Button type="primary" size="large" onClick={handleRegister}>
+            Зарегистрироваться
+          </Button>
+        </Link>
 
         <div className="Form__Link">
           <Link to={'/login'}>Уже есть аккаунт? Войти</Link>

@@ -40,9 +40,11 @@ const Login = () => {
           type="text"
           onChange={(e) => handleChange(e, setPassword)}
         />
-        <Button size="large" type="primary" onClick={handleLogin}>
-          Войти
-        </Button>
+        <Link to="/profile">
+          <Button size="large" type="primary" onClick={handleLogin}>
+            Войти
+          </Button>
+        </Link>
         <div className="Form__Link">
           <Link to={'/register'}> Нет аккаунта? Зарегистрироваться</Link>
         </div>

@@ -9,6 +9,15 @@ export const getBreeds = async () => {
   }
 };
 
+export const getUser = async () => {
+  try {
+    const response = await axios.get('users/user/info');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const getBloodTypes = async (pet_type_id: number) => {
   try {
     const response = await axios.get(`blood_group/${pet_type_id}`);

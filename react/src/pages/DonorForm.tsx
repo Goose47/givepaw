@@ -7,6 +7,7 @@ import { Select, Space } from 'antd';
 import type { SelectProps } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import { Flex, Radio } from 'antd';
+import { Link } from 'react-router-dom';
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState('');
@@ -115,7 +116,9 @@ const DonorForm = () => {
           />
         </Space>
 
-        <Button>Отправить заявку</Button>
+        <Link to="/profile">
+          <Button>Отправить заявку</Button>
+        </Link>
       </div>
     </div>
   );
