@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import RecipientItem from "./RecipientItem";
-import { Recipient } from "../Home/HomeRecipientsLibrary";
-import PetSelect from "../Forms/PetSelect";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import RecipientItem from './RecipientItem';
+import { Recipient } from '../Home/HomeRecipientsLibrary';
+import PetSelect from '../Forms/PetSelect';
+import axios from 'axios';
 
 const RecipientsLibrary = () => {
   const [recipients, setRecipients] = useState<Recipient[]>([]);
   const [petType, setPetType] = useState<number>();
 
   useEffect(() => {
-    axios
-      .post("/recipients/sort_by_data", {})
-      .then((response) => {
-        setRecipients(response.data);
-      });
+    axios.post('/recipients/sort_by_data', {}).then((response) => {
+      setRecipients(response.data);
+    });
   }, []);
 
   return (

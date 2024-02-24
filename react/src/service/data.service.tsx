@@ -62,9 +62,30 @@ export const getClinics = async () => {
   }
 };
 
-export const createPet = async () => {
+export const createPet = async (
+  animalType: string,
+  breed: string,
+  bloodGroup: string,
+  petName: string,
+  bloodComponent: string,
+  user: any,
+  image: string,
+  age: string,
+  weight: string,
+  vaccinations: string
+) => {
   try {
-    const response = await axios.post('pets');
+    const response = await axios.post('pets', {
+      blood_group_id: bloodGroup,
+      breed_id: breed,
+      pet_type_id: animalType,
+      avatar_id: image,
+      name: petName,
+      age: age,
+      weight: weight,
+      user_id: user.id,
+      vaccinations: vaccinations,
+    });
     return response.data;
   } catch (error) {
     console.error(error);

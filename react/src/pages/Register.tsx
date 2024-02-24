@@ -21,12 +21,11 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    
-    dispatch(fetchRegister({username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
+    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
       () => {
         setTimeout(() => {
-          window.location.replace("https://uvuv643.ru/profile");
-        }, 300)
+          window.location.replace('https://uvuv643.ru/profile');
+        }, 300);
       }
     );
   };

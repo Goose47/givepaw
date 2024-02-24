@@ -9,8 +9,8 @@ interface PetTypeInterface {
 }
 
 interface PetSelectProps {
-  onChange: (id: number) => void,
-  id ?: string,
+  onChange: (id: number) => void;
+  id?: string;
 }
 
 const PetSelect = (props: PetSelectProps) => {
@@ -32,14 +32,17 @@ const PetSelect = (props: PetSelectProps) => {
           options={petTypes.map((el) => {
             return {
               label: (
-                <div style={{display: "flex",
-                  alignItems: "center",
-                }}>
-                  <img src={el.icon} alt="#" style={{
-                    width: 20,
-                    height: 20,
-                    marginRight: 15
-                  }}/> {el.title}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img
+                    src={el.icon}
+                    alt="#"
+                    style={{
+                      width: 20,
+                      height: 20,
+                      marginRight: 15,
+                    }}
+                  />{' '}
+                  {el.title}
                 </div>
               ),
               value: el.id,

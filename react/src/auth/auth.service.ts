@@ -11,7 +11,6 @@ export const register = async (
   city: number,
   image: any
 ) => {
-
   const formData = new FormData();
   formData.append('username', username);
   formData.append('name', name);

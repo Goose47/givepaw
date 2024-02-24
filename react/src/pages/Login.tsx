@@ -18,8 +18,8 @@ const Login = () => {
   const handleLogin = () => {
     dispatch(fetchLogin({ username, password }) as any).then(() => {
       setTimeout(() => {
-        window.location.replace("https://uvuv643.ru/profile");
-      }, 300)
+        window.location.replace('https://uvuv643.ru/profile');
+      }, 300);
     });
   };
 

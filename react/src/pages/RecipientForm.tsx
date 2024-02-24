@@ -23,14 +23,13 @@ const RecipientForm = () => {
   return (
     <div>
       <div className="Form">
-
         <h1>Форма реципиента</h1>
 
         <label htmlFor="email">Ваш email</label>
         <Input
           size="large"
           id="email"
-          placeholder={"Причина поиска животного-донора"}
+          placeholder={'Причина поиска животного-донора'}
           value={reason}
           type="text"
           onChange={(e) => handleChange(e, setReason)}
@@ -40,7 +39,7 @@ const RecipientForm = () => {
         <Input
           size="large"
           id="clinic"
-          placeholder={"Ветеринарная клиника"}
+          placeholder={'Ветеринарная клиника'}
           value={veterinaryСlinic}
           type="text"
           onChange={(e) => handleChange(e, setVeterinaryСlinic)}
@@ -50,7 +49,7 @@ const RecipientForm = () => {
         <Input
           size="large"
           id="blood-amount"
-          placeholder={"Количество крови"}
+          placeholder={'Количество крови'}
           value={bloodAmount}
           type="number"
           onChange={(e) => handleChange(e, setBloodAmount)}
@@ -60,14 +59,15 @@ const RecipientForm = () => {
         <Input
           size="large"
           id="deadline"
-          placeholder={"Дата, до которой поиск актуален"}
+          placeholder={'Дата, до которой поиск актуален'}
           value={deadline}
           type="date"
           onChange={(e) => handleChange(e, setDeadline)}
         />
 
-        <Button type="primary" onClick={handleSend}>Отправить заявку</Button>
-
+        <Button type="primary" onClick={handleSend}>
+          Отправить заявку
+        </Button>
       </div>
     </div>
   );
