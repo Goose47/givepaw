@@ -2,9 +2,9 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from src.schemas.location import City
-from src.schemas.pets import Pet
-from src.schemas.recipients import Recipient
+from src.schemas.location import City, create_city
+from src.schemas.pets import Pet, create_pet
+from src.schemas.recipients import Recipient, create_recipient
 
 
 class DonorCreate(BaseModel):
@@ -19,3 +19,7 @@ class Donor(BaseModel):
     city: City
     recipient: Optional[Recipient] = None
 
+
+def create_donor(donor):
+    return Donor(id=donor.id, pet=create_pet(donor.pet), city=create_city(donor.city),
+                 recipient=create_recipient(donor.recipient))
