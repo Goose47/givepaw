@@ -29,7 +29,6 @@ class RegisterUser(BaseModel):
             password: str = Form(),
             city_id: int = Form(),
             user_role_id: int = Form(),
-            avatar: int = UploadFile,
     ):
         return cls(
             username=username,
@@ -40,7 +39,6 @@ class RegisterUser(BaseModel):
             password=password,
             city_id=city_id,
             user_role_id=user_role_id,
-            avatar=avatar,
         )
 
 
