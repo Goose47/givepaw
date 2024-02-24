@@ -24,12 +24,10 @@ async def register(user: RegisterUser):
 @router.post("/login", response_model=UserType)
 async def login(user: LoginUser):
     try:
-        # access_token, refresh_token = await LoginUseCase.login(user)
-        data = await LoginUseCase.login(user)
+        access_token, refresh_token = await LoginUseCase.login(user)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
-    return data
     return format_jwt_response(access_token, refresh_token)
 
 
