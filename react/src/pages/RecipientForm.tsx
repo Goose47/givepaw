@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { Input } from 'antd';
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
+import MyPetSelect from '../components/Forms/MyPetSelect';
 
 const RecipientForm = () => {
   const [reason, setReason] = useState('');
@@ -23,6 +24,7 @@ const RecipientForm = () => {
   return (
     <div>
       <div>Форма реципиента</div>
+      <MyPetSelect />
       <div>
         <Input
           placeholder={'Причина поиска животного-донора'}
