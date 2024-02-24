@@ -22,6 +22,10 @@ export const register = async (
       'password': password,
       'city_id': city.toString(),
       'avatar': image
+    }, {
+      headers: {
+        'Content-Type': "application/json"
+      }
     });
     return response.data;
   } catch (error) {

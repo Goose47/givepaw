@@ -257,7 +257,6 @@ const AnimalForm = (props: any) => {
                   })
                 }
               </div>
-              <input id="file" type="file" onChange={handleImageChange} />
 
             </>
           )
