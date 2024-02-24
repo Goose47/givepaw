@@ -37,7 +37,8 @@ class RegisterUseCase:
             email=data.email,
             password=hashed_password,
             city_id=data.city_id,
-            user_role_id=avatar.id,
+            avatar_id=avatar.id,
+            user_role_id=1,
         ))
         await SqlAlchemyRepository(db_manager.get_session, model=UserConfig)\
             .create(UserConfigCreateType(user_id=user.id))
