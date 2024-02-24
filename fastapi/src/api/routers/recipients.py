@@ -7,6 +7,8 @@ from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import recipients
 from src.database.models.associative import Recipient
+from src.schemas.blood_group import BloodComponent
+from src.schemas.recipients import create_recipient
 
 router = APIRouter(
     prefix="/recipients",
@@ -17,8 +19,9 @@ router = APIRouter(
 @router.get('/', response_model=List[recipients.Recipient])
 async def index():
     try:
-        recipients: List[Recipient] = await SqlAlchemyRepository(db_manager.get_session, model=Recipient).get_multi()
-        return recipients
+        recipient_list: List[Recipient] = await SqlAlchemyRepository(db_manager.get_session,
+                                                                     model=Recipient).get_multi()
+        return [create_recipient(r) for r in recipient_list]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))

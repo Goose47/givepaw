@@ -1,9 +1,9 @@
 from pydantic import BaseModel
 import datetime
 
-from src.schemas.blood_group import BloodComponent
-from src.schemas.clinics import Clinic
-from src.schemas.pets import Pet
+from src.schemas.blood_group import BloodComponent, create_blood_component
+from src.schemas.clinics import Clinic, create_clinic
+from src.schemas.pets import Pet, create_pet
 
 
 class Recipient(BaseModel):
@@ -14,8 +14,17 @@ class Recipient(BaseModel):
     blood_amount: int
     donor_amount: int
     pet: Pet
-    clinic_id: Clinic
+    clinic: Clinic
     end_actual_date: datetime.date
+
+
+def create_recipient(recipient):
+    return Recipient(id=recipient.id, reason=recipient.reason,
+                     blood_component=create_blood_component(recipient.blood_component),
+                     blood_amount=recipient.blood_amount,
+                     donor_amount=recipient.donor_amount, pet=create_pet(recipient.pet),
+                     clinic=create_clinic(recipient.clinic),
+                     end_actual_date=recipient.end_actual_date)
 
 
 class RecipientCreate(BaseModel):
