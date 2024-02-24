@@ -11,18 +11,18 @@ export const register = async (
   city: number,
   image: any
 ) => {
-  const formData = new FormData();
-  formData.append('username', username);
-  formData.append('name', name);
-  formData.append('phone', phone);
-  formData.append('surname', surname);
-  formData.append('patronymic', patronymic);
-  formData.append('email', email);
-  formData.append('password', password);
-  formData.append('city_id', city.toString());
-  formData.append('avatar', image);
   try {
-    const response = await axios.post('auth/register', formData);
+    const response = await axios.post('auth/register', {
+      'username': username,
+      'name': name,
+      'phone': phone,
+      'surname': surname,
+      'patronymic': patronymic,
+      'email': email,
+      'password': password,
+      'city_id': city.toString(),
+      'avatar': image
+    });
     return response.data;
   } catch (error) {
     console.error(error);
