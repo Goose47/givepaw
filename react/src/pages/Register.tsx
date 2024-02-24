@@ -46,16 +46,11 @@ const Register = () => {
       dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, avatar }) as any).then(
         () => {
           setError(null)
-          // setTimeout(() => {
-          //   window.location.replace('https://uvuv643.ru/profile');
-          // }, 300);
+          setTimeout(() => {
+            window.location.replace('https://uvuv643.ru/profile');
+          }, 300);
         }
-      ).catch((error : any) => {
-        console.log(error)
-        if (error.response.status === 400) {
-          setError(error.response.data.detail)
-        }
-      });
+      );
 
     }
 
