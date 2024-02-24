@@ -45,7 +45,7 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
 
 
 @router.put("/user", response_model=user.UserUpdate)
-async def update_user(user_id: int, request: Request, data_user: UserUpdate, auth: Auth = Depends()):
+async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
     try:
         await auth.check_access_token(request)
         user: models.City = await SqlAlchemyRepository(db_manager.get_session,
