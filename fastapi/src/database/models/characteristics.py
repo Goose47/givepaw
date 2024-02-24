@@ -13,6 +13,10 @@ class PetType(Base):
 
     icon: Mapped[str] = mapped_column(String)
 
+    @property
+    def link(self):
+        return self.icon + 'asfa'
+
 
 class BloodComponent(Base):
     __tablename__ = "blood_components"
