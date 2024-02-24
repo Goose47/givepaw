@@ -60,5 +60,5 @@ class RegisterUseCase:
             email=user.email,
             user_role_id=user.user_role_id,
             city_id=user.city_id,
-            avatar_id=user.avatar.id
+            avatar_id=avatar.id
         )
