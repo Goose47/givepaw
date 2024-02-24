@@ -2,6 +2,7 @@ from sqlalchemy import Integer, String
 
 from sqlalchemy.orm import Mapped, mapped_column
 from src.database.models.base import Base
+from src.config.app.config import settings_app
 
 
 class PetType(Base):
@@ -12,6 +13,10 @@ class PetType(Base):
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
     icon: Mapped[str] = mapped_column(String)
+
+    @property
+    def link(self):
+        return settings_app.APP_URL + '/files/assets/' + self.icon
 
 
 class BloodComponent(Base):

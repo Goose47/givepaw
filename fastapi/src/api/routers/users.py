@@ -17,7 +17,7 @@ router = APIRouter(
 
 
 @router.get('/user/info', response_model=user.UserProfile)
-async def get_my(request: Request, auth: Auth = Depends()):
+async def get_user_info(request: Request, auth: Auth = Depends()):
     try:
         await auth.check_access_token(request)
         user_id = request.state.user.id
