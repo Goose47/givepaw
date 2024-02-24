@@ -10,7 +10,6 @@ from src.schemas import pets, vaccination, breed, blood_group
 from src.database import models
 from src.schemas.pets import Pet, CreatePetRequest, MyPetResponse
 from src.schemas.blood_group import create_blood_component
-from src.schemas.pets import Pet
 
 from src.api.dependencies.auth import Auth
 

@@ -53,7 +53,7 @@ class CreatePetRequest(BaseModel):
     name: str
     age: int
     weight: float
-    user_id: Optional[int] = 1337
+    user_id: Optional[int]
     vaccinations: List[Vaccination]
 
 
