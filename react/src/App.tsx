@@ -10,7 +10,7 @@ import RecipientForm from './pages/RecipientForm';
 import DonorForm from './pages/DonorForm';
 import Mockup from './pages/Mockup';
 import Profile from './pages/Profile';
-import RecipientsLibrary from "./components/Recipient/RecipientsLibrary";
+import RecipientsLibrary from './components/Recipient/RecipientsLibrary';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 axios.defaults.withCredentials = true;

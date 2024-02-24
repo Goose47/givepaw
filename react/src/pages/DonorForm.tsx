@@ -5,11 +5,10 @@ import { Select, Space } from 'antd';
 import type { SelectProps } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import { Flex, Radio } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPets } from '../redux/slices/PetsSlice';
 import PetSelect from '../components/Forms/PetSelect';
-
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState('');
@@ -22,6 +21,7 @@ const DonorForm = () => {
   const [weight, setWeight] = useState('');
   const [vaccinations, setVaccinations] = useState([]);
   const pets = useSelector(selectPets);
+  const navigate = useNavigate();
 
   const handleSelectChange = (value: string[]) => {
     console.log(`selected ${value}`);
@@ -36,6 +36,7 @@ const DonorForm = () => {
     setImage(file);
   };
 
+  const handleSend = () => {};
 
   const options: SelectProps['options'] = [];
 
@@ -53,7 +54,7 @@ const DonorForm = () => {
   return (
     <div>
       <div>Форма донора</div>
-      <PetSelect/>
+      <PetSelect />
       <div>
         <div>Тип животного</div>
         <Radio.Group onChange={onChange} defaultValue="a">
@@ -105,10 +106,7 @@ const DonorForm = () => {
             options={options}
           />
         </Space>
-
-        <Link to="/profile">
-          <Button>Отправить заявку</Button>
-        </Link>
+        <Button onClick={handleSend}>Отправить заявку</Button>
       </div>
     </div>
   );

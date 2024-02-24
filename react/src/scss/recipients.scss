@@ -96,8 +96,6 @@
   }
 }
 
-
-
 .RecipientsLibrary {
   margin-top: 80px;
   margin-bottom: 50px;
@@ -143,7 +141,8 @@
 }
 
 @media (max-width: 1230px) {
-  .RecipientsLibrary, .HomeRecipients {
+  .RecipientsLibrary,
+  .HomeRecipients {
     &__Item {
       width: 50%;
       flex: 0 0 50%;
@@ -152,7 +151,8 @@
 }
 
 @media (max-width: 768px) {
-  .RecipientsLibrary, .HomeRecipients {
+  .RecipientsLibrary,
+  .HomeRecipients {
     &__Row {
       display: block;
     }
