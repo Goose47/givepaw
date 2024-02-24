@@ -8,7 +8,6 @@ from src.database.models.associative import User, UserConfig, UserNetwork
 from src.database.models.characteristics import Avatar
 from fastapi import UploadFile
 from src.utils.storage import Storage
-from pydantic import BaseModel
 from typing import Optional
 
 

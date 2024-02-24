@@ -53,6 +53,7 @@ class UserType(BaseModel):
     user_role_id: int
     city_id: int
     avatar_id: Optional[int]
+    avatar_link: Optional[str]
 
 
 class LoginUser(BaseModel):
