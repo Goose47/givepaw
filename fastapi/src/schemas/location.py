@@ -22,4 +22,4 @@ class UpdateCity(BaseModel):
 
 
 def create_city(city):
-    return City(id=city.id, title=city.title, region=create_region(city.region))
+    return City(id=city.id, title=city.title, region=create_region(city.region) if city.region else None)
