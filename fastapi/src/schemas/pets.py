@@ -62,6 +62,19 @@ class CreatePetRequest(BaseModel):
 """
 
 
+class CreatePet(BaseModel):
+    blood_group_id: int
+    breed_id: Optional[int]
+    breed: Optional[str]
+    pet_type_id: int
+    avatar_id: Optional[int]
+    name: str
+    age: int
+    weight: float
+    user_id: Optional[int]
+    vaccinations: Optional[List[Vaccination]]
+
+
 class MyPetResponse(BaseModel):
     id: int
     blood_group_title: str
