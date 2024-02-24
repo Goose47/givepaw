@@ -8,10 +8,11 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 from src.schemas import pets, vaccination, breed, blood_group
 from src.database import models
-from src.schemas.pets import Pet, MyPetResponse, CreatePet  # CreatePetRequest,
+from src.schemas.pets import Pet, MyPetResponse, CreatePet, create_pet  # CreatePetRequest,
 from src.schemas.blood_group import create_blood_component
 
 from src.api.dependencies.auth import Auth
+from src.schemas.vaccination import PetVaccination
 
 router = APIRouter(
     prefix="/pets",
@@ -98,11 +99,18 @@ async def get_my(request: Request, auth: Auth = Depends()):
 
 
 @router.post('/', response_model=Pet)
-async def create_pet(data: CreatePet, request: Request, auth: Auth = Depends()):
+async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
         data.user_id = request.state.user.id
+
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(data)
-        return pet
+
+        if len(data.vaccinations) > 0:
+            vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.id, date=v.date) for v in data.vaccinations]
+            vaccinations_db = await SqlAlchemyRepository(db_manager.get_session,
+                                                         model=models.PetVaccination).bulk_create(vaccinations)
+
+        return create_pet(pet)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))

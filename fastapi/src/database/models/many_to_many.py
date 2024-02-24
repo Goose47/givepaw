@@ -13,6 +13,7 @@ class PetVaccination(Base):
     pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False, primary_key=True)
     vaccination_id: Mapped[int] = mapped_column(ForeignKey("vaccinations.id"), nullable=False, primary_key=True)
     vaccination_date: Mapped[datetime.date] = mapped_column(nullable=False)
+    # document: Mapped[str] = mapped_column(nullable=True)
 
 
 class DonorRecipient(Base):
