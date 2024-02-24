@@ -1,0 +1,22 @@
+.Icon__Small {
+  --int__egds-icons__theme: inherit;
+  --int__egds-icons__theme__background: unset;
+  block-size: var(--egds-icons__size__block, var(--egds-icons__size, var(--int__egds-icons__size)));
+  box-sizing: content-box;
+  color: var(--egds-icons__theme, var(--int__egds-icons__theme));
+  grid-area: var(--egds-icons__grid_area, auto);
+  inline-size: var(--egds-icons__size__inline, var(--egds-icons__size, var(--int__egds-icons__size)));
+  min-inline-size: var(--egds-icons__size__inline, var(--egds-icons__size, var(--int__egds-icons__size)));
+  --int__egds-icons__size: 1.125rem;
+  fill: #000;
+  margin-left: 5px;
+}
+
+.Icon__Small--Before {
+  margin-right: 5px;
+  margin-left: 0;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
