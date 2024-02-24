@@ -6,9 +6,8 @@ import { Recipient } from '../Home/HomeRecipientsLibrary';
 import PetSelect from '../Forms/PetSelect';
 
 const RecipientsLibrary = () => {
-
   const [recipients, setRecipients] = useState<Recipient[]>([]);
-  const [petType, setPetType] = useState<number>()
+  const [petType, setPetType] = useState<number>();
 
   return (
     <div className="RecipientsLibrary">

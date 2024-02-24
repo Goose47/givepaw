@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const getBreeds = async () => {
+export const getBreeds = async (pet_type_id: any) => {
   try {
-    const response = await axios.get('pets/breeds');
+    const response = await axios.get(`pets/breeds/${pet_type_id}`);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -36,6 +36,15 @@ export const getVaccines = async () => {
 };
 
 export const getAnimalTypes = async () => {
+  try {
+    const response = await axios.get('pets/pet_types');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getComponentTypes = async (pet_type_id: number) => {
   try {
     const response = await axios.get('pets/pet_types');
     return response.data;
