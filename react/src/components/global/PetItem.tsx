@@ -22,14 +22,25 @@ const PetItem = (props: PetItemProps) => {
   let pet = props.pet;
 
   return <div className="PetItem">
-    <div className="PetItem__Avatar">
-      <img src="https://http.cat/204" alt={pet.name} />
-    </div>
-    <div className="PetItem__Data">
-      <div>{pet.name}</div>
-      <div className="Pet__Field"><span>Возраст</span><span>{pet.age}</span></div>
-      <div className="Pet__Field"><span>Вес</span><span>{pet.weight}</span></div>
-      <div className="Pet__Field"><span>Порода</span><span>{pet.breed}</span></div>
+    <div className="PetItem__Wrapper">
+      <div className="PetItem__Avatar">
+        <img src="https://http.cat/204" alt={pet.name} />
+      </div>
+      <div className="PetItem__Data">
+        <h3>{pet.name}</h3>
+        <div className="Pet__Field">
+          <span>Возраст</span>
+          <span>{pet.age}</span>
+        </div>
+        <div className="Pet__Field">
+          <span>Вес</span>
+          <span>{pet.weight}</span>
+        </div>
+        <div className="Pet__Field">
+          <span>Порода</span>
+          <span>{pet.breed}</span>
+        </div>
+      </div>
     </div>
   </div>;
 };
