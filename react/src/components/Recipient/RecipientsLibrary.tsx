@@ -1,21 +1,11 @@
 import React, { useState } from 'react';
-import RecipientItem from '../Recipient/RecipientItem';
+import RecipientItem from './RecipientItem';
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa6';
+import { Recipient } from '../Home/HomeRecipientsLibrary';
+import PetSelect from '../Forms/PetSelect';
 
-export interface Recipient {
-  id: number;
-  avatar: string;
-  name: string;
-  blood_group: string;
-  place: string;
-  numberTaken: number;
-  numberRequired: number;
-  deadline: string;
-  reason: string;
-}
-
-const HomeRecipientsLibrary = () => {
+const RecipientsLibrary = () => {
   const [recipients, setRecipients] = useState<Recipient[]>([
     {
       id: 1,
@@ -64,22 +54,26 @@ const HomeRecipientsLibrary = () => {
   ]);
 
   return (
-    <div className="HomeRecipients">
+    <div className="RecipientsLibrary">
       <h1>Потребность в донорах</h1>
-      <div className="HomeRecipients__Wrapper">
-        <div className="HomeRecipients__Row">
-          {recipients.map((recipient) => (
-            <div className="HomeRecipients__Item">
-              <RecipientItem recipient={recipient} />
-            </div>
-          ))}
+      <div className="RecipientsLibrary__Filters">
+        <div className="RecipientsLibrary__Filter">
+          <PetSelect />
         </div>
       </div>
-      <Link to="recipients" className="HomeRecipients__Link">
-        Узнать больше <FaArrowRight />
-      </Link>
+      <div className="RecipientsLibrary__Items">
+        <div className="RecipientsLibrary__Wrapper">
+          <div className="RecipientsLibrary__Row">
+            {recipients.map((recipient) => (
+              <div className="RecipientsLibrary__Item">
+                <RecipientItem recipient={recipient} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default HomeRecipientsLibrary;
+export default RecipientsLibrary;

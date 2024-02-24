@@ -1,20 +1,23 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import axios from 'axios';
 import { Button } from 'antd';
 import { Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchLogin } from '../redux/slices/UserSlice';
 
 const Login = () => {
-  const [login, setLogin] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
   };
 
-  const handleLogin = () => {};
-
-  const handleLogout = () => {};
+  const handleLogin = () => {
+    dispatch(fetchLogin({ username, password }) as any).then(navigate(`/profile`));
+  };
 
   return (
     <>
@@ -25,9 +28,9 @@ const Login = () => {
           id="email"
           size="large"
           placeholder={'Email'}
-          value={login}
+          value={username}
           type="text"
-          onChange={(e) => handleChange(e, setLogin)}
+          onChange={(e) => handleChange(e, setUsername)}
         />
         <label htmlFor="password">Ваш пароль</label>
         <Input
@@ -38,7 +41,7 @@ const Login = () => {
           type="text"
           onChange={(e) => handleChange(e, setPassword)}
         />
-        <Button size="large" type="primary">
+        <Button size="large" type="primary" onClick={handleLogin}>
           Войти
         </Button>
         <div className="Form__Link">

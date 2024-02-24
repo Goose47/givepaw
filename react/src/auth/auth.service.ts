@@ -3,23 +3,25 @@ import axios from 'axios';
 export const register = async (
   username: string,
   name: string,
+  phone: string,
   surname: string,
   patronymic: string,
   email: string,
   password: string,
-  city_id: number,
-  avatar: Blob
+  city: number,
+  image: any
 ) => {
   const formData = new FormData();
   formData.append('username', username);
   formData.append('name', name);
+  formData.append('phone', phone);
   formData.append('surname', surname);
   formData.append('patronymic', patronymic);
   formData.append('email', email);
   formData.append('password', password);
-  formData.append('city_id', city_id.toString());
-  formData.append('avatar', avatar);
-
+  formData.append('city_id', city.toString());
+  formData.append('avatar', image);
+  console.log(image);
   try {
     const response = await axios.post('auth/register', formData, {
       headers: {
@@ -33,9 +35,9 @@ export const register = async (
   }
 };
 
-export const login = async (login: string, password: string) => {
+export const login = async (username: string, password: string) => {
   try {
-    const response = await axios.post('auth/login', { login, password });
+    const response = await axios.post('auth/login', { username, password });
     return response.data;
   } catch (error) {
     console.error(error);
