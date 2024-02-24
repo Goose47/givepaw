@@ -11,6 +11,10 @@ class PetType(BaseModel):
     title: str
     icon: str
 
+    @property
+    def link(self):
+        return self.icon + 'jajajaja'
+
 
 class Pet(BaseModel):
     id: int
