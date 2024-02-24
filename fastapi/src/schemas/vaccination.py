@@ -10,13 +10,13 @@ class Vaccination(BaseModel):
 
 class PetVaccinationCreate(BaseModel):
     vaccination_id: int
-    date: datetime.date
+    vaccination_date: datetime.date
 
 
 class PetVaccination(BaseModel):
     vaccination_id: int
     pet_id: int
-    date: datetime.date
+    vaccination_date: datetime.date
 
 
 def create_vaccination(vaccination):
