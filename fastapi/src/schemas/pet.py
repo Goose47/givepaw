@@ -20,14 +20,11 @@ class Pet(BaseModel):
     name: str
     age: int
     weight: float
-    # user
+    user:User
 
 
 """
 
-    name: Mapped[str] = mapped_column(String, nullable=False)
-    age: Mapped[int] = mapped_column(Integer, nullable=False)
-    weight: Mapped[float] = mapped_column(Float, nullable=False)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     user: Mapped["User"] = relationship(uselist=False, lazy="selectin")

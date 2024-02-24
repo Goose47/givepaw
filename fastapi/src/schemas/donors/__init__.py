@@ -13,3 +13,4 @@ class Donor(BaseModel):
     id: int
     pet: Pet
     city_id: City
+
