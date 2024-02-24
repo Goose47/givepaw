@@ -24,6 +24,12 @@
         object-fit: cover;
       }
     }
+    &__Buttons { 
+      display: flex;
+      margin-top: 10px;
+      div {
+        margin-left: 5px;
+      }
   }
   &__Pets {
     margin-top: 50px;
@@ -32,12 +38,6 @@
     margin-top: 15px;
     margin-bottom: 30px;
   }
-  &__Buttons { 
-    display: flex;
-    margin-top: 10px;
-    div {
-      margin-left: 5px;
-    }
   }
   &__Row {
     display: flex;
