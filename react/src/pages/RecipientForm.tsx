@@ -45,7 +45,6 @@ const RecipientForm = () => {
           onChange={(e) => handleChange(e, setDeadline)}
         />
         <Link to={'/profile'}>
-          {' '}
           <Button>Отправить заявку</Button>
         </Link>
       </div>

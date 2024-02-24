@@ -1,13 +1,15 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
-import { Button, message, Upload } from 'antd';
+import { Button } from 'antd';
 import { Input } from 'antd';
 import { Select, Space } from 'antd';
 import type { SelectProps } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import { Flex, Radio } from 'antd';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectPets } from '../redux/slices/PetsSlice';
+import PetSelect from '../components/Forms/PetSelect';
+
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState('');
@@ -19,6 +21,7 @@ const DonorForm = () => {
   const [age, setAge] = useState('');
   const [weight, setWeight] = useState('');
   const [vaccinations, setVaccinations] = useState([]);
+  const pets = useSelector(selectPets);
 
   const handleSelectChange = (value: string[]) => {
     console.log(`selected ${value}`);
@@ -28,23 +31,11 @@ const DonorForm = () => {
     console.log(`radio checked:${e.target.value}`);
   };
 
-  const props: UploadProps = {
-    name: 'file',
-    action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
-    headers: {
-      authorization: 'authorization-text',
-    },
-    onChange(info) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    setImage(file);
   };
+
 
   const options: SelectProps['options'] = [];
 
@@ -62,6 +53,7 @@ const DonorForm = () => {
   return (
     <div>
       <div>Форма донора</div>
+      <PetSelect/>
       <div>
         <div>Тип животного</div>
         <Radio.Group onChange={onChange} defaultValue="a">
@@ -100,9 +92,7 @@ const DonorForm = () => {
         <Input placeholder={'Кличка'} value={petName} type="text" onChange={(e) => handleChange(e, setPetName)} />
         <Input placeholder={'Возраст'} value={age} type="text" onChange={(e) => handleChange(e, setAge)} />
         <Input placeholder={'Вес'} value={weight} type="text" onChange={(e) => handleChange(e, setWeight)} />
-        <Upload {...props}>
-          <Button icon={<UploadOutlined />}>Загрузите фото животного</Button>
-        </Upload>
+        <input type="file" onChange={handleImageChange} />
 
         <Space style={{ width: '100%' }} direction="vertical">
           <Select
