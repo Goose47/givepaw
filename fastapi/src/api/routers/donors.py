@@ -48,7 +48,7 @@ async def store(data: donors.DonorCreate):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.get('/{user_id}', response_model=list[donors.Donor])
+@router.get('/{user_id}', response_model=List[donors.Donor])
 async def get_donors_by_user_id(user_id: int):
     try:
         all_donors: list[models.Donor] = await SqlAlchemyRepository(db_manager.get_session,

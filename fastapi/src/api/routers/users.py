@@ -7,9 +7,9 @@ from src.database import models
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import user
-from src.schemas.location import Region, City, create_region, create_city
-from src.schemas.user import UserRole, Avatar, UserNetwork, UserConfig, create_user_role, create_avatar, \
-    create_user_network, create_user_config
+from src.schemas.location import create_city
+from src.schemas.user import create_user_role, create_avatar, \
+    create_user_network, create_user_config, UserUpdate, create_user
 
 router = APIRouter(
     prefix="/users",
@@ -39,6 +39,23 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
                                 patronymic=user_info.patronymic, username=user_info.username,
                                 email=user_info.email, user_role=user_role, city=city, avatar=avatar,
                                 user_network=user_network, user_config=user_config)
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.put("/user", response_model=user.UserUpdate)
+async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
+    try:
+        await auth.check_access_token(request)
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session,
+                                                       model=models.User).get_single(id=request.state.user.id)
+        if not user:
+            raise Exception()
+
+        user = await SqlAlchemyRepository(db_manager.get_session, model=models.User).update(data=data_user,
+                                                                                            id=request.state.user.id)
+        return create_user(user)
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
