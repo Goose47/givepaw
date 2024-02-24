@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.get('/', response_model=List[schemas.City])
-async def get_pet_types():
+async def get_cities():
     try:
         types: List[models.City] = await SqlAlchemyRepository(db_manager.get_session,
                                                               model=models.City).get_multi()

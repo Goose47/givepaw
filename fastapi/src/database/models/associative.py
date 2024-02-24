@@ -107,7 +107,7 @@ class UserConfig(Base):
     email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
+    user: Mapped["User"] = relationship(uselist=False, lazy="selectin", overlaps="user_config")
 
 
 class UserNetwork(Base):
@@ -119,7 +119,7 @@ class UserNetwork(Base):
     vk: Mapped[str] = mapped_column(String)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
+    user: Mapped["User"] = relationship(uselist=False, lazy="selectin", overlaps="user_config")
 
 
 class Breed(Base):
