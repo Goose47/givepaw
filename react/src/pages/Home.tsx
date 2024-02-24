@@ -6,7 +6,6 @@ import HomeRecipientsLibrary from '../components/Home/HomeRecipientsLibrary';
 const Home = () => {
   return (
     <div className="Home">
-      <h1>ARTYOM LOH</h1>
       <HomeInfo />
       <HomeRecipientsLibrary />
     </div>
