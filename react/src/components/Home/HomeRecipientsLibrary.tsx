@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import RecipientItem from '../Recipient/RecipientItem';
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa6';
-import axios from "axios";
+import axios from 'axios';
 
 export interface Recipient {
   id: number;
@@ -16,16 +16,16 @@ export interface Recipient {
 }
 
 const HomeRecipientsLibrary = () => {
-
   const [recipients, setRecipients] = useState<Recipient[]>([]);
 
   useEffect(() => {
-    axios.post('/recipients/sort_by_data', {
-      offset: 4
-    })
-      .then(response => {
-        setRecipients(response.data)
+    axios
+      .post('/recipients/sort_by_data', {
+        offset: 4,
       })
+      .then((response) => {
+        setRecipients(response.data);
+      });
   }, []);
 
   return (

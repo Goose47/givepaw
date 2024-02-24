@@ -49,7 +49,7 @@ const RecipientsLibrary = () => {
     },
   ]);
 
-  const [petType, setPetType] = useState<number>()
+  const [petType, setPetType] = useState<number>();
 
   return (
     <div className="RecipientsLibrary">

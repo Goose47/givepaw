@@ -22,13 +22,17 @@ const Profile = () => {
           <div>ФИО: {user.name + ' ' + user.surname + ' ' + user.patronymic}</div>
           <div>Email: {user.email}</div>
         </div>
-        {pets && (
-          <div>
-            {pets.map((item: any) => {
-              return pets.name;
-            })}
-          </div>
-        )}
+        <div>
+          {pets.map((pet: any) => (
+            <div key={pet.id}>
+              {/* <img src={pet.avatar.photo_thumb} alt={pet.name} /> */}
+              <div>{pet.name}</div>
+              <div>Возраст: {pet.age}</div>
+              <div>Вес: {pet.weight}</div>
+              <div>Порода: {pet.breed}</div>
+            </div>
+          ))}
+        </div>
       </>
     )
   );
