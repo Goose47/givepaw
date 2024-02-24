@@ -6,7 +6,6 @@ import { Recipient } from "../Home/HomeRecipientsLibrary";
 import PetSelect from "../Forms/PetSelect";
 
 const RecipientsLibrary = () => {
-
   const [recipients, setRecipients] = useState<Recipient[]>([
     {
       id: 1,
@@ -54,12 +53,14 @@ const RecipientsLibrary = () => {
     },
   ]);
 
+  const [petType, setPetType] = useState<number>()
+
   return (
     <div className="RecipientsLibrary">
       <h1>Потребность в донорах</h1>
       <div className="RecipientsLibrary__Filters">
         <div className="RecipientsLibrary__Filter">
-          <PetSelect />
+          <PetSelect onChange={setPetType} />
         </div>
       </div>
       <div className="RecipientsLibrary__Items">
@@ -73,9 +74,8 @@ const RecipientsLibrary = () => {
           </div>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
 export default RecipientsLibrary;
