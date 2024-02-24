@@ -22,3 +22,4 @@ jobs:
             docker compose down;
             docker compose up -d;
             docker exec givepaw_fastapi alembic upgrade head
+            docker exec givepaw_laravel php artisan migrate

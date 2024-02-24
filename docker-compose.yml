@@ -12,6 +12,7 @@ services:
       - ./certbot/www:/var/www/certbot/
       - ./certbot/conf:/etc/letsencrypt/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - ./laravel:/var/www/app/laravel
     networks:
       - givepaw
 
@@ -57,6 +58,17 @@ services:
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
     command: certonly --webroot -w /var/www/certbot/ --email uvuv.space@gmail.com -d api.uvuv643.ru -d uvuv643.ru --agree-tos --cert-name givepaw
+
+    laravel:
+      container_name: givepaw_laravel
+      restart: unless-stopped
+      build:
+        context: ./laravel
+        dockerfile: Dockerfile
+      volumes:
+        - ./laravel:/var/www/app/laravel
+      networks:
+        - givepaw
 
 networks:
   givepaw:
