@@ -1,13 +1,13 @@
 from pydantic import BaseModel
 
 
-class RhesusType(BaseModel):
+class Rhesus(BaseModel):
     id: int
     title: str
 
 
 def create_rhesus_type(rhesus):
-    return RhesusType(id=rhesus.id, title=rhesus.title)
+    return Rhesus(id=rhesus.id, title=rhesus.title)
 
 
 class BloodGroup(BaseModel):
@@ -22,12 +22,12 @@ def create_blood_group(blood):
 class PetBloodGroup(BaseModel):
     id: int
     blood_group: BloodGroup
-    rhesus_type: RhesusType
+    rhesus: Rhesus
 
 
 def create_pet_blood_group(pet_blood_group):
     return PetBloodGroup(id=pet_blood_group.id, blood_group=create_blood_group(pet_blood_group.blood_group),
-                         rhesus_type=create_rhesus_type(pet_blood_group.rhesus_type))
+                         rhesus=create_rhesus_type(pet_blood_group.rhesus))
 
 
 class BloodComponent(BaseModel):
