@@ -11,25 +11,21 @@ export const register = async (
   city: number,
   image: any
 ) => {
-  const formData = new FormData();
-  formData.append('username', username);
-  formData.append('name', name);
-  formData.append('phone', phone);
-  formData.append('surname', surname);
-  formData.append('patronymic', patronymic);
-  formData.append('email', email);
-  formData.append('password', password);
-  formData.append('city_id', city.toString());
-  formData.append('avatar', image);
-
-//   for (const entry of formData.entries() as any) {
-//     console.log(entry);
-//   }
   try {
-    const response = await axios.post('auth/register', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+    const response = await axios.post('auth/register', {
+      'username': username,
+      'name': name,
+      'phone': phone,
+      'surname': surname,
+      'patronymic': patronymic,
+      'email': email,
+      'password': password,
+      'city_id': city.toString(),
+      'avatar': image
+    }, {
+      headers: {
+        'Content-Type': "application/json"
+      }
     });
     return response.data;
   } catch (error) {

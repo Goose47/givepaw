@@ -15,8 +15,10 @@ import {
 import { selectUser } from "../redux/slices/UserSlice";
 import MyPetSelect from "../components/Forms/MyPetSelect";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import UploadPhoto from "../components/global/UploadPhoto";
 
-const DonorForm = () => {
+const AnimalForm = (props: any) => {
   const [animalType, setAnimalType] = useState("");
   const [breed, setBreed] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
@@ -62,22 +64,41 @@ const DonorForm = () => {
     setImage(file);
   };
 
+  const [error, setError] = useState<string>()
+
   const handleSend = () => {
-    const fetchSend = async () => {
-      const pet = await createPet(
-        animalType,
-        breed,
-        bloodGroup,
-        petName,
-        bloodComponent,
-        image,
-        age,
-        weight,
-        vaccinations,
-        user
-      );
-    };
-    fetchSend();
+    if (!animalType) {
+      setError("Неверно указан тип животного")
+    } else if (!breed) {
+      setError("Неверно указана порода животного")
+    } else if (!bloodGroup) {
+      setError("Неверно указана группа крови")
+    } else if (!petName) {
+      setError("Неверно указано имя питомца")
+    } else if (!age) {
+      setError("Неверно указан возраст питомца")
+    } else if (!weight) {
+      setError("Неверно указан вес питомца")
+    } else {
+      setError(undefined)
+      axios.post('pets/', {
+        "blood_group_id": bloodGroup,
+        "breed_id": breed,
+        "breed": null,
+        "pet_type_id": animalType,
+        "avatar": avatar,
+        "name": petName,
+        "age": age,
+        "weight": weight,
+        "vaccinations": [
+          {
+            "vaccination_id": 1,
+            "vaccination_date": "2024-02-24"
+          }
+        ]
+      })
+    }
+
   };
 
   useEffect(() => {
@@ -89,23 +110,17 @@ const DonorForm = () => {
       setBloodComponentOptions(components);
 
       const vaccinesOptions = await getVaccines();
-      setVaccinationsOptions(vaccinationsOptions);
+      setVaccinationsOptions(vaccinesOptions);
+
     };
 
     fetchData();
   }, []);
 
-  const options = [];
-
-  for (let i = 10; i < 36; i++) {
-    options.push({
-      label: i.toString(36) + i,
-      value: i.toString(36) + i
-    });
-  }
-
   const [selectedPetId, setSelectedPetId] = useState<number>();
   const [selectingPetId, setSelectingPetId] = useState<boolean>(false);
+
+  const [avatar, setAvatar] = useState<any>(null)
 
   const dispatch = useDispatch();
   const pets = useSelector(selectPets);
@@ -121,6 +136,7 @@ const DonorForm = () => {
   }, [pets]);
 
   const handleAppend = () => {
+    console.log(vaccinationsOptions)
     setSelectingPetId(false);
   };
 
@@ -129,12 +145,28 @@ const DonorForm = () => {
   const handleSelect = (value: number) => {
     setSelectedPetId(value)
     setSelectingPetId(false)
-    navigate('/donor/' + value)
+    if (props.mode === "donor") {
+      navigate('/donor/' + value)
+    } else {
+      navigate('/recipient/' + value)
+    }
+  }
+
+  const [selectedVaccines, setSelectedVaccines] = useState<number[]>([])
+
+  const handleSelectVaccines = (vaccines : any) => {
+    setSelectedVaccines(vaccines)
   }
 
   return (
     <div>
-      <h1>Форма донора</h1>
+      {
+        props.mode === "donor" ? (
+          <h1>Форма донора</h1>
+        ) : (
+          <h1>Форма реципиента</h1>
+        )
+      }
       {
         selectingPetId && <MyPetSelect onAppend={handleAppend} onSelect={handleSelect} />
       }
@@ -192,14 +224,52 @@ const DonorForm = () => {
               <Input id="weight" placeholder="Вес" value={weight} type="text" onChange={(e) => setWeight(e.target.value)} />
 
               <label htmlFor="file">Аватар животного</label>
-              <input id="file" type="file" onChange={handleImageChange} />
+              <UploadPhoto setBase={setAvatar}/>
+
+              <Space style={{ width: "100%" }} direction="vertical">
+                <Select
+                  mode="multiple"
+                  allowClear
+                  style={{ width: "100%" }}
+                  placeholder="Прививки"
+                  defaultValue={vaccinations}
+                  onChange={handleSelectVaccines}
+                  options={vaccinationsOptions.map((el: any) => {
+                    return {
+                      value: el.id,
+                      label: el.title
+                    };
+                  })}
+                />
+              </Space>
+
+              <label htmlFor="file">Даты прививок</label>
+              <div className="Vaccines__Dates">
+                {
+                  selectedVaccines.map(el => {
+                    let currentVaccine : any = vaccinationsOptions.filter((k : any) => k.id == el)[0]
+                    return (
+                      <div className="Vaccines__Items">
+                        <div>{ currentVaccine.title }</div>
+                        <div><input type="date" onChange={(e : any) => 0}/></div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
 
             </>
           )
         }
-        <Button type="primary" onClick={handleSend}>
-          Добавить питомца
-        </Button>
+        {
+          error && (<p className={"Error"}>{error}</p>)
+        }
+        {
+          !selectingPetId && (<Button type="primary" onClick={handleSend}>
+            Добавить питомца
+          </Button>)
+        }
+
       </div>
 
 
@@ -216,20 +286,10 @@ const DonorForm = () => {
       {/*  </div>*/}
       {/*)}*/}
 
-      {/*<Space style={{ width: "100%" }} direction="vertical">*/}
-      {/*  <Select*/}
-      {/*    mode="multiple"*/}
-      {/*    allowClear*/}
-      {/*    style={{ width: "100%" }}*/}
-      {/*    placeholder="Прививки"*/}
-      {/*    defaultValue={vaccinations}*/}
-      {/*    onChange={handleSelectChange}*/}
-      {/*    options={options}*/}
-      {/*  />*/}
-      {/*</Space>*/}
+
 
     </div>
   )
 }
 
-export default DonorForm;
+export default AnimalForm;

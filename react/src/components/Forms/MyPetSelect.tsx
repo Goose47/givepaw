@@ -1,10 +1,15 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPets, selectPets } from '../../redux/slices/PetsSlice';
-import { Pet } from '../global/PetItem';
-import PetItem from '../global/PetItem';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPets, selectPets } from "../../redux/slices/PetsSlice";
+import PetItem, { Pet } from "../global/PetItem";
+import { FaPlus } from "react-icons/fa6";
 
-const MyPetSelect = () => {
+interface MyPetSelectProps {
+  onAppend: () => void
+  onSelect: (value: number) => void
+}
+
+const MyPetSelect = (props : MyPetSelectProps) => {
   const dispatch = useDispatch();
   const pets = useSelector(selectPets);
 
@@ -16,13 +21,20 @@ const MyPetSelect = () => {
     <div>
       {pets.length > 0 ? (
         <div className="Profile__Pets">
-          <h3>Выберите своего питомца: </h3>
+          <h3>Выберите своего питомца:</h3>
           <div className="Profile__Row">
             {pets.map((pet: Pet) => (
-              <div className="Profile__Item">
-                <PetItem pet={pet} />
+              <div className="Profile__Item" onClick={() => props.onSelect(pet.id)}>
+                <PetItem selectable pet={pet} />
               </div>
             ))}
+            <div className="Profile__Item">
+              <div className="PetItem__Add">
+                <div className="PetItem__Add__Icon" onClick={props.onAppend}>
+                  <FaPlus />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
