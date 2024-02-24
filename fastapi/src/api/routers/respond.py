@@ -22,6 +22,7 @@ router = APIRouter(
 @router.get('/', response_model=list[schemas.DonorRecipient])
 async def get_donor_recipient():
     all_responds: List[models.DonorRecipient] = await SqlAlchemyRepository(db_manager.get_session,
-                                                                           model=models.DonorRecipient).get_multi()
+                                                                           model=models.DonorRecipient).get_multi(
+        order="date")
 
     return [create_donor_recipient(respond) for respond in all_responds]
