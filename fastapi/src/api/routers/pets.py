@@ -130,7 +130,6 @@ async def create_user_pet(
         data: CreatePet,
         auth: Auth = Depends()
 ):
-    raise Exception('keke')
     await auth.check_access_token(request)
     try:
         # if avatar:
@@ -142,6 +141,7 @@ async def create_user_pet(
         # data.avatar_id = avatar.id if avatar else None
         data.user_id = request.state.user.id
         pet_data = create_pet_model(data)
+
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)
 
         if len(data.vaccinations):

@@ -43,7 +43,6 @@ def create_pet(pet):
               _breed=create_breed(pet._breed),
               breed=pet.breed,
               pet_type=create_pet_type(pet.pet_type),
-              avatar=create_avatar(pet.avatar),
               name=pet.name,
               age=pet.age,
               weight=pet.weight,
