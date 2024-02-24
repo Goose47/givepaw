@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CitySelect from '../components/global/CitySelect';
 import { useDispatch } from 'react-redux';
 import { fetchRegister } from '../redux/slices/UserSlice';
+import UploadPhoto from "../components/global/UploadPhoto";
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -20,8 +21,10 @@ const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [avatar, setAvatar] = useState<any>()
+
   const handleRegister = () => {
-    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
+    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, avatar }) as any).then(
       () => {
         setTimeout(() => {
           window.location.replace('https://uvuv643.ru/profile');
@@ -131,7 +134,7 @@ const Register = () => {
           </CitySelect>
         </div>
 
-        <input type="file" onChange={handleImageChange} />
+        <UploadPhoto setBase={setAvatar}/>
 
         <Button type="primary" size="large" onClick={handleRegister}>
           Зарегистрироваться

@@ -12,6 +12,8 @@ import Mockup from './pages/Mockup';
 import Profile from './pages/Profile';
 import RecipientsLibrary from './components/Recipient/RecipientsLibrary';
 import RespondForm from './pages/RespondForm';
+import AnimalForm from "./pages/AnimalForm";
+import UploadPhoto from "./components/global/UploadPhoto";
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 axios.defaults.withCredentials = true;
@@ -46,7 +48,7 @@ function App() {
       path: '/recipient-form',
       element: (
         <RouterWrapper>
-          <RecipientForm />
+          <AnimalForm mode="recipient" />
         </RouterWrapper>
       ),
     },
@@ -60,6 +62,14 @@ function App() {
     },
     {
       path: '/donor-form',
+      element: (
+        <RouterWrapper>
+          <AnimalForm mode="donor" />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/donor/{id}',
       element: (
         <RouterWrapper>
           <DonorForm />

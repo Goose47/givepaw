@@ -29,3 +29,37 @@ html {
 * {
   box-sizing: border-box;
 }
+
+.file-input-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.file-input {
+  display: none;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-input-label:hover {
+  background-color: #0056b3;
+}
+
+.file-input-label::before {
+  content: 'Выбрать файл';
+}
+
+/* Удаление контента в случае, если файл выбран */
+.file-input:not(:focus) + .file-input-label::before {
+  content: '';
+}
+

@@ -20,14 +20,9 @@ export const register = async (
   formData.append('email', email);
   formData.append('password', password);
   formData.append('city_id', city.toString());
-  formData.append('file', image);
+  formData.append('avatar', image);
   try {
-    const response = await axios.post('auth/register', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        withCredentials: true,
-      },
-    });
+    const response = await axios.post('auth/register', formData);
     return response.data;
   } catch (error) {
     console.error(error);

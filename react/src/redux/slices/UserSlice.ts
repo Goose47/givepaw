@@ -17,7 +17,7 @@ export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data:
     data.email,
     data.password,
     data.city,
-    data.image
+    data.avatar
   );
   return res;
 });
