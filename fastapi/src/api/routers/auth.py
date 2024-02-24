@@ -14,11 +14,11 @@ router = APIRouter(
 
 @router.post("/register")
 async def register(user: RegisterUser):
-    try:
-        registered_user: UserType = await RegisterUseCase.register(user)
-        access_token, refresh_token = await LoginUseCase.login(LoginUser(username=user.username, password=user.password))
-    except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+    # try:
+    registered_user: UserType = await RegisterUseCase.register(user)
+    access_token, refresh_token = await LoginUseCase.login(LoginUser(username=user.username, password=user.password))
+    # except Exception as e:
+        # raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
     return format_jwt_response(access_token, refresh_token, registered_user)
 
 
