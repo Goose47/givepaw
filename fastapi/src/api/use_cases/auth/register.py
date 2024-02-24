@@ -13,7 +13,7 @@ from pydantic import BaseModel
 
 class RegisterUseCase:
     @staticmethod
-    async def register(data: RegisterUser, avatar: UploadFile) -> UserType:
+    async def register(data: RegisterUser, avatar: Optional[UploadFile]) -> UserType:
         if await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(username=data.username):
             raise Exception('This username is already taken')
         if await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(email=data.email):
@@ -24,10 +24,11 @@ class RegisterUseCase:
         hashed_password = crypt.hash(data.password)
         data.user_role_id = 1  # todo enum
 
-        storage = Storage()
-        path = storage.save(avatar, 'avatars')
-        avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
-            .create(AvatarCreate(photo_path=path, photo_thumb=path))
+        if avatar:
+            storage = Storage()
+            path = storage.save(avatar, 'avatars')
+            avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
+                .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(RegisterUser(
             username=data.username,
@@ -37,7 +38,7 @@ class RegisterUseCase:
             email=data.email,
             password=hashed_password,
             city_id=data.city_id,
-            avatar_id=avatar.id,
+            avatar_id=avatar.id if avatar else None,
             user_role_id=1,
         ))
         await SqlAlchemyRepository(db_manager.get_session, model=UserConfig)\
@@ -60,5 +61,5 @@ class RegisterUseCase:
             email=user.email,
             user_role_id=user.user_role_id,
             city_id=user.city_id,
-            avatar_id=avatar.id
+            avatar_id=avatar.id if avatar else None
         )
