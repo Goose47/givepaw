@@ -15,7 +15,7 @@ class RegisterUser(BaseModel):
     password: str
 
     city_id: int
-    # user_role_id: Optional[int] = None
+    user_role_id: Optional[int] = None
     # todo avatar
 
     @classmethod
@@ -28,7 +28,7 @@ class RegisterUser(BaseModel):
             email: EmailStr = Form(),
             password: str = Form(),
             city_id: int = Form(),
-            user_role_id = None,
+            user_role_id: Optional[int] = Form(),
     ):
         return cls(
             username=username,
