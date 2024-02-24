@@ -1,0 +1,51 @@
+@import 'variables.scss';
+
+@import 'global/header.scss';
+@import 'global/footer.scss';
+@import 'global/icons.scss';
+@import 'global/dropdown.scss';
+@import 'global/form.scss';
+
+@import 'home.scss';
+
+.ant-select-arrow {
+  svg {
+    fill: $grey !important;
+  }
+}
+.ant-select-selection-placeholder {
+  color: $grey !important;
+}
+.ant-select-selector {
+  border: none !important;
+}
+.Select__Placeholder {
+  display: flex;
+  align-items: center;
+  &__Title {
+    margin-left: 5px;
+    padding-right: 15px;
+  }
+}
+.ant-select-dropdown {
+  width: 375px !important;
+  span {
+    color: $grey;
+    display: block;
+    font-size: 10px;
+  }
+}
+
+.ant-select-selection-search input {
+  padding-right: 30px !important;
+}
+.ant-select-selector {
+  max-width: 150px;
+}
+
+@media (max-width: 768px) {
+  .ant-select-dropdown {
+    width: calc(100% - 30px) !important;
+    left: 15px !important;
+  }
+}
