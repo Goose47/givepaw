@@ -24,10 +24,12 @@ const Profile = () => {
             <div className="Profile__Header__Avatar">
               <img src="https://http.cat/502" alt="#" />
             </div>
-            <h2>{user.username}</h2>
+            <div>
+              <h2>{user.username}</h2>
+              <div>{user.name + " " + user.surname + " " + user.patronymic}</div>
+              <div>{user.email}</div>
+            </div>
           </div>
-          <div>{user.name + ' ' + user.surname + ' ' + user.patronymic}</div>
-          <div>{user.email}</div>
         </div>
         {pets.length > 0 ? (
           <div className="Profile__Pets">
