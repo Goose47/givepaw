@@ -31,6 +31,7 @@ const Register = () => {
   const handleImageChange = (event: any) => {
     const file = event.target.files[0];
     setImage(file);
+    alert(image);
   };
 
   return (

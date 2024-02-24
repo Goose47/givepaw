@@ -20,6 +20,7 @@ export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data:
     data.image
   );
   console.log(res);
+  alert(res);
   return res;
 });
 
