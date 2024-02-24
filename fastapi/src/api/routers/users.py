@@ -18,7 +18,7 @@ router = APIRouter(
 
 @router.get('/user/info', response_model=user.UserProfile)
 async def get_my(request: Request, auth: Auth = Depends()):
-    #try:
+    # try:
     await auth.check_access_token(request)
     user_id = request.state.user.id
     user_info: models.User = await SqlAlchemyRepository(db_manager.get_session, model=models.User).get_single(
@@ -31,20 +31,20 @@ async def get_my(request: Request, auth: Auth = Depends()):
     city = City(id=user_info.city.id, title=user_info.city.title, region=region)
 
     avatar = Avatar(id=user_info.avatar.id, photo_path=user_info.avatar.photo_path,
-                        photo_thumb=user_info.avatar.photo_thumb)
+                    photo_thumb=user_info.avatar.photo_thumb) if user_info.avatar else None
 
     user_network = UserNetwork(id=user_info.user_network.id, telegram=user_info.user_network.telegram,
-                                   vk=user_info.user_network.vk)
+                               vk=user_info.user_network.vk)
 
     user_config = UserConfig(id=user_info.user_config.id,
-                                 phone_number_status=user_info.user_config.phone_number_status,
-                                 social_networks_status=user_info.user_config.social_networks_status,
-                                 email_status=user_info.user_config.email_status)
+                             phone_number_status=user_info.user_config.phone_number_status,
+                             social_networks_status=user_info.user_config.social_networks_status,
+                             email_status=user_info.user_config.email_status)
 
     return user.UserProfile(id=user_info.id, surname=user_info.surname, name=user_info.name,
-                                patronymic=user_info.patronymic, username=user_info.username,
-                                email=user_info.email, user_role=user_role, city=city, avatar=avatar,
-                                user_network=user_network, user_config=user_config)
+                            patronymic=user_info.patronymic, username=user_info.username,
+                            email=user_info.email, user_role=user_role, city=city, avatar=avatar,
+                            user_network=user_network, user_config=user_config)
 
-    #except Exception as e:
-        #raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+    # except Exception as e:
+    # raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
