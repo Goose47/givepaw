@@ -15,9 +15,10 @@ class City(BaseModel):
     title: str
     region: Region
 
+
 class UpdateCity(BaseModel):
     title: str
-    region_id: Region
+    region_id: int
 
 
 def create_city(city):
