@@ -33,8 +33,9 @@ class UserNetwork(BaseModel):
 
 
 def create_user_network(user_network):
-    return UserNetwork(id=user_network.id, telegram=user_network.telegram, vk=user_network.vk)
-
+    if user_network:
+        return UserNetwork(id=user_network.id, telegram=user_network.telegram, vk=user_network.vk)
+    return user_network
 
 class UserConfig(BaseModel):
     id: int
@@ -44,9 +45,10 @@ class UserConfig(BaseModel):
 
 
 def create_user_config(user_config):
-    return UserConfig(id=user_config.id, phone_number_status=user_config.phone_number_status,
+    if user_config:
+        return UserConfig(id=user_config.id, phone_number_status=user_config.phone_number_status,
                       social_networks_status=user_config.social_networks_status, email=user_config.email_status)
-
+    return user_config
 
 class UserProfile(BaseModel):
     id: int
