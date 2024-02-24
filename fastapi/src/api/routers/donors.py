@@ -22,8 +22,13 @@ router = APIRouter(
 @router.get('/', response_model=List[donors.Donor])
 async def index():
     try:
-        donors: List[models.Donor] = await SqlAlchemyRepository(db_manager.get_session, model=Donor).get_multi()
-        return donors
+        all_donors: List[models.Donor] = await SqlAlchemyRepository(db_manager.get_session, model=Donor).get_multi()
+        return [donors.Donor(
+            id=donor.id,
+            pet=create_pet(donor.pet),
+            city=create_city(donor.city),
+            recipient=create_recipient(donor.recipient) if donor.recipient else None)
+            for donor in all_donors]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
