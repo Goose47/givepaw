@@ -32,6 +32,13 @@
     margin-top: 15px;
     margin-bottom: 30px;
   }
+  &__Buttons { 
+    display: flex;
+    margin-top: 10px;
+    div {
+      margin-left: 5px;
+    }
+  }
   &__Row {
     display: flex;
     flex-wrap: wrap;

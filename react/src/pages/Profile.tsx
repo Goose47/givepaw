@@ -43,10 +43,19 @@ const Profile = () => {
               <div>{user.email}</div>
               {user.user_network.telegram && <div>Telegram: {user.user_network.telegram}</div> }
               {user.user_network.vk && <div>VK: {user.user_network.vk}</div>}
-              <div>
-                <Button type="primary" onClick={handleLogout}>
-                  Выйти из аккаунта
-                </Button>
+              <div className='Profile_Buttons'>
+                <div>
+                  <Link to={"/profile-edit"}>
+                  <Button type="primary">
+                    Редактировать профиль
+                  </Button>
+                  </Link>
+                </div>
+                <div>
+                  <Button type="primary" onClick={handleLogout}>
+                    Выйти из аккаунта
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
