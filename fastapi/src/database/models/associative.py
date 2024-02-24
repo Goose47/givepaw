@@ -34,6 +34,7 @@ class User(Base):
 
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
+
     @property
     def avatar_link(self):
         return (settings_app.APP_URL + '/files/avatars/' + self.avatar.photo_path) if self.avatar_id else None
@@ -144,6 +145,9 @@ class Donor(Base):
 
     pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
     pet: Mapped["Pet"] = relationship(uselist=False, lazy="selectin")
+
+    recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), nullable=True)
+    recipient: Mapped["Recipient"] = relationship(lazy="selectin", uselist=False)
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
     city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
