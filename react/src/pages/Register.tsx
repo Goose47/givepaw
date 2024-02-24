@@ -29,9 +29,9 @@ const Register = () => {
 
     if (!username) {
       setError("Не указано имя пользователя")
-    } else if (email) {
+    } else if (!email) {
       setError("Не указан адрес электронной почты")
-    } else if (phone) {
+    } else if (!phone) {
       setError("Не указан адрес электронной почты")
     } else if (!password || !passwordConfirmation) {
       setError("Не указан пароль")
