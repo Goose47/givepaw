@@ -31,7 +31,7 @@ async def index():
 @router.post('/', response_model=donors.Donor)
 async def store(data: donors.DonorCreate):
     try:
-        donor: models.Donor = await SqlAlchemyRepository(db_manager.get_session, model=associative.Donor).create(data)
+        donor: models.Donor = await SqlAlchemyRepository(db_manager.get_session, model=schema.Donor).create(data)
 
         return donors.Donor(id=donor.id, pet=create_pet(donor.pet), city=create_city(donor.city))
 
