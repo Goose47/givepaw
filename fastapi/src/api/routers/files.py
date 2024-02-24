@@ -15,6 +15,8 @@ router = APIRouter(
 async def get_file(path: str):
     try:
         image_path = settings_app.APP_PATH + '/storage/assets/' + path
+        with open(image_path, 'rb') as huy:
+            return huy
         return FileResponse(image_path)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail={"cause": e.with_traceback})
