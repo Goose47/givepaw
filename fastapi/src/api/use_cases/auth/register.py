@@ -23,7 +23,7 @@ class RegisterUseCase:
         crypt = Crypt()
 
         hashed_password = crypt.hash(data.password)
-        data.user_role_id = 1  # todo enum
+        # data.user_role_id = 1  # todo enum
 
         if avatar:
             storage = Storage()

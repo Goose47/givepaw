@@ -28,7 +28,6 @@ class RegisterUser(BaseModel):
             email: EmailStr = Form(),
             password: str = Form(),
             city_id: int = Form(),
-            user_role_id: Optional[int] = Form(),
     ):
         return cls(
             username=username,
@@ -38,7 +37,6 @@ class RegisterUser(BaseModel):
             email=email,
             password=password,
             city_id=city_id,
-            user_role_id=user_role_id,
         )
 
 
