@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import { Button } from 'antd';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CitySelect from '../components/global/CitySelect';
 import { useDispatch } from 'react-redux';
 import { fetchRegister } from '../redux/slices/UserSlice';
@@ -18,9 +18,12 @@ const Register = () => {
   const [city, setCity] = useState<number>(-1);
   const [image, setImage] = useState(undefined);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleRegister = () => {
-    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any);
+    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
+      navigate(`/profile`)
+    );
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
@@ -31,7 +34,6 @@ const Register = () => {
     const file = event.target.files[0];
     setImage(file);
   };
-
 
   return (
     <div>
@@ -127,12 +129,9 @@ const Register = () => {
 
         <input type="file" onChange={handleImageChange} />
 
-
-        <Link to="/profile">
-          <Button type="primary" size="large" onClick={handleRegister}>
-            Зарегистрироваться
-          </Button>
-        </Link>
+        <Button type="primary" size="large" onClick={handleRegister}>
+          Зарегистрироваться
+        </Button>
 
         <div className="Form__Link">
           <Link to={'/login'}>Уже есть аккаунт? Войти</Link>
