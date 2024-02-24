@@ -3,7 +3,7 @@ from http import HTTPStatus
 from typing import List
 
 from fastapi import APIRouter, Request, HTTPException
-import src.schemas.blood_group_schemas as schemas
+import src.schemas.blood_group as schemas
 import src.database.models.associative as models
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
