@@ -10,8 +10,10 @@ import RecipientForm from './pages/RecipientForm';
 import DonorForm from './pages/DonorForm';
 import Mockup from './pages/Mockup';
 import Profile from './pages/Profile';
+import RecipientsLibrary from "./components/Recipient/RecipientsLibrary";
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
+axios.defaults.withCredentials = true;
 
 function App() {
   const router = createBrowserRouter([
@@ -60,6 +62,14 @@ function App() {
       element: (
         <RouterWrapper>
           <Profile />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/recipients',
+      element: (
+        <RouterWrapper>
+          <RecipientsLibrary />
         </RouterWrapper>
       ),
     },
