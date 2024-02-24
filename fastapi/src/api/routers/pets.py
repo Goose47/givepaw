@@ -30,7 +30,7 @@ async def get_pet_types():
                              icon=t.link) for t in types]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
 @router.get('/vaccinations', response_model=List[vaccination.Vaccination])
@@ -43,7 +43,7 @@ async def get_vaccinations():
                                         title=v.title) for v in vaccinations]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
 @router.get('/breeds/{pet_type_id}', response_model=List[breed.BreedResponse])
@@ -55,7 +55,7 @@ async def get_breeds(pet_type_id: int):
         return [breed.BreedResponse(id=v.id, title=v.title) for v in breeds]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
 @router.get('/blood_components', response_model=List[blood_group.BloodComponent])
@@ -67,12 +67,12 @@ async def get_blood_components():
         return [create_blood_component(c) for c in components]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
 @router.get('/my', response_model=List[MyPetResponse])
 async def get_my(request: Request, auth: Auth = Depends()):
-    #await auth.check_access_token(request)
+    # await auth.check_access_token(request)
     try:
         my_pets: List[models.Pet] = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet) \
             .get_multi(user_id=17)
@@ -101,8 +101,8 @@ async def get_my(request: Request, auth: Auth = Depends()):
 async def create_pet(data: CreatePet, request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
-        # added_pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(new_pet)
-        # return added_pet
-        pass
+        data.user_id = request.state.user.id
+        pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(data)
+        return pet
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
