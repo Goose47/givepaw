@@ -63,6 +63,7 @@ class CreatePet(BaseModel):
     weight: float
     user_id: Optional[int] = None
     vaccinations: Optional[List[PetVaccinationCreate]]
+
     ## as_form не нужен
     @classmethod
     def as_form(
@@ -121,7 +122,7 @@ class MyPetResponse(BaseModel):
     blood_group_title: str
     breed_title: str
     pet_type_title: str
-    avatar_path: str
+    avatar_path: Optional[str]
     name: str
     age: int
     weight: float
