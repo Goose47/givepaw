@@ -35,17 +35,27 @@ const Profile = () => {
         <div className="Profile__Info">
           <div className="Profile__Header">
             <div className="Profile__Header__Avatar">
-
               {/* <img src="https://http.cat/502" alt="#" /> */}
             </div>
             <div>
               <h2>{user.username}</h2>
               <div>{user.name + ' ' + user.surname + ' ' + user.patronymic}</div>
               <div>{user.email}</div>
-              <div>
-                <Button type="link" onClick={handleLogout}>
-                  Выйти из аккаунта
-                </Button>
+              {user.user_network.telegram && <div>Telegram: {user.user_network.telegram}</div> }
+              {user.user_network.vk && <div>VK: {user.user_network.vk}</div>}
+              <div className='Profile__Header__Buttons'>
+                <div>
+                  <Link to={"/profile-edit"}>
+                  <Button type="primary">
+                    Редактировать профиль
+                  </Button>
+                  </Link>
+                </div>
+                <div>
+                  <Button type="primary" onClick={handleLogout}>
+                    Выйти из аккаунта
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

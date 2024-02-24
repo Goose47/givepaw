@@ -14,6 +14,7 @@ import RecipientsLibrary from './components/Recipient/RecipientsLibrary';
 import RespondForm from './pages/RespondForm';
 import AnimalForm from "./pages/AnimalForm";
 import UploadPhoto from "./components/global/UploadPhoto";
+import ProfileEdit from './pages/ProfileEdit';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 axios.defaults.withCredentials = true;
@@ -81,6 +82,14 @@ function App() {
       element: (
         <RouterWrapper>
           <Profile />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/profile-edit',
+      element: (
+        <RouterWrapper>
+          <ProfileEdit />
         </RouterWrapper>
       ),
     },
