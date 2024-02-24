@@ -10,7 +10,7 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import recipients
 from src.database.models.associative import Recipient
 from src.schemas.blood_group import BloodComponent
-from src.schemas.recipients import create_recipient
+from src.schemas.recipients import create_recipient, RecipientFilter
 
 router = APIRouter(
     prefix="/recipients",
@@ -40,11 +40,12 @@ async def store(data: recipients.RecipientCreate):
 
 
 @router.get('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
-async def sort_recep_by_data():
+async def sort_recep_by_data(rec_filter: RecipientFilter):
     locale.setlocale(locale.LC_TIME, 'ru_RU')
 
     try:
         recipient: list[Recipient] = await SqlAlchemyRepository(db_manager.get_session, model=Recipient).get_multi("end_actual_date")
+
         return [
             recipients.RecipientForSortByData(
                 avatar=rec.pet.avatar.photo_path,
@@ -58,4 +59,4 @@ async def sort_recep_by_data():
         ]
 
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+        raise e
