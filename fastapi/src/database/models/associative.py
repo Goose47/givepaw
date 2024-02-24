@@ -14,7 +14,7 @@ class User(Base):
 
     surname: Mapped[str] = mapped_column(String, nullable=False)
     name: Mapped[str] = mapped_column(String, nullable=False)
-    patronymic: Mapped[str] = mapped_column(String)
+    patronymic: Mapped[str] = mapped_column(String, nullable=True)
 
     username: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
@@ -56,18 +56,18 @@ class Pet(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
-    blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"))
+    blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"), nullable=False)
     blood_group: Mapped["PetBloodGroup"] = relationship(uselist=False, lazy="selectin")
     # PetBloodGroup
-    breed_id: Mapped[int] = mapped_column(ForeignKey("breeds.id"), nullable=False)
+    breed_id: Mapped[int] = mapped_column(ForeignKey("breeds.id"), nullable=True)
     _breed: Mapped["Breed"] = relationship(uselist=False, lazy="selectin")
 
-    breed: Mapped[str] = mapped_column(String)
+    breed: Mapped[str] = mapped_column(String, nullable=True)
 
-    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"))
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
     pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
 
-    avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
+    avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
 
     name: Mapped[str] = mapped_column(String, nullable=False)
@@ -87,13 +87,13 @@ class PetBloodGroup(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
-    blood_group_id: Mapped[int] = mapped_column(ForeignKey("blood_groups.id"), index=True)
+    blood_group_id: Mapped[int] = mapped_column(ForeignKey("blood_groups.id"), index=True, nullable=False)
     blood_group: Mapped["BloodGroup"] = relationship(uselist=False, lazy="selectin")
 
     pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
     pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
 
-    rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"))
+    rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"), nullable=False)
     rhesus: Mapped["Rhesus"] = relationship(uselist=False, lazy="selectin")
 
 
@@ -149,7 +149,7 @@ class Recipient(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
-    reason: Mapped[str] = mapped_column(Text)
+    reason: Mapped[str] = mapped_column(Text, nullable=False)
 
     blood_component_id: Mapped[int] = mapped_column(ForeignKey("blood_components.id"), nullable=False)
     blood_component: Mapped["BloodComponent"] = relationship(uselist=False, lazy="selectin")
@@ -166,7 +166,6 @@ class Recipient(Base):
     end_actual_date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
-# TODO: SCHEDULE
 class Clinic(Base):
     __tablename__ = "clinics"
     extend_existing = True
