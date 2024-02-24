@@ -1,15 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Button } from 'antd';
-import { Input } from 'antd';
-import { Select, Space } from 'antd';
-import type { SelectProps } from 'antd';
-import type { RadioChangeEvent } from 'antd';
-import { Flex, Radio } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Button, Input, Radio, Select, Space } from 'antd';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPets } from '../redux/slices/PetsSlice';
-import PetSelect from '../components/Forms/PetSelect';
-import MyPetSelect from '../components/Forms/MyPetSelect';
+import type { SelectProps } from 'antd';
+import type { RadioChangeEvent } from 'antd';
+import { Flex } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAnimalTypes, getBloodTypes, getBreeds, getComponentTypes } from '../service/data.service';
 
 const DonorForm = () => {
@@ -23,7 +20,6 @@ const DonorForm = () => {
   const [weight, setWeight] = useState('');
   const [vaccinations, setVaccinations] = useState([]);
   const pets = useSelector(selectPets);
-  const navigate = useNavigate();
 
   const [breedOptions, setBreedOptions] = useState<any[]>([]);
   const [animalTypeOptions, setAnimalTypeOptions] = useState<any[]>([]);
@@ -34,34 +30,15 @@ const DonorForm = () => {
     console.log(`selected ${value}`);
   };
 
-  const mapBreedOptions = () => {
-    let options = breedOptions.map((item) => ({
-      value: item.title,
-      label: item.title,
-    }));
-    return options;
-  };
+  const onChangeAnimalType = async (e: RadioChangeEvent) => {
+    const value = e.target.value;
+    setAnimalType(value);
 
-  const onChange = (e: RadioChangeEvent) => {
-    console.log(`radio checked:${e.target.value}`);
-  };
+    const breeds = await getBreeds(value);
+    setBreedOptions(breeds);
 
-  const onChangeAnimalType = (e: RadioChangeEvent) => {
-    setAnimalType(e.target.value);
-    const fetchBreedOptions = async () => {
-      const options = await getBreeds(animalType);
-      setBreedOptions(options);
-    };
-  
-    fetchBreedOptions();
-
-    const fetchBloodTypes = async () => {
-      const options = await getBloodTypes(animalType);
-      setBloodGroupOptions(options);
-    };
-  
-    fetchBloodTypes();
-    
+    const bloodTypes = await getBloodTypes(value);
+    setBloodGroupOptions(bloodTypes);
   };
 
   const onChangeBloodGroup = (e: RadioChangeEvent) => {
@@ -77,29 +54,23 @@ const DonorForm = () => {
     setImage(file);
   };
 
-  const handleSend = () => {};
+  const handleSend = () => {
+    // Handle form submission
+  };
 
   useEffect(() => {
-    const fetchAnimalTypes = async () => {
-      const options = await getAnimalTypes();
-      setAnimalTypeOptions(options);
+    const fetchData = async () => {
+      const animalTypes = await getAnimalTypes();
+      setAnimalTypeOptions(animalTypes);
+
+      const components = await getComponentTypes();
+      setBloodComponentOptions(components);
     };
-  
-    fetchAnimalTypes();
 
-    const fetchComponents = async () => {
-      const options = await getComponentTypes();
-      setBloodComponentOptions(options);
-    };
-  
-    fetchComponents();
-    console.log(bloodGroupOptions);
-    console.log(breedOptions);
-  },[])
+    fetchData();
+  }, []);
 
-
-
-  const options: SelectProps['options'] = [];
+  const options = [];
 
   for (let i = 10; i < 36; i++) {
     options.push({
@@ -115,66 +86,52 @@ const DonorForm = () => {
   return (
     <div>
       <div>Форма донора</div>
-      <MyPetSelect />
+
       <div>
-        
         {animalTypeOptions && (
           <>
-          <div>Тип животного</div>
-        <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
-          {animalTypeOptions.map((pet) => (
-            <div key={pet.id}>
-              <Radio.Button value={pet.id}>{pet.title}</Radio.Button>
-            </div>
-          ))}
-        </Radio.Group>
-        </>
-      )}
-
-        {bloodGroupOptions && (
-          <>
-          <div>Группа крови</div>
-          <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
-            {bloodGroupOptions.map((group) => (
-              <div key={group.id}>
-                <Radio.Button value={group.id}>{group.title}</Radio.Button>
-              </div>
-            ))}
-          </Radio.Group>
+            <div>Тип животного</div>
+            <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
+              {animalTypeOptions.map((animalType) => (
+                <Radio.Button key={animalType.id} value={animalType.id}>{animalType.title}</Radio.Button>
+              ))}
+            </Radio.Group>
           </>
         )}
 
-        
+        {bloodGroupOptions && (
+          <>
+            <div>Группа крови</div>
+            <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
+              {bloodGroupOptions.map((bloodGroup) => (
+                <Radio.Button key={bloodGroup.id} value={bloodGroup.id}>{bloodGroup.title}</Radio.Button>
+              ))}
+            </Radio.Group>
+          </>
+        )}
+
         {bloodComponentOptions && (
           <>
-          <div>Компонент крови</div>
-          <Radio.Group onChange={onChangeComponentType} defaultValue="a">
-            {bloodComponentOptions.map((component) => (
-              <div key={component.id}>
-                <Radio.Button value={component.id}>{component.title}</Radio.Button>
-              </div>
-            ))}
-          </Radio.Group>
+            <div>Компонент крови</div>
+            <Radio.Group onChange={onChangeComponentType} defaultValue="a">
+              {bloodComponentOptions.map((component) => (
+                <Radio.Button key={component.id} value={component.id}>{component.title}</Radio.Button>
+              ))}
+            </Radio.Group>
           </>
         )}
 
         {breedOptions && (
           <Select
-            placeholder={'Порода'}
+            placeholder="Порода"
             onChange={(e) => handleChange(e, setBreed)}
-            options={(() => mapBreedOptions) as any}
-            // options={[
-            //   { value: 'jack', label: 'Jack' },
-            //   { value: 'lucy', label: 'Lucy' },
-            //   { value: 'Yiminghe', label: 'yiminghe' },
-            //   { value: 'disabled', label: 'Disabled', disabled: true },
-            // ]}
+            options={breedOptions.map((breed) => ({ value: breed.id, label: breed.title }))}
           />
         )}
 
-        <Input placeholder={'Кличка'} value={petName} type="text" onChange={(e) => handleChange(e, setPetName)} />
-        <Input placeholder={'Возраст'} value={age} type="text" onChange={(e) => handleChange(e, setAge)} />
-        <Input placeholder={'Вес'} value={weight} type="text" onChange={(e) => handleChange(e, setWeight)} />
+        <Input placeholder="Кличка" value={petName} type="text" onChange={(e) => handleChange(e, setPetName)} />
+        <Input placeholder="Возраст" value={age} type="text" onChange={(e) => handleChange(e, setAge)} />
+        <Input placeholder="Вес" value={weight} type="text" onChange={(e) => handleChange(e, setWeight)} />
         <input type="file" onChange={handleImageChange} />
 
         <Space style={{ width: '100%' }} direction="vertical">
