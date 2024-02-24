@@ -85,7 +85,14 @@ const DonorForm = () => {
     };
   
     fetchAnimalTypes();
-  },[])
+
+    const fetchComponents = async () => {
+      const options = await getComponentTypes();
+      setBloodComponentOptions(options);
+    };
+  
+    fetchComponents();
+  },[breedOptions, bloodGroupOptions])
 
 
   const options: SelectProps['options'] = [];
@@ -106,8 +113,10 @@ const DonorForm = () => {
       <div>Форма донора</div>
       <MyPetSelect />
       <div>
-        <div>Тип животного</div>
+        
         {animalTypeOptions && (
+          <>
+          <div>Тип животного</div>
         <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
           {animalTypeOptions.map((pet) => (
             <div key={pet.id}>
@@ -115,10 +124,12 @@ const DonorForm = () => {
             </div>
           ))}
         </Radio.Group>
+        </>
       )}
 
-        <div>Группа крови</div>
         {bloodGroupOptions && (
+          <>
+          <div>Группа крови</div>
           <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
             {bloodGroupOptions.map((group) => (
               <div key={group.id}>
@@ -126,10 +137,13 @@ const DonorForm = () => {
               </div>
             ))}
           </Radio.Group>
+          </>
         )}
 
-        <div>Компонент крови</div>
+        
         {bloodComponentOptions && (
+          <>
+          <div>Компонент крови</div>
           <Radio.Group onChange={onChangeComponentType} defaultValue="a">
             {bloodComponentOptions.map((component) => (
               <div key={component.id}>
@@ -137,6 +151,7 @@ const DonorForm = () => {
               </div>
             ))}
           </Radio.Group>
+          </>
         )}
 
         {breedOptions && (
