@@ -9,6 +9,8 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import donors
 from src.database import models
 from src.schemas.donors import Donor
+from src.schemas.location import create_city
+from src.schemas.pets import create_pet
 
 router = APIRouter(
     prefix="/donors",
@@ -30,7 +32,8 @@ async def index():
 async def store(data: donors.DonorCreate):
     try:
         donor: models.Donor = await SqlAlchemyRepository(db_manager.get_session, model=associative.Donor).create(data)
-        return donor
+
+        return donors.Donor(id=donor.id, pet=create_pet(donor.pet), city=create_city(donor.city))
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
