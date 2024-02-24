@@ -1,4 +1,5 @@
 import datetime
+import locale
 from http import HTTPStatus
 from typing import List
 
@@ -40,6 +41,8 @@ async def store(data: recipients.RecipientCreate):
 
 @router.get('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
 async def sort_recep_by_data():
+    locale.setlocale(locale.LC_TIME, 'ru_RU')
+
     try:
         recipient: list[Recipient] = await SqlAlchemyRepository(db_manager.get_session, model=Recipient).get_multi("end_actual_date")
         return [
@@ -48,7 +51,7 @@ async def sort_recep_by_data():
                 name=rec.pet.name,
                 blood_group=rec.pet.blood_group.blood_group.title,
                 place=rec.clinic.address,
-                deadline=rec.end_actual_date,
+                deadline=f"До {rec.end_actual_date.strftime('%d %B %Y')}",
                 reason=rec.reason
             ) for rec in recipient
             if rec.end_actual_date >= datetime.date.today()
