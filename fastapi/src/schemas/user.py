@@ -76,6 +76,10 @@ class UserUpdate(BaseModel):
     city_id: Optional[int] = None
 
 
+class UserChangePassword(BaseModel):
+    password: str
+
+
 def create_user(user):
     user = UserProfile(id=user.id, surname=user.surname, name=user.name, patronymic=user.patronymic,
                        username=user.username,

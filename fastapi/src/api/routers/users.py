@@ -44,7 +44,7 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.put("/user", response_model=user.UserUpdate)
+@router.put("/user", response_model=user.UserProfile)
 async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
     try:
         await auth.check_access_token(request)
@@ -55,6 +55,25 @@ async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depe
 
         user: models.User = await SqlAlchemyRepository(db_manager.get_session, model=models.User).update(data=data_user,
                                                                                                          id=request.state.user.id)
+        user = create_user(user)
+        return user
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.put("/user/change_password", response_model=user.UserProfile)
+async def update_user_password(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
+    try:
+        await auth.check_access_token(request)
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session,
+                                                       model=models.User).get_single(id=request.state.user.id)
+        if not user:
+            raise Exception()
+
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session, model=models.User).update(data=data_user,
+                                                                                                         id=request.state.user.id)
+        user = create_user(user)
         return user
 
     except Exception as e:
