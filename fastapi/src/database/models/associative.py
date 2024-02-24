@@ -64,7 +64,7 @@ class Pet(Base):
 
     breed: Mapped[str] = mapped_column(String)
 
-    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.json.id"))
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"))
     pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
 
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=False)
@@ -90,7 +90,7 @@ class PetBloodGroup(Base):
     blood_group_id: Mapped[int] = mapped_column(ForeignKey("blood_groups.id"), index=True)
     blood_group: Mapped["BloodGroup"] = relationship(uselist=False, lazy="selectin")
 
-    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.json.id"), nullable=False)
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
     pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
 
     rhesus_id: Mapped[int] = mapped_column(ForeignKey("rhesus.id"))
@@ -129,7 +129,7 @@ class Breed(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
-    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.json.id"), nullable=False)
+    pet_type_id: Mapped[int] = mapped_column(ForeignKey("pet_types.id"), nullable=False)
     pet_type: Mapped["PetType"] = relationship(uselist=False, lazy="selectin")
 
 

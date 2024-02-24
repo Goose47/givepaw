@@ -39,13 +39,13 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_blood_groups_title'), 'blood_groups', ['title'], unique=True)
-    op.create_table('pet_types.json',
+    op.create_table('pet_types',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('icon', sa.String(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_index(op.f('ix_pet_types_title'), 'pet_types.json', ['title'], unique=True)
+    op.create_index(op.f('ix_pet_types_title'), 'pet_types', ['title'], unique=True)
     op.create_table('regions',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('title', sa.String(), nullable=False),
@@ -80,7 +80,7 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('pet_type_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.json.id'], ),
+    sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_breeds_title'), 'breeds', ['title'], unique=True)
@@ -98,7 +98,7 @@ def upgrade() -> None:
     sa.Column('pet_type_id', sa.Integer(), nullable=False),
     sa.Column('rhesus_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['blood_group_id'], ['blood_groups.id'], ),
-    sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.json.id'], ),
+    sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.id'], ),
     sa.ForeignKeyConstraint(['rhesus_id'], ['rhesus.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -149,7 +149,7 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['avatar_id'], ['avatars.id'], ),
     sa.ForeignKeyConstraint(['blood_group_id'], ['pet_blood_groups.id'], ),
     sa.ForeignKeyConstraint(['breed_id'], ['breeds.id'], ),
-    sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.json.id'], ),
+    sa.ForeignKeyConstraint(['pet_type_id'], ['pet_types.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -221,8 +221,8 @@ def downgrade() -> None:
     op.drop_table('rhesus')
     op.drop_index(op.f('ix_regions_title'), table_name='regions')
     op.drop_table('regions')
-    op.drop_index(op.f('ix_pet_types_title'), table_name='pet_types.json')
-    op.drop_table('pet_types.json')
+    op.drop_index(op.f('ix_pet_types_title'), table_name='pet_types')
+    op.drop_table('pet_types')
     op.drop_index(op.f('ix_blood_groups_title'), table_name='blood_groups')
     op.drop_table('blood_groups')
     op.drop_index(op.f('ix_blood_components_title'), table_name='blood_components')

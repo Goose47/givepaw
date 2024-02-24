@@ -21,7 +21,7 @@ const RecipientItem = (props: RecipientProps) => {
             <div className="RecipientItem__Title">
               {recipient.name}
               <span>
-                <BsCalendar2DateFill /> {recipient.deadline}
+                <BsCalendar2DateFill /> {recipient.deadline.toLowerCase()}
               </span>
             </div>
           </div>
