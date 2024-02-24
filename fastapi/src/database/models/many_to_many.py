@@ -20,7 +20,10 @@ class DonorRecipient(Base):
     __tablename__ = "donors__recipient"
 
     donor_id: Mapped[int] = mapped_column(ForeignKey("donors.id"), nullable=False, primary_key=True)
+    donor: Mapped["Donor"] = relationship(lazy="selectin", uselist=False)
+
     recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), primary_key=True, nullable=False)
+    recipient: Mapped["Recipient"] = relationship(lazy="selectin", uselist=False)
 
     clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
     clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")

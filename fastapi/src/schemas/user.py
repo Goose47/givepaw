@@ -67,6 +67,15 @@ class UserProfile(BaseModel):
     user_config: UserConfig
 
 
+class UserUpdate(BaseModel):
+    surname: Optional[str] = None
+    name: Optional[str] = None
+    patronymic: Optional[str] = None
+    username: Optional[str] = None
+    email: Optional[str] = None
+    city_id: Optional[int] = None
+
+
 def create_user(user):
     user = UserProfile(id=user.id, surname=user.surname, name=user.name, patronymic=user.patronymic,
                        username=user.username,
