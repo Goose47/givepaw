@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -43,3 +43,27 @@ def create_pet(pet):
               name=pet.name, age=pet.age, weight=pet.weight, user=create_user(pet.user),
               vaccinations=create_vaccinations(pet.vaccinations))
     return pet
+
+
+class CreatePetRequest(BaseModel):
+    blood_group: PetBloodGroup
+    breed_id: id
+    pet_type_id: int
+    avatar_id: int
+    name: str
+    age: int
+    weight: float
+    user_id: Optional[int] = 1337
+    vaccinations: List[Vaccination]
+
+
+class MyPetResponse(BaseModel):
+    id: int
+    blood_group_title: str
+    breed_title: str
+    pet_type_title: str
+    avatar_path: str
+    name: str
+    age: int
+    weight: float
+    vaccinations: List[str]
