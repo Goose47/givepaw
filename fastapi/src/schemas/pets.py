@@ -45,6 +45,7 @@ def create_pet(pet):
     return pet
 
 
+"""
 class CreatePetRequest(BaseModel):
     blood_group: PetBloodGroup
     breed_id: id
@@ -53,8 +54,12 @@ class CreatePetRequest(BaseModel):
     name: str
     age: int
     weight: float
-    user_id: Optional[int] = 1337
+    user_id: Optional[int]
     vaccinations: List[Vaccination]
+
+    arbitrary_types_allowed = True
+
+"""
 
 
 class MyPetResponse(BaseModel):

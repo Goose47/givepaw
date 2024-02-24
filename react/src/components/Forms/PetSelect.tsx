@@ -40,7 +40,6 @@ const PetSelect = (props: PetSelectProps) => {
       </div>
     )
   );
-  return <></>;
 };
 
 export default PetSelect;

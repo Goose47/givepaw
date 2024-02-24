@@ -7,8 +7,9 @@ from src.database import models
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import user
-from src.schemas.location import Region, City
-from src.schemas.user import UserRole, Avatar, UserNetwork, UserConfig
+from src.schemas.location import Region, City, create_region, create_city
+from src.schemas.user import UserRole, Avatar, UserNetwork, UserConfig, create_user_role, create_avatar, \
+    create_user_network, create_user_config
 
 router = APIRouter(
     prefix="/users",
@@ -25,21 +26,14 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
 
             id=user_id)
 
-        user_role = UserRole(id=user_info.user_role.id, title=user_info.user_role.title)
+        user_role = create_user_role(user_info.user_role)
 
-        region = Region(id=user_info.city.region.id, title=user_info.city.region.title)
-        city = City(id=user_info.city.id, title=user_info.city.title, region=region)
+        city = create_city(user_info.city)
 
-        avatar = Avatar(id=user_info.avatar.id, photo_path=user_info.avatar.photo_path,
-                        photo_thumb=user_info.avatar.photo_thumb) if user_info.avatar else user_info.avatar
+        avatar = create_avatar(user_info.avatar)
 
-        user_network = UserNetwork(id=user_info.user_network.id, telegram=user_info.user_network.telegram,
-                                   vk=user_info.user_network.vk)
-
-        user_config = UserConfig(id=user_info.user_config.id,
-                                 phone_number_status=user_info.user_config.phone_number_status,
-                                 social_networks_status=user_info.user_config.social_networks_status,
-                                 email_status=user_info.user_config.email_status)
+        user_network = create_user_network(user_info.user_network)
+        user_config = create_user_config(user_info.user_config)
 
         return user.UserProfile(id=user_info.id, surname=user_info.surname, name=user_info.name,
                                 patronymic=user_info.patronymic, username=user_info.username,
