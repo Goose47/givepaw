@@ -81,7 +81,7 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
                 bool(rec.pet.breed_id == rec_filter.breed if rec_filter.breed else True) and
                 bool(rec.clinic.city.id == rec_filter.city if rec_filter.city else True)
                 )
-            ]
+            ][::-1]
 
         if rec_filter.offset:
             return result[:rec_filter.offset]
