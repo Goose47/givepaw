@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from pydantic import EmailStr, Field
-from fastapi import Form, UploadFile
+from fastapi import Form, UploadFile, File
 
 
 class RegisterUser(BaseModel):
