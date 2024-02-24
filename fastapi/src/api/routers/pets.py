@@ -90,4 +90,3 @@ async def create_pet(new_pet: Pet):
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
->> >> >> > dev
