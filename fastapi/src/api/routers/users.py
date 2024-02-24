@@ -53,8 +53,8 @@ async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depe
         if not user:
             raise Exception()
 
-        user = await SqlAlchemyRepository(db_manager.get_session, model=models.User).update(data=data_user,
-                                                                                            id=request.state.user.id)
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session, model=models.User).update(data=data_user,
+                                                                                                         id=request.state.user.id)
         return create_user(user)
 
     except Exception as e:
