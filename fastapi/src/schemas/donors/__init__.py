@@ -1,5 +1,8 @@
 from pydantic import BaseModel
 
+from src.schemas.location import City
+from src.schemas.pet import Pet
+
 
 class DonorCreate(BaseModel):
     pet_id: int
@@ -8,5 +11,5 @@ class DonorCreate(BaseModel):
 
 class Donor(BaseModel):
     id: int
-    pet_id: int
-    city_id: int
+    pet: Pet
+    city_id: City
