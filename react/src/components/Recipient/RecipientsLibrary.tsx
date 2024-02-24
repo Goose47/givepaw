@@ -3,6 +3,7 @@ import RecipientItem from "./RecipientItem";
 import { Link } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa6";
 import { Recipient } from "../Home/HomeRecipientsLibrary";
+import PetSelect from "../Forms/PetSelect";
 
 const RecipientsLibrary = () => {
 
@@ -58,7 +59,7 @@ const RecipientsLibrary = () => {
       <h1>Потребность в донорах</h1>
       <div className="RecipientsLibrary__Filters">
         <div className="RecipientsLibrary__Filter">
-
+          <PetSelect />
         </div>
       </div>
       <div className="RecipientsLibrary__Items">
