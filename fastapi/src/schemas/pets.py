@@ -53,23 +53,6 @@ def create_pet(pet):
     return pet
 
 
-"""
-class CreatePetRequest(BaseModel):
-    blood_group: PetBloodGroup
-    breed_id: id
-    pet_type_id: int
-    avatar_id: int
-    name: str
-    age: int
-    weight: float
-    user_id: Optional[int]
-    vaccinations: List[Vaccination]
-
-    arbitrary_types_allowed = True
-
-"""
-
-
 class CreatePet(BaseModel):
     blood_group_id: int
     breed_id: Optional[int]
@@ -124,10 +107,16 @@ class CreatePetModel(BaseModel):
 
 
 def create_pet_model(pet):
-    return CreatePetModel(blood_group_id=pet.blood_group_id, breed_id=pet.breed_id,
-                          breed=pet.breed, pet_type_id=pet.pet_type_id,
-                          avatar_id=pet.avatar_id, name=pet.name, age=pet.age,
-                          weight=pet.weight, user_id=pet.user_id)
+    return CreatePetModel(blood_group_id=pet.blood_group_id,
+                          breed_id=pet.breed_id,
+                          breed=pet.breed,
+                          pet_type_id=pet.pet_type_id,
+                          avatar_id=pet.avatar_id,
+                          name=pet.name,
+                          age=pet.age,
+                          weight=pet.weight,
+                          user_id=pet.user_id
+                          )
 
 
 class MyPetResponse(BaseModel):
