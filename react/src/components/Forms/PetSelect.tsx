@@ -8,7 +8,7 @@ const PetSelect = () => {
 
   useEffect(() => {
     dispatch(fetchPets() as any);
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
