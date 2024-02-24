@@ -19,6 +19,7 @@ export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data:
     data.city,
     data.image
   );
+  console.log(res);
   return res;
 });
 

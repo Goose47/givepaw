@@ -21,13 +21,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
-      () => {
-        setTimeout(() => {
-          window.location.replace('https://uvuv643.ru/profile');
-        }, 300);
-      }
-    );
+    dispatch(fetchRegister({username, email, phone, password, name, surname, patronymic, city, image }) as any);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
