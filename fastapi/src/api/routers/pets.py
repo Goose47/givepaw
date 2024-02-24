@@ -26,7 +26,8 @@ async def get_pet_types():
 
         return [pets.PetType(id=t.id,
                              title=t.title,
-                             icon=t.icon) for t in types]
+                             icon=t.icon,
+                             link=t.link) for t in types]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
