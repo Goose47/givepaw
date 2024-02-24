@@ -3,8 +3,19 @@
 
   &__Wrapper {
     position: relative;
-    height: 400px;
-    margin: 30px;
+    height: 550px;
+    margin: 20px;
+    margin-top: 60px;
+    margin-bottom: 80px;
+    border: $medium;
+
+    h1 {
+      font-size: 50px;
+    }
+    h2 {
+      font-size: 30px;
+    }
+
   }
 
   &__Background {
@@ -21,10 +32,14 @@
   }
 
   &__Content {
-    position: absolute;
-    bottom: 30px;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 30px;
+    background: $medium;
+    color: white;
+  }
+
+  &__Info{
+    display: flex;
+    padding-bottom: 100px;
   }
 
   &__Buttons {
