@@ -21,8 +21,10 @@ class RegisterUseCase:
         data.user_role_id = 1  # todo enum
 
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(data)
-        await SqlAlchemyRepository(db_manager.get_session, model=UserConfig).create(UserConfigCreateType())
-        await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(UserNetworksCreateType())
+        await SqlAlchemyRepository(db_manager.get_session, model=UserConfig)\
+            .create(UserConfigCreateType(user_id=user.id))
+        await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork)\
+            .create(UserNetworksCreateType(user_id=user.id))
 
         return UserType(
             id=user.id,
