@@ -72,6 +72,6 @@ async def get_my(request: Request, auth: Auth = Depends()):
 @router.post('/')
 async def create_pet(request: Request):
     try:
-        pass
+        huy = 'huy'
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
