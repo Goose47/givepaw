@@ -125,7 +125,7 @@ class MyPetResponse(BaseModel):
     blood_group_title: str
     breed_title: str
     pet_type_title: str
-    avatar_path: Optional[str]
+    avatar_link: Optional[str] = None
     name: str
     age: int
     weight: float
