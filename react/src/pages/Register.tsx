@@ -22,8 +22,8 @@ const Register = () => {
   const dispatch = useDispatch();
 
   const handleRegister = () => {
-    dispatch(fetchRegister({username, email,phone, password, name, surname,patronymic,city,image})as any)
-  }
+    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any);
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
@@ -132,7 +132,7 @@ const Register = () => {
           onChange={(e) => handleChange(e, setPasswordConfirmation)}
         />
 
-        <label htmlFor="city_id" >Ваш город</label>
+        <label htmlFor="city_id">Ваш город</label>
         <div className="Form__City">
           <CitySelect size="large" onChange={(e) => handleChange(e, setCity)}>
             <></>

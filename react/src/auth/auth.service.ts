@@ -3,7 +3,7 @@ import axios from 'axios';
 export const register = async (
   username: string,
   name: string,
-  phone: string, 
+  phone: string,
   surname: string,
   patronymic: string,
   email: string,
@@ -14,7 +14,7 @@ export const register = async (
   const formData = new FormData();
   formData.append('username', username);
   formData.append('name', name);
-  formData.append('phone',phone);
+  formData.append('phone', phone);
   formData.append('surname', surname);
   formData.append('patronymic', patronymic);
   formData.append('email', email);
