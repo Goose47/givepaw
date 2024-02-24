@@ -139,8 +139,10 @@ class Donor(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
     pet_id: Mapped[int] = mapped_column(ForeignKey("pets.id"), nullable=False)
+    pet: Mapped["Pet"] = relationship(uselist=False, lazy="selectin")
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
+    city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
 
 
 class Recipient(Base):
