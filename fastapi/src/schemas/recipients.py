@@ -10,7 +10,6 @@ from src.schemas.pets import Pet, create_pet
 
 class Recipient(BaseModel):
     id: int
-
     reason: str
     blood_component: BloodComponent
     blood_amount: int
