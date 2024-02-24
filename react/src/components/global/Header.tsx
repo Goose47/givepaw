@@ -21,7 +21,7 @@ const Header = () => {
           <div className="Header__Left">
             <Link to={'/'}>
               <div className="Header__Logo">
-                <img src="images/logo.svg" alt="Donor Search" />
+                <img src="images/givepaw_logo.svg" alt="Donor Search" />
               </div>
             </Link>
             <Link to="/haha">Как стать донором?</Link>
