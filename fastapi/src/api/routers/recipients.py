@@ -39,7 +39,7 @@ async def store(data: recipients.RecipientCreate):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.get('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
+@router.post('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
 async def sort_recep_by_data(rec_filter: Optional[RecipientFilter]):
     locale.setlocale(locale.LC_TIME, 'ru_RU')
 
