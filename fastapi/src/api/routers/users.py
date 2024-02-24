@@ -9,7 +9,7 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import user
 from src.schemas.location import Region, City, create_region, create_city
 from src.schemas.user import UserRole, Avatar, UserNetwork, UserConfig, create_user_role, create_avatar, \
-    create_user_network, create_user_config, UserUpdate
+    create_user_network, create_user_config, UserUpdate, create_user
 
 router = APIRouter(
     prefix="/users",
@@ -45,15 +45,17 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
 
 
 @router.put("/user", response_model=user.UserUpdate)
-async def update_user(user_id: int, request: Request, data_user: UserUpdate):
+async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
     try:
+        await auth.check_access_token(request)
         user: models.City = await SqlAlchemyRepository(db_manager.get_session,
-                                                       model=models.User).get_single(id=user_id)
+                                                       model=models.User).get_single(id=request.state.user.id)
         if not user:
             raise Exception()
 
-        city = await SqlAlchemyRepository(db_manager.get_session, model=models.City).update(data=data_city, id=city_id)
-        return create_city(city)
+        user = await SqlAlchemyRepository(db_manager.get_session, model=models.City).update(data=data_user,
+                                                                                            id=request.state.user.id)
+        return create_user(user)
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
