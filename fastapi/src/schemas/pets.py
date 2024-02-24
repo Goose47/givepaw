@@ -56,13 +56,13 @@ def create_pet(pet):
 class CreatePet(BaseModel):
     blood_group_id: int
     breed_id: Optional[int]
-    breed: Optional[str]
+    breed: Optional[str] = None
     pet_type_id: int
     avatar_id: Optional[int]
     name: str
     age: int
     weight: float
-    user_id: int
+    user_id: int = None
     vaccinations: Optional[List[PetVaccinationCreate]]
 
     avatar_id: Optional[int] = None
@@ -78,7 +78,8 @@ class CreatePet(BaseModel):
             age: int = Form(),
             weight: float = Form(),
             user_id: int = Form(),
-            vaccinations: list[PetVaccinationCreate] = Form([]),
+            # vaccinations: list[PetVaccinationCreate] = Form(),
+            vaccinations: list = Form(),
     ):
         return cls(
             blood_group_id=blood_group_id,
@@ -96,13 +97,13 @@ class CreatePet(BaseModel):
 class CreatePetModel(BaseModel):
     blood_group_id: int
     breed_id: Optional[int]
-    breed: Optional[str]
+    breed: Optional[str] = None
     pet_type_id: int
     avatar_id: Optional[int]
     name: str
     age: int
     weight: float
-    user_id: int
+    user_id: int = None
 
 
 def create_pet_model(pet):
