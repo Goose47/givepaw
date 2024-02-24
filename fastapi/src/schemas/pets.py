@@ -58,14 +58,13 @@ class CreatePet(BaseModel):
     breed_id: Optional[int]
     breed: Optional[str] = None
     pet_type_id: int
-    avatar_id: Optional[int]
+    avatar: Optional[str] = None
+    avatar_id: Optional[int] = None
     name: str
     age: int
     weight: float
     user_id: int = None
     vaccinations: Optional[List[PetVaccinationCreate]]
-
-    avatar_id: Optional[int] = None
     ## as_form не нужен
     @classmethod
     def as_form(
