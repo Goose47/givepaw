@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "title": "Сиамский",
+    "pet_type_id": 1
+  },
+  {
+    "id": 2,
+    "title": "Сфинкс",
+    "pet_type_id": 1
+  },
+  {
+    "id": 3,
+    "title": "Лабрадор",
+    "pet_type_id": 2
+  },
+  {
+    "id": 4,
+    "title": "Шпиц",
+    "pet_type_id": 2
+  },
+  {
+    "id": 5,
+    "title": "Королевский",
+    "pet_type_id": 3
+  },
+  {
+    "id": 6,
+    "title": "Малый",
+    "pet_type_id": 3
+  }
+]
