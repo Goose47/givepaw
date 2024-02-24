@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "title": "СПБ Больница №1",
+    "address": "ул. Садовая, 2",
+    "email": "spb1@gmail.com",
+    "phone": "+79999999999",
+    "city_id": 1
+  },
+  {
+    "id": 2,
+    "title": "В Больница №3",
+    "address": "ул. Выборгская, 133",
+    "email": "v1@gmail.com",
+    "phone": "+79993933999",
+    "city_id": 2
+  },
+  {
+    "id": 3,
+    "title": "МСК Больница №12",
+    "address": "ул. Розы, 292",
+    "email": "msc2@gmail.com",
+    "phone": "+79999939939",
+    "city_id": 3
+  },
+  {
+    "id": 4,
+    "title": "Х Больница №2020",
+    "address": "ул. Химки, 223",
+    "email": "x@gmail.com",
+    "phone": "+799993899999",
+    "city_id": 4
+  },
+  {
+    "id": 5,
+    "title": "Сам Больница №1",
+    "address": "ул. Самарская, 23",
+    "email": "sam@gmail.com",
+    "phone": "+79999939999",
+    "city_id": 5
+  },
+  {
+    "id": 6,
+    "title": "Т Больница №1",
+    "address": "ул. Толика, 2",
+    "email": "tol@gmail.com",
+    "phone": "+79998899999",
+    "city_id": 6
+  }
+]

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request, HTTPException
+from fastapi import APIRouter, Depends, Request, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
 from http import HTTPStatus
 
@@ -13,7 +13,8 @@ router = APIRouter(
 
 
 @router.post("/register")
-async def register(user: RegisterUser):
+async def register(user: RegisterUser, file: UploadFile):
+    return file.filename
     try:
         registered_user: UserType = await RegisterUseCase.register(user)
         access_token, refresh_token, user = await LoginUseCase.login(LoginUser(username=user.username, password=user.password))
