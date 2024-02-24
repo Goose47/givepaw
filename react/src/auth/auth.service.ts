@@ -9,7 +9,7 @@ export const register = async (
   email: string,
   password: string,
   city: number,
-  image: Blob
+  image: any
 ) => {
   const formData = new FormData();
   formData.append('username', username);
@@ -21,6 +21,7 @@ export const register = async (
   formData.append('password', password);
   formData.append('city_id', city.toString());
   formData.append('avatar', image);
+    console.log(image);
   try {
     const response = await axios.post('auth/register', formData, {
       headers: {
