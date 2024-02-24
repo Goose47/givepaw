@@ -56,7 +56,7 @@ async def refresh(request: Request, auth: Auth = Depends()):
 def format_jwt_response(access_token: str, refresh_token: str, user=None):
     response = JSONResponse(
         content={
-            'user': user.dict()
+            'user': dict(user) if user else None
         },
         status_code=HTTPStatus.OK
     )
