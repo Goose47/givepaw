@@ -22,4 +22,4 @@ class Donor(BaseModel):
 
 def create_donor(donor):
     return Donor(id=donor.id, pet=create_pet(donor.pet), city=create_city(donor.city),
-                 recipient=create_recipient(donor.recipient))
+                 recipient=create_recipient(donor.recipient) if donor.recipient else None)
