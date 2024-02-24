@@ -29,7 +29,7 @@ class Pet(BaseModel):
     age: int
     weight: float
     user: UserProfile
-    vaccinations: List[Vaccination]
+    vaccinations: List
     avatar_link: Optional[str] = None
 
 
@@ -129,4 +129,4 @@ class MyPetResponse(BaseModel):
     name: str
     age: int
     weight: float
-    vaccinations: Optional[List[str]] = []
+    vaccinations: List
