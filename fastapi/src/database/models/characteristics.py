@@ -16,7 +16,7 @@ class PetType(Base):
 
     @property
     def link(self):
-        return settings_app.APP_URL + '/assets/' + self.icon
+        return settings_app.APP_URL + '/files/assets/' + self.icon
 
 
 class BloodComponent(Base):
