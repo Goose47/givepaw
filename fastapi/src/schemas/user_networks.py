@@ -16,7 +16,7 @@ class UserNetworkCreate(BaseModel):
     id: int
     telegram: Optional[str] = None
     vk: Optional[str] = None
-    user_id: int
+    user_id: Optional[int] = None
 class UserNetworkUpdate(BaseModel):
     id: int
     telegram: Optional[str] = None

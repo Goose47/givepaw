@@ -27,8 +27,10 @@ async def index(request: Request, auth: Auth = Depends()):
 
 
 @router.post('/', response_model=user_networks.UserNetwork)
-async def store(data: user_networks.UserNetworkCreate):
+async def store(data: user_networks.UserNetworkCreate, request: Request, auth: Auth = Depends()):
+    await auth.check_access_token(request)
     try:
+        data.user_id = request.state.user.id
         un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(data)
         return un
 
@@ -37,7 +39,8 @@ async def store(data: user_networks.UserNetworkCreate):
 
 
 @router.put('/', response_model=user_networks.UserNetwork)
-async def store(data: user_networks.UserNetworkUpdate):
+async def store(data: user_networks.UserNetworkUpdate, request: Request, auth: Auth = Depends()):
+    await auth.check_access_token(request)
     try:
         un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).update(data, id=data.id)
         return un
