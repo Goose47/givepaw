@@ -1,8 +1,3 @@
-
-
-const CreatePetForm = () => {
-    
-
-}
+const CreatePetForm = () => {};
 
 export default CreatePetForm;
