@@ -29,7 +29,17 @@ async def login(user: LoginUser):
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
-    return format_jwt_response(access_token, refresh_token, user)
+    return format_jwt_response(access_token, refresh_token, UserType(
+            id=user.id,
+            username=user.username,
+            name=user.name,
+            surname=user.surname,
+            patronymic=user.patronymic,
+            email=user.email,
+            user_role_id=user.user_role_id,
+            city_id=user.city_id,
+            avatar_id=user.avatar_id
+        ))
 
 
 @router.post("/logout")
