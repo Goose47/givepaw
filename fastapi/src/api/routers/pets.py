@@ -98,6 +98,29 @@ async def get_my(request: Request, auth: Auth = Depends()):
 """new_pet: CreatePetRequest,"""
 
 
+@router.get('/get_all', response_model=List[MyPetResponse])
+async def get_all(request: Request):
+    try:
+        pets: List[models.Pet] = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet) \
+            .get_multi()
+
+        return [MyPetResponse(
+            id=pet.id,
+            blood_group_title=pet.blood_group.blood_group.title,
+            breed_title=pet.breed if pet.breed else pet._breed.title,
+            pet_type_title=pet.pet_type.title,
+            avatar_path=pet.avatar.photo_path,
+            name=pet.name,
+            age=pet.age,
+            weight=pet.weight,
+            vaccinations=[vac.title for vac in pet.vaccinations]
+
+        ) for pet in pets]
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
 @router.post('/', response_model=Pet)
 async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
