@@ -8,7 +8,6 @@ from src.database.models.associative import User
 class RegisterUseCase:
     @staticmethod
     async def register(data: RegisterUser) -> UserType:
-        data.user_role_id = 1 # todo enum
         if await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(username=data.username):
             raise Exception('This username is already taken')
 
@@ -16,6 +15,7 @@ class RegisterUseCase:
 
         hashed_password = crypt.hash(data.password)
         data.password = hashed_password
+        data.user_role_id = 1  # todo enum
 
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(data)
         return UserType(
