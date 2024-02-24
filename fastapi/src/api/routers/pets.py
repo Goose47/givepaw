@@ -135,7 +135,6 @@ async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depend
             vaccinations = await SqlAlchemyRepository(db_manager.get_session,
                                                       model=models.PetVaccination).bulk_create(
                 vaccinations)
-            pet.vaccinations = vaccinations
 
         return create_pet(pet)
     except Exception as e:
