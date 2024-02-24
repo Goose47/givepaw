@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, Request, HTTPException, UploadFile, Form
+from fastapi import APIRouter, Depends, Request, HTTPException, UploadFile, Form, File
 from fastapi.responses import JSONResponse
 from http import HTTPStatus
 
 from src.api.dependencies.auth import Auth
 from src.api.use_cases.auth import *
 from src.schemas.auth import *
-
+from typing import Optional, Annotated
 router = APIRouter(
     prefix="/auth",
     tags=["auth"],
@@ -13,7 +13,7 @@ router = APIRouter(
 
 
 @router.post("/register")
-async def register(user: RegisterUser = Depends(RegisterUser.as_form), avatar: Optional[UploadFile] = None):
+async def register(user: RegisterUser = Depends(RegisterUser.as_form), avatar: Optional[Annotated[bytes, File()]] = None):
     try:
         registered_user: UserType = await RegisterUseCase.register(user, avatar)
         access_token, refresh_token, user = await LoginUseCase.login(
