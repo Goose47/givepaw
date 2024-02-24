@@ -125,7 +125,12 @@ async def get_all(request: Request):
 
 
 @router.post('/', response_model=Pet)
-async def create_user_pet(request: Request, data: CreatePet, avatar: UploadFile = File(),  auth: Auth = Depends()):
+async def create_user_pet(
+        request: Request,
+        data: CreatePet = Depends(CreatePet.as_form),
+        avatar: UploadFile = File(),
+        auth: Auth = Depends()
+):
     await auth.check_access_token(request)
     try:
         if avatar:
