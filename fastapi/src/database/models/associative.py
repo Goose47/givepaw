@@ -115,8 +115,8 @@ class UserNetwork(Base):
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    telegram: Mapped[str] = mapped_column(String, default='-')
-    vk: Mapped[str] = mapped_column(String, default='-')
+    telegram: Mapped[str] = mapped_column(String, default=None)
+    vk: Mapped[str] = mapped_column(String, default=None)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     user: Mapped["User"] = relationship(uselist=False, lazy="selectin", overlaps="user_config")
