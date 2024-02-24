@@ -13,9 +13,7 @@ class RegisterUser(BaseModel):
     password: str
 
     city_id: int
-    avatar_id: Optional[int]
-    user_role_id: int
-
+    # todo avatar
 
 
 class UserType(BaseModel):
