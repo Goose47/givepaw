@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.get(
-    "/{pet_type_id}", response_model=list[schemas.PetBloodGroupSchema]
+    "/{pet_type_id}", response_model=list[schemas.PetBloodGroup]
 )
 async def get_blood_group(request: Request, pet_type_id: int):
     try:
@@ -23,7 +23,7 @@ async def get_blood_group(request: Request, pet_type_id: int):
             db_manager.get_session, model=models.PetBloodGroup
         ).get_multi(pet_type_id=pet_type_id)
         return [
-            schemas.PetBloodGroupSchema(
+            schemas.PetBloodGroup(
                 id=pet_blood_group.id,
                 blood_group=schemas.BloodGroup(
                     id=pet_blood_group.blood_group.id, title=pet_blood_group.blood_group.title

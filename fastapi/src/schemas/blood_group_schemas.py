@@ -11,7 +11,7 @@ class BloodGroup(BaseModel):
     title: str
 
 
-class PetBloodGroupSchema(BaseModel):
+class PetBloodGroup(BaseModel):
     id: int
     blood_group: BloodGroup
     rhesus_type: RhesusType

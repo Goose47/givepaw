@@ -6,7 +6,7 @@ from fastapi import APIRouter, HTTPException, Request, Depends
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
-from src.schemas import pet_type, vaccination, breed
+from src.schemas import pet_type, vaccination, breed,
 from src.database import models
 from src.schemas.pets import PetViewType
 
@@ -67,3 +67,9 @@ async def get_my(request: Request, auth: Auth = Depends()):
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.post('/')
+async def create_pet(request: Request):
+    try:
+

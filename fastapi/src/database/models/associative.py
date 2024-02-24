@@ -58,7 +58,7 @@ class Pet(Base):
 
     blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"))
     blood_group: Mapped["PetBloodGroup"] = relationship(uselist=False, lazy="selectin")
-
+    # PetBloodGroup
     breed_id: Mapped[int] = mapped_column(ForeignKey("breeds.id"), nullable=False)
     _breed: Mapped["Breed"] = relationship(uselist=False, lazy="selectin")
 

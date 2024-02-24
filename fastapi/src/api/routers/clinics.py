@@ -15,7 +15,7 @@ router = APIRouter(
 
 
 @router.get('/', response_model=List[schemas.Clinic])
-async def get_pet_types():
+async def get_all_clinics():
     try:
         clinics: List[models.Clinic] = await SqlAlchemyRepository(db_manager.get_session,
                                                                   model=models.Clinic).get_multi()
