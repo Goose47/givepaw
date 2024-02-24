@@ -68,11 +68,11 @@ export const createPet = async (
   bloodGroup: string,
   petName: string,
   bloodComponent: string,
-  user: any,
   image: string,
   age: string,
   weight: string,
-  vaccinations: string
+  vaccinations: string[],
+  user: any,
 ) => {
   try {
     const response = await axios.post('pets', {

@@ -20,10 +20,10 @@ const DonorForm = () => {
   const [bloodGroup, setBloodGroup] = useState('');
   const [petName, setPetName] = useState('');
   const [bloodComponent, setBloodComponent] = useState('');
-  const [image, setImage] = useState(undefined);
+  const [image, setImage] = useState('');
   const [age, setAge] = useState('');
   const [weight, setWeight] = useState('');
-  const [vaccinations, setVaccinations] = useState([]);
+  const [vaccinations, setVaccinations] = useState<any[]>([]);
   const [vaccinationsOptions, setVaccinationsOptions] = useState([]);
   const pets = useSelector(selectPets);
   const user = useSelector(selectUser);
