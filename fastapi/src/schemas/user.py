@@ -2,12 +2,16 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from src.schemas.location import City
+from src.schemas.location import City, create_city
 
 
 class UserRole(BaseModel):
     id: int
     title: str
+
+
+def create_user_role(user_role):
+    return UserRole(id=user_role.id, title=user_role.title)
 
 
 class Avatar(BaseModel):
@@ -28,11 +32,20 @@ class UserNetwork(BaseModel):
     vk: str
 
 
+def create_user_network(user_network):
+    return UserNetwork(id=user_network.id, telegram=user_network.telegram, vk=user_network.vk)
+
+
 class UserConfig(BaseModel):
     id: int
     phone_number_status: int
     social_networks_status: int
     email_status: int
+
+
+def create_user_config(user_config):
+    return UserConfig(id=user_config.id, phone_number_status=user_config.phone_number_status,
+                      social_networks_status=user_config.social_networks_status, email=user_config.email_status)
 
 
 class UserProfile(BaseModel):
@@ -48,8 +61,15 @@ class UserProfile(BaseModel):
     user_network: UserNetwork
     user_config: UserConfig
 
+
 def create_user(user):
-    user = UserProfile(id=user.id, surname=user.surname, name=)
+    user = UserProfile(id=user.id, surname=user.surname, name=user.name, patronymic=user.patronymic,
+                       username=user.username,
+                       email=user.email, user_role=create_user_role(user.user_role), city=create_city(user.city),
+                       avatar=create_avatar(user.avatar), user_network=create_user_network(user.user_network),
+                       user_config=create_user_config(user.user_config))
+    return user
+
 
 class UserConfigViewType(BaseModel):
     id: int

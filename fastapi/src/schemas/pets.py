@@ -4,8 +4,8 @@ from pydantic import BaseModel
 
 from src.schemas.blood_group import PetBloodGroup
 from src.schemas.breed import Breed, create_breed
-from src.schemas.user import Avatar, UserProfile, create_avatar
-from src.schemas.vaccination import Vaccination
+from src.schemas.user import Avatar, UserProfile, create_avatar, create_user
+from src.schemas.vaccination import Vaccination, create_vaccinations
 
 
 class PetType(BaseModel):
@@ -34,5 +34,6 @@ def create_pet_type(pet_type):
 def create_pet(pet):
     pet = Pet(id=pet.id, blood_group=pet.blood_group, breed=create_breed(pet.breed),
               pet_type=create_pet_type(pet.pet_type), avatar=create_avatar(pet.avatar),
-              name=pet.name, age=pet.age, weight=pet.weight, user=create_user(pet.user))
+              name=pet.name, age=pet.age, weight=pet.weight, user=create_user(pet.user),
+              vaccinations=create_vaccinations(pet.vaccinations))
     return pet
