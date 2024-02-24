@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from pydantic import EmailStr, Field
-from fastapi import Form, UploadFile
+from fastapi import Form, UploadFile, File
 
 
 class RegisterUser(BaseModel):
@@ -16,6 +16,7 @@ class RegisterUser(BaseModel):
 
     city_id: int
     user_role_id: Optional[int] = None
+    avatar: Optional[str] = None
     avatar_id: Optional[int] = None
 
     @classmethod
@@ -52,8 +53,8 @@ class UserType(BaseModel):
 
     user_role_id: int
     city_id: int
-    avatar_id: Optional[int]
-    avatar_link: Optional[str]
+    avatar_id: Optional[int] = None
+    avatar_link: Optional[str] = None
 
 
 class LoginUser(BaseModel):

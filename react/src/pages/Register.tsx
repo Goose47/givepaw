@@ -45,17 +45,13 @@ const Register = () => {
       setError(null)
       dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, avatar }) as any).then(
         () => {
+          alert("AAAAAAAA")
           setError(null)
-          // setTimeout(() => {
-          //   window.location.replace('https://uvuv643.ru/profile');
-          // }, 300);
+          setTimeout(() => {
+            window.location.replace('https://uvuv643.ru/profile');
+          }, 300);
         }
-      ).catch((error : any) => {
-        console.log(error)
-        if (error.response.status === 400) {
-          setError(error.response.data.detail)
-        }
-      });
+      );
 
     }
 
@@ -163,6 +159,7 @@ const Register = () => {
           </CitySelect>
         </div>
 
+        <div>Ваш аватар:</div>
         <UploadPhoto setBase={setAvatar}/>
 
         <Button type="primary" size="large" onClick={handleRegister}>

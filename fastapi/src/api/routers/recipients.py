@@ -93,7 +93,7 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
         raise e
 
 
-@router.get('/by_user_id', response_model=list[recipients.Recipient])
+@router.get('/{user_id}', response_model=list[recipients.Recipient])
 async def get_recipients_by_user_id(user_id: int):
     try:
         all_recipients: list[model.Recipient] = await SqlAlchemyRepository(db_manager.get_session,

@@ -14,4 +14,4 @@ class Clinic(BaseModel):
 
 def create_clinic(clinic):
     return Clinic(id=clinic.id, title=clinic.title, address=clinic.address, email=clinic.email, phone=clinic.phone,
-                  city=create_city(clinic.city))
+                  city=create_city(clinic.city) if clinic.city else None)

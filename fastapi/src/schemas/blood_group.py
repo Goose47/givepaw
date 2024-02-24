@@ -27,8 +27,9 @@ class PetBloodGroup(BaseModel):
 
 def create_pet_blood_group(pet_blood_group):
     return PetBloodGroup(id=pet_blood_group.id,
-                         blood_group=create_blood_group(pet_blood_group.blood_group),
-                         rhesus=create_rhesus_type(pet_blood_group.rhesus))
+                         blood_group=create_blood_group(
+                             pet_blood_group.blood_group) if pet_blood_group.blood_group else None,
+                         rhesus=create_rhesus_type(pet_blood_group.rhesus) if pet_blood_group.rhesus else None)
 
 
 class BloodComponent(BaseModel):
