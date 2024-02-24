@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group
 from src.schemas.breed import Breed, create_breed
 from src.schemas.user import Avatar, UserProfile, create_avatar, create_user
-from src.schemas.vaccination import Vaccination, create_vaccinations
+from src.schemas.vaccination import Vaccination, create_vaccinations, PetVaccinationCreate
 
 
 class PetType(BaseModel):
@@ -71,8 +71,8 @@ class CreatePet(BaseModel):
     name: str
     age: int
     weight: float
-    user_id: Optional[int]
-    vaccinations: Optional[List[Vaccination]]
+    user_id: int
+    vaccinations: Optional[List[PetVaccinationCreate]]
 
 
 class MyPetResponse(BaseModel):
