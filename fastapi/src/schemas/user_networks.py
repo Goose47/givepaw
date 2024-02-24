@@ -23,7 +23,7 @@ class UserNetworkUpdate(BaseModel):
 
 
 def create_user_network(un):
-    return Recipient(
+    return UserNetwork(
         id=un.id,
         telegram=un.telegram,
         vk=un.vk,

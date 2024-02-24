@@ -29,8 +29,8 @@ async def index(request: Request, auth: Auth = Depends()):
 @router.post('/', response_model=user_networks.UserNetwork)
 async def store(data: user_networks.UserNetworkCreate):
     try:
-        recipient: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(data)
-        return recipient
+        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(data)
+        return un
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
@@ -39,8 +39,8 @@ async def store(data: user_networks.UserNetworkCreate):
 @router.put('/', response_model=user_networks.UserNetwork)
 async def store(data: user_networks.UserNetworkUpdate):
     try:
-        recipient: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).update(data, id=data.id)
-        return recipient
+        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).update(data, id=data.id)
+        return un
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
