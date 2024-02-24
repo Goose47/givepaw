@@ -18,7 +18,9 @@ const PetSelect = (props: PetSelectProps) => {
 
   useEffect(() => {
     axios.get('pets/pet_types').then((response) => {
-      setPetTypes(response.data);
+      setPetTypes([{
+        id: null, title: "Не выбрано", icon: null,
+      }, ...response.data]);
     });
   }, []);
 
@@ -26,14 +28,16 @@ const PetSelect = (props: PetSelectProps) => {
     petTypes && (
       <div className="PetSelect">
         <Select
+          size="large"
           id={props.id}
-          defaultValue={1}
+          placeholder={"Выберите животное"}
+          defaultValue={null}
           onChange={props.onChange}
           options={petTypes.map((el) => {
             return {
               label: (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img
+                  { el.icon && <img
                     src={el.icon}
                     alt="#"
                     style={{
@@ -41,7 +45,7 @@ const PetSelect = (props: PetSelectProps) => {
                       height: 20,
                       marginRight: 15,
                     }}
-                  />{' '}
+                  /> }
                   {el.title}
                 </div>
               ),
