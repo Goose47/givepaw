@@ -61,6 +61,7 @@ const DonorForm = () => {
     };
   
     fetchBloodTypes();
+    
   };
 
   const onChangeBloodGroup = (e: RadioChangeEvent) => {
@@ -92,7 +93,10 @@ const DonorForm = () => {
     };
   
     fetchComponents();
-  },[breedOptions, bloodGroupOptions])
+    console.log(bloodGroupOptions);
+    console.log(breedOptions);
+  },[])
+
 
 
   const options: SelectProps['options'] = [];
