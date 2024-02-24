@@ -16,7 +16,6 @@ const CitySelect = (props: CitySelectProps) => {
 
   const handleSelectCity = (id: any) => {
     if (props.onChange) {
-      alert(id);
       props.onChange(id);
     }
     let targetCities = cities.filter((city) => city.id == id);

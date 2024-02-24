@@ -9,7 +9,8 @@ interface PetTypeInterface {
 }
 
 interface PetSelectProps {
-  onChange: (id: number) => void;
+  onChange: (id: number) => void,
+  id ?: string,
 }
 
 const PetSelect = (props: PetSelectProps) => {
@@ -23,8 +24,10 @@ const PetSelect = (props: PetSelectProps) => {
 
   return (
     petTypes && (
-      <div>
+      <div className="PetSelect">
         <Select
+          id={props.id}
+          defaultValue={1}
           onChange={props.onChange}
           options={petTypes.map((el) => {
             return {
