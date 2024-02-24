@@ -47,6 +47,7 @@ class RecipientForSortByData(BaseModel):
     place: str
     deadline: str
     reason: str
+    number_required: int
 
 
 class RecipientFilter(BaseModel):

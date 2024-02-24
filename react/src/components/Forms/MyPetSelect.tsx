@@ -10,12 +10,14 @@ const PetSelect = () => {
     dispatch(fetchPets() as any);
   }, [dispatch]);
 
-  return ( pets &&
-    <div>
-      {pets.map((item: any) => {
-        return <div>{item.name}</div>;
-      })}
-    </div>
+  return (
+    pets && (
+      <div>
+        {pets.map((item: any) => {
+          return <div>{item.name}</div>;
+        })}
+      </div>
+    )
   );
 };
 

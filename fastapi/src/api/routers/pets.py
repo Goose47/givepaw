@@ -6,8 +6,9 @@ from fastapi import APIRouter, HTTPException, Request, Depends
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
-from src.schemas import pets, vaccination, breed
+from src.schemas import pets, vaccination, breed, blood_group
 from src.database import models
+from src.schemas.blood_group import create_blood_component
 from src.schemas.pets import Pet
 
 from src.api.dependencies.auth import Auth
@@ -57,6 +58,18 @@ async def get_breeds(pet_type_id: int):
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
 
 
+@router.get('/blood_components', response_model=List[blood_group.BloodComponent])
+async def get_blood_components():
+    try:
+        components: List[models.BloodComponent] = await SqlAlchemyRepository(db_manager.get_session,
+                                                                             model=models.BloodComponent).get_multi()
+
+        return [create_blood_component(c) for c in components]
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
+
+
 @router.get('/my', response_model=List[Pet])
 async def get_my(request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
@@ -76,3 +89,4 @@ async def create_pet(new_pet: Pet):
         return added_pet
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+

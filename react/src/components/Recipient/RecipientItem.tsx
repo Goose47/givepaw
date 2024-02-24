@@ -28,7 +28,7 @@ const RecipientItem = (props: RecipientProps) => {
           <div className="RecipientItem__Place">
             <BsGeoAltFill /> {recipient.place}
           </div>
-          <div>Необходимо доноров: {recipient.numberRequired}</div>
+          <div>Необходимо доноров: {recipient.number_required}</div>
           <div>
             Группа крови: <Tag>{recipient.blood_group}</Tag>
           </div>

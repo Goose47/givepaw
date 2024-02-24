@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import RecipientItem from "./RecipientItem";
-import { Link } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa6";
-import { Recipient } from "../Home/HomeRecipientsLibrary";
-import PetSelect from "../Forms/PetSelect";
+import React, { useState } from 'react';
+import RecipientItem from './RecipientItem';
+import { Link } from 'react-router-dom';
+import { FaArrowRight } from 'react-icons/fa6';
+import { Recipient } from '../Home/HomeRecipientsLibrary';
+import PetSelect from '../Forms/PetSelect';
 
 const RecipientsLibrary = () => {
   const [recipients, setRecipients] = useState<Recipient[]>([
@@ -13,8 +13,7 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/101',
       blood_group: '4++',
       place: 'Каменоостровский проспект д. 56',
-      numberTaken: 4,
-      numberRequired: 7,
+      number_required: 7,
       deadline: 'до 30 февраля',
       reason: 'lorem ipsum dolor',
     },
@@ -24,8 +23,7 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/403',
       blood_group: '1-',
       place: 'Вяземский пер. 5-7',
-      numberTaken: 3,
-      numberRequired: 6,
+      number_required: 7,
       deadline: 'до 26 февраля',
       reason: 'lorem ipsum dolor',
     },
@@ -35,8 +33,7 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/200',
       blood_group: '4++',
       place: 'Каменоостровский проспект д. 56',
-      numberTaken: 4,
-      numberRequired: 7,
+      number_required: 7,
       deadline: 'до 30 февраля',
       reason: 'lorem ipsum dolor',
     },
@@ -46,14 +43,13 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/502',
       blood_group: '1-',
       place: 'Вяземский пер. 5-7',
-      numberTaken: 3,
-      numberRequired: 6,
+      number_required: 7,
       deadline: 'до 26 февраля',
       reason: 'lorem ipsum dolor',
     },
   ]);
 
-  const [petType, setPetType] = useState<number>()
+  const [petType, setPetType] = useState<number>();
 
   return (
     <div className="RecipientsLibrary">
