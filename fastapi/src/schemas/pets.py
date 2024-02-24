@@ -40,15 +40,15 @@ def create_pet_type(pet_type):
 def create_pet(pet):
     pet = Pet(
         id=pet.id,
-        blood_group=create_pet_blood_group(pet.blood_group),
-        _breed=create_breed(pet._breed),
+        blood_group=create_pet_blood_group(pet.blood_group) if pet.blood_group else None,
+        _breed=create_breed(pet._breed) if pet._breed else None,
         breed=pet.breed,
-        pet_type=create_pet_type(pet.pet_type),
+        pet_type=create_pet_type(pet.pet_type) if pet.pet_type else None,
         name=pet.name,
         age=pet.age,
         weight=pet.weight,
-        user=create_user(pet.user),
-        vaccinations=create_vaccinations(pet.vaccinations),
+        user=create_user(pet.user) if pet.user else None,
+        vaccinations=create_vaccinations(pet.vaccinations) if pet.vaccinations else None,
         avatar_link=pet.avatar_link,
     )
     return pet

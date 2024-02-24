@@ -44,7 +44,7 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.put("/user", response_model=user.UserUpdate)
+@router.put("/user")
 async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
     try:
         await auth.check_access_token(request)
@@ -55,7 +55,7 @@ async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depe
 
         user: models.User = await SqlAlchemyRepository(db_manager.get_session, model=models.User).update(data=data_user,
                                                                                                          id=request.state.user.id)
-        return create_user(user)
+        return user.id
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
