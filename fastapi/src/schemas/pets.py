@@ -25,7 +25,6 @@ class Pet(BaseModel):
     _breed: Optional[Breed]
     breed: Optional[str]
     pet_type: PetType
-    avatar: Avatar
     name: str
     age: int
     weight: float
