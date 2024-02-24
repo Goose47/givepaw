@@ -16,7 +16,7 @@ const MyPetSelect = () => {
     <div>
       {pets.length > 0 ? (
         <div className="Profile__Pets">
-          <h3>Мои питомцы: </h3>
+          <h3>Выберите своего питомца: </h3>
           <div className="Profile__Row">
             {pets.map((pet: Pet) => (
               <div className="Profile__Item">
