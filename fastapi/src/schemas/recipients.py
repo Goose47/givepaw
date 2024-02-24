@@ -47,11 +47,11 @@ class RecipientForSortByData(BaseModel):
     place: str
     deadline: str
     reason: str
+    number_required: int
 
 
 class RecipientFilter(BaseModel):
-    animal_type: Optional[int]
-    breed: Optional[int]
-    blood_group_title: Optional[int]
-    city: Optional[int]
-    offset: Optional[int]
+    animal_type: Optional[int] = None
+    breed: Optional[int] = None
+    city: Optional[int] = None
+    offset: Optional[int] = None

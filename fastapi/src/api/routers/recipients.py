@@ -1,7 +1,7 @@
 import datetime
 import locale
 from http import HTTPStatus
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException
 
@@ -39,24 +39,39 @@ async def store(data: recipients.RecipientCreate):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.get('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
-async def sort_recep_by_data(rec_filter: RecipientFilter):
+@router.post('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
+async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
+                             RecipientFilter(animal_type=None, breed=None, city=None, offset=None)):
     locale.setlocale(locale.LC_TIME, 'ru_RU')
 
     try:
-        recipient: list[Recipient] = await SqlAlchemyRepository(db_manager.get_session, model=Recipient).get_multi("end_actual_date")
+        recipient: list[Recipient] = await SqlAlchemyRepository(
+            db_manager.get_session,
+            model=Recipient).get_multi()
 
-        return [
+        result = [
             recipients.RecipientForSortByData(
+                id=rec.id,
                 avatar=rec.pet.avatar.photo_path,
                 name=rec.pet.name,
                 blood_group=rec.pet.blood_group.blood_group.title,
                 place=rec.clinic.address,
                 deadline=f"До {rec.end_actual_date.strftime('%d %B %Y')}",
-                reason=rec.reason
+                reason=rec.reason,
+                number_required=rec.donor_amount
             ) for rec in recipient
-            if rec.end_actual_date >= datetime.date.today()
-        ]
+
+            if (rec.end_actual_date >= datetime.date.today() and
+                bool(rec.pet.pet_type.id == rec_filter.animal_type if rec_filter.animal_type else True) and
+                bool(rec.pet.breed_id == rec_filter.breed if rec_filter.breed else True) and
+                bool(rec.clinic.city.id == rec_filter.city if rec_filter.city else True)
+                )
+            ]
+
+        if rec_filter.offset:
+            return result[:rec_filter.offset]
+
+        return result
 
     except Exception as e:
         raise e
