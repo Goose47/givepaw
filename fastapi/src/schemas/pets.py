@@ -56,6 +56,8 @@ class CreatePetRequest(BaseModel):
     user_id: Optional[int]
     vaccinations: List[Vaccination]
 
+    arbitrary_types_allowed = True
+
 
 class MyPetResponse(BaseModel):
     id: int
