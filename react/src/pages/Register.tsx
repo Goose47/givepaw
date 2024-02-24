@@ -23,14 +23,43 @@ const Register = () => {
 
   const [avatar, setAvatar] = useState<any>()
 
+  const [error, setError] = useState<any>()
+
   const handleRegister = () => {
-    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, avatar }) as any).then(
-      () => {
-        // setTimeout(() => {
-        //   window.location.replace('https://uvuv643.ru/profile');
-        // }, 300);
-      }
-    );
+
+    if (!username) {
+      setError("Не указано имя пользователя")
+    } else if (email) {
+      setError("Не указан адрес электронной почты")
+    } else if (phone) {
+      setError("Не указан адрес электронной почты")
+    } else if (!password || !passwordConfirmation) {
+      setError("Не указан пароль")
+    } else if (password !== passwordConfirmation) {
+      setError("Подтверждение пароля не совпадает")
+    } else if (!name || !surname || !patronymic) {
+      setError("Не указано ФИО")
+    } else if (!avatar) {
+      setError("Вы должны выбрать корректный аватар")
+    } else {
+      setError(null)
+      dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, avatar }) as any).then(
+        () => {
+          setError(null)
+          // setTimeout(() => {
+          //   window.location.replace('https://uvuv643.ru/profile');
+          // }, 300);
+        }
+      ).catch((error : any) => {
+        console.log(error)
+        if (error.response.status === 400) {
+          setError(error.response.data.detail)
+        }
+      });
+
+    }
+
+
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
@@ -143,6 +172,9 @@ const Register = () => {
         <div className="Form__Link">
           <Link to={'/login'}>Уже есть аккаунт? Войти</Link>
         </div>
+
+        { error && (<div className="Error">{ error }</div>)}
+
       </div>
     </div>
   );
