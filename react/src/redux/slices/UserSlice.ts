@@ -21,49 +21,49 @@ export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data:
 });
 
 const UserSlice = createSlice({
-    name: 'user',
-    initialState: {
-      user: {},
-      isLoading: false,
-      hasError: false,
+  name: 'user',
+  initialState: {
+    user: {},
+    isLoading: false,
+    hasError: false,
+  },
+  reducers: {
+    logout: (state) => {
+      state.user = {};
+      state.isLoading = false;
+      state.hasError = false;
     },
-    reducers: {
-      logout: (state) => {
-        state.user = {};
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchLogin.pending, (state, action) => {
+        state.isLoading = true;
+        state.hasError = false;
+      })
+      .addCase(fetchLogin.fulfilled, (state, action) => {
+        state.user = action.payload;
         state.isLoading = false;
         state.hasError = false;
-      },
-    },
-    extraReducers: (builder) => {
-      builder
-        .addCase(fetchLogin.pending, (state, action) => {
-          state.isLoading = true;
-          state.hasError = false;
-        })
-        .addCase(fetchLogin.fulfilled, (state, action) => {
-          state.user = action.payload;
-          state.isLoading = false;
-          state.hasError = false;
-        })
-        .addCase(fetchLogin.rejected, (state, action) => {
-          state.hasError = true;
-          state.isLoading = false;
-        })
-        .addCase(fetchRegister.pending, (state, action) => {
-          state.isLoading = true;
-          state.hasError = false;
-        })
-        .addCase(fetchRegister.fulfilled, (state, action) => {
-          state.user = action.payload;
-          state.isLoading = false;
-          state.hasError = false;
-        })
-        .addCase(fetchRegister.rejected, (state, action) => {
-          state.hasError = true;
-          state.isLoading = false;
-        });
-    },
-  });
+      })
+      .addCase(fetchLogin.rejected, (state, action) => {
+        state.hasError = true;
+        state.isLoading = false;
+      })
+      .addCase(fetchRegister.pending, (state, action) => {
+        state.isLoading = true;
+        state.hasError = false;
+      })
+      .addCase(fetchRegister.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.hasError = false;
+      })
+      .addCase(fetchRegister.rejected, (state, action) => {
+        state.hasError = true;
+        state.isLoading = false;
+      });
+  },
+});
 
 export const selectUser = (state: { user: { user: any } }) => state.user.user;
 export const selectLoading = (state: { user: { isLoading: any } }) => state.user.isLoading;
