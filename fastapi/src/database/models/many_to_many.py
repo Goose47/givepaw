@@ -1,7 +1,7 @@
 import datetime
 
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database.models import Base
 
@@ -19,6 +19,9 @@ class DonorRecipient(Base):
 
     donor_id: Mapped[int] = mapped_column(ForeignKey("donors.id"), nullable=False, primary_key=True)
     recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), nullable=False, primary_key=True)
+
+    clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
+    clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
 
     date: Mapped[datetime.date] = mapped_column()
     blood_amount: Mapped[float] = mapped_column()
