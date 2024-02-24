@@ -45,6 +45,7 @@ def create_pet(pet):
     return pet
 
 
+"""
 class CreatePetRequest(BaseModel):
     blood_group: PetBloodGroup
     breed_id: id
@@ -57,6 +58,8 @@ class CreatePetRequest(BaseModel):
     vaccinations: List[Vaccination]
 
     arbitrary_types_allowed = True
+
+"""
 
 
 class MyPetResponse(BaseModel):
