@@ -42,7 +42,7 @@ async def index(request: Request, auth: Auth = Depends()):
 async def update(data: user_networks.UserNetworkUpdate, request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
-        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).update(data, id=data.id)
+        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).update(data, id=request.state.user.id)
         return un
 
     except Exception as e:
