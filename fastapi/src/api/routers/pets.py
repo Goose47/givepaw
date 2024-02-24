@@ -132,8 +132,8 @@ async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depend
         if len(data.vaccinations) > 0:
             vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.vaccination_id,
                                            vaccination_date=v.vaccination_date) for v in data.vaccinations]
-            vaccinations = await SqlAlchemyRepository(db_manager.get_session,
-                                                      model=models.PetVaccination).bulk_create(
+            await SqlAlchemyRepository(db_manager.get_session,
+                                       model=models.PetVaccination).bulk_create(
                 vaccinations)
 
         return create_pet(pet)
