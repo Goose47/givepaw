@@ -27,9 +27,9 @@ const PetItem = (props: PetItemProps) => {
     </div>
     <div className="PetItem__Data">
       <div>{pet.name}</div>
-      <div>Возраст: {pet.age}</div>
-      <div>Вес: {pet.weight}</div>
-      <div>Порода: {pet.breed}</div>
+      <div className="Pet__Field"><span>Возраст</span><span>{pet.age}</span></div>
+      <div className="Pet__Field"><span>Вес</span><span>{pet.weight}</span></div>
+      <div className="Pet__Field"><span>Порода</span><span>{pet.breed}</span></div>
     </div>
   </div>;
 };
