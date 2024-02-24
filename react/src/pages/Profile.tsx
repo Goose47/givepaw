@@ -41,8 +41,8 @@ const Profile = () => {
               <h2>{user.username}</h2>
               <div>{user.name + ' ' + user.surname + ' ' + user.patronymic}</div>
               <div>{user.email}</div>
-              {user.user_network.telegram && <div>Telegram: {user.user_network.telegram}</div> }
-              {user.user_network.vk && <div>VK: {user.user_network.vk}</div>}
+              {user.user_network?.telegram && <div>Telegram: {user.user_network.telegram}</div> }
+              {user.user_network?.vk && <div>VK: {user.user_network.vk}</div>}
               <div className='Profile__Header__Buttons'>
                 <div>
                   <Link to={"/profile-edit"}>
