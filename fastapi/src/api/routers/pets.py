@@ -80,11 +80,11 @@ async def get_my(request: Request, auth: Auth = Depends()):
         return [MyPetResponse(
             id=pet.id,
             blood_group_title=pet.blood_group.blood_group.title,
-            breed_title=pet.breed.title,
+            breed_title=pet.breed,
             pet_type_title=pet.pet_type.title,
             avatar_path=pet.avatar.photo_path,
             name=pet.name,
-            age=pet.name,
+            age=pet.age,
             weight=pet.weight,
             vaccinations=[vac.title for vac in pet.vaccinations]
 
