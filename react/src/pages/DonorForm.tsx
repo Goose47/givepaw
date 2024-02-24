@@ -102,7 +102,7 @@ const DonorForm = () => {
             <div>Группа крови</div>
             <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
               {bloodGroupOptions.map((bloodGroup) => (
-                <Radio.Button key={bloodGroup.id} value={bloodGroup.id}>{bloodGroup.title}</Radio.Button>
+                <Radio.Button key={bloodGroup.id} value={bloodGroup.id}>{bloodGroup.blood_group.title}, {bloodGroup.rhesus.title}</Radio.Button>
               ))}
             </Radio.Group>
           </div>
