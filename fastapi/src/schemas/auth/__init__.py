@@ -13,7 +13,7 @@ class RegisterUser(BaseModel):
     password: str
 
     city_id: int
-    user_role_id: Optional[int]
+    user_role_id: Optional[int] = None
     # todo avatar
 
 
