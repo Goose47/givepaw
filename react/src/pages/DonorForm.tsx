@@ -13,6 +13,8 @@ import {
   getVaccines,
 } from '../service/data.service';
 import { selectUser } from '../redux/slices/UserSlice';
+import PetItem, { Pet } from '../components/global/PetItem';
+import MyPetSelect from '../components/Forms/MyPetSelect';
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState('');
@@ -90,6 +92,7 @@ const DonorForm = () => {
       const vaccinesOptions = await getVaccines();
       setVaccinationsOptions(vaccinationsOptions);
     };
+    console.log(pets);
 
     fetchData();
   }, []);
@@ -108,6 +111,7 @@ const DonorForm = () => {
       <div className="Form">
         <h1>Форма донора</h1>
 
+        <MyPetSelect />
         {animalTypeOptions && (
           <>
             <div>Тип животного</div>
