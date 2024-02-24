@@ -90,7 +90,7 @@ async def get_my(request: Request, auth: Auth = Depends()):
             name=pet.name,
             age=pet.age,
             weight=pet.weight,
-            vaccinations=[vac.title for vac in pet.vaccinations] if pet.vaccinations else None
+            vaccinations=[vac.title for vac in pet.vaccinations]
 
         ) for pet in my_pets]
 

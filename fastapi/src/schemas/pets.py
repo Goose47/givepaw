@@ -129,4 +129,4 @@ class MyPetResponse(BaseModel):
     name: str
     age: int
     weight: float
-    vaccinations: Optional[List[str]] = None
+    vaccinations: Optional[List[str]] = []
