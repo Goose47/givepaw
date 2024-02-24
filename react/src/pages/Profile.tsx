@@ -35,15 +35,16 @@ const Profile = () => {
         <div className="Profile__Info">
           <div className="Profile__Header">
             <div className="Profile__Header__Avatar">
-
               {/* <img src="https://http.cat/502" alt="#" /> */}
             </div>
             <div>
               <h2>{user.username}</h2>
               <div>{user.name + ' ' + user.surname + ' ' + user.patronymic}</div>
               <div>{user.email}</div>
+              {user.user_network.telegram && <div>Telegram: {user.user_network.telegram}</div> }
+              {user.user_network.vk && <div>VK: {user.user_network.vk}</div>}
               <div>
-                <Button type="link" onClick={handleLogout}>
+                <Button type="primary" onClick={handleLogout}>
                   Выйти из аккаунта
                 </Button>
               </div>
