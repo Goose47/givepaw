@@ -40,7 +40,8 @@ async def store(data: recipients.RecipientCreate):
 
 
 @router.post('/sort_by_data', response_model=list[recipients.RecipientForSortByData])
-async def sort_recep_by_data(rec_filter: Optional[RecipientFilter]):
+async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
+                             RecipientFilter(animal_type=None, breed=None, city=None, offset=None)):
     locale.setlocale(locale.LC_TIME, 'ru_RU')
 
     try:
