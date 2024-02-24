@@ -1,13 +1,13 @@
 import React from 'react';
 import '../scss/main.scss';
-import HomeHeader from '../components/Home/HomeHeader';
-import HomeRecipients from '../components/Home/HomeRecipients';
+import HomeInfo from '../components/Home/HomeInfo';
+import HomeRecipientsLibrary from '../components/Home/HomeRecipientsLibrary';
 
 const Home = () => {
   return (
     <div className="Home">
-      <HomeHeader />
-      <HomeRecipients />
+      <HomeInfo />
+      <HomeRecipientsLibrary />
     </div>
   );
 };

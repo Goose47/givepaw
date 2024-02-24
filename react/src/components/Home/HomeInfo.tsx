@@ -3,7 +3,7 @@ import { BiDonateBlood } from 'react-icons/bi';
 import { MdHealing } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-const HomeHeader = () => {
+const HomeInfo = () => {
   return (
     <div className="HomeHeader">
       <div className="HomeHeader__Wrapper">
@@ -45,4 +45,4 @@ const HomeHeader = () => {
   );
 };
 
-export default HomeHeader;
+export default HomeInfo;
