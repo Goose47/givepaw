@@ -47,7 +47,7 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
     try:
         recipient: list[Recipient] = await SqlAlchemyRepository(
             db_manager.get_session,
-            model=Recipient).get_multi("end_actual_date")
+            model=Recipient).get_multi(order="end_actual_date")
 
         result = [
             recipients.RecipientForSortByData(
