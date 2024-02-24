@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 import datetime
 
@@ -45,3 +47,11 @@ class RecipientForSortByData(BaseModel):
     place: str
     deadline: str
     reason: str
+
+
+class RecipientFilter(BaseModel):
+    animal_type = Optional[int]
+    breed = Optional[int]
+    blood_group_title = Optional[int]
+    city = Optional[int]
+    offset = Optional[int]
