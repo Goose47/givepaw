@@ -86,7 +86,7 @@ async def get_my(request: Request, auth: Auth = Depends()):
             blood_group_title=pet.blood_group.blood_group.title,
             breed_title=pet.breed if pet.breed else pet._breed.title,
             pet_type_title=pet.pet_type.title,
-            avatar_path=pet.avatar.photo_path,
+            avatar_link=pet.avatar_link,
             name=pet.name,
             age=pet.age,
             weight=pet.weight,
@@ -112,7 +112,7 @@ async def get_all(request: Request):
             blood_group_title=pet.blood_group.blood_group.title,
             breed_title=pet.breed if pet.breed else pet._breed.title,
             pet_type_title=pet.pet_type.title,
-            avatar_path="",  # todo: do avatars
+            avatar_link=pet.avatar_link,
             name=pet.name,
             age=pet.age,
             weight=pet.weight,
