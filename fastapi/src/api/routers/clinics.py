@@ -5,7 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
-from src.schemas import clinics_schemas as schemas
+from src.schemas import clinics as schemas, location
 from src.database.models import associative as models
 
 router = APIRouter(
@@ -27,8 +27,8 @@ async def get_all_clinics():
                                email=clinic.email,
                                city=schemas.City(id=clinic.city.id,
                                                  title=clinic.city.title,
-                                                 region=schemas.Region(id=clinic.city.region.id,
-                                                                       title=clinic.city.region.title))
+                                                 region=location.Region(id=clinic.city.region.id,
+                                                                        title=clinic.city.region.title))
                                ) for clinic in clinics]
 
     except Exception as e:

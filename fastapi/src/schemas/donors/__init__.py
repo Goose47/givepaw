@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 from src.schemas.location import City
-from src.schemas.pet import Pet
+from src.schemas.pets import Pet
 
 
 class DonorCreate(BaseModel):
