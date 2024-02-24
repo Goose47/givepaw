@@ -52,6 +52,8 @@ class RecipientForSortByData(BaseModel):
 class RecipientFilter(BaseModel):
     animal_type: Optional[int]
     breed: Optional[int]
-    blood_group_title: Optional[int]
     city: Optional[int]
     offset: Optional[int]
+
+    def get_fields(self):
+        return [(k, v) for k, v in self.__dict__.items() if v]
