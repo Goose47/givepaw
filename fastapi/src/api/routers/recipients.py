@@ -46,8 +46,7 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter]):
     try:
         recipient: list[Recipient] = await SqlAlchemyRepository(
             db_manager.get_session,
-            model=Recipient).get_multi("end_actual_date"
-                                       )
+            model=Recipient).get_multi("end_actual_date")
 
         result = [
             recipients.RecipientForSortByData(
@@ -61,8 +60,10 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter]):
             if (rec.end_actual_date >= datetime.date.today() and
                 bool(rec.pet.pet_type.id == rec_filter.animal_type if rec_filter.animal_type else True) and
                 bool(rec.pet.breed_id == rec_filter.breed if rec_filter.breed else True) and
-                bool(rec.clinic.city.id == rec_filter.city if rec_filter.city else True))
-        ]
+                bool(rec.clinic.city.id == rec_filter.city if rec_filter.city else True)
+                )
+            for rec in recipient]
+
         if rec_filter.offset:
             return result[:rec_filter.offset]
 
