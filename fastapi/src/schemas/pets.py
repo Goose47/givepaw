@@ -73,13 +73,13 @@ class CreatePetRequest(BaseModel):
 class CreatePet(BaseModel):
     blood_group_id: int
     breed_id: Optional[int]
-    breed: Optional[str]
+    breed: Optional[str] = None
     pet_type_id: int
     avatar_id: Optional[int]
     name: str
     age: int
     weight: float
-    user_id: int
+    user_id: int = None
     vaccinations: Optional[List[PetVaccinationCreate]]
 
     avatar_id: Optional[int] = None
@@ -114,13 +114,13 @@ class CreatePet(BaseModel):
 class CreatePetModel(BaseModel):
     blood_group_id: int
     breed_id: Optional[int]
-    breed: Optional[str]
+    breed: Optional[str] = None
     pet_type_id: int
     avatar_id: Optional[int]
     name: str
     age: int
     weight: float
-    user_id: int
+    user_id: int = None
 
 
 def create_pet_model(pet):
