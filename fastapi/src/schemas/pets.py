@@ -95,7 +95,8 @@ class CreatePet(BaseModel):
             age: int = Form(),
             weight: float = Form(),
             user_id: int = Form(),
-            vaccinations: list[PetVaccinationCreate] = Form(),
+            # vaccinations: list[PetVaccinationCreate] = Form(),
+            vaccinations: list = Form(),
     ):
         return cls(
             blood_group_id=blood_group_id,
