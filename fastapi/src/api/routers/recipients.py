@@ -57,7 +57,8 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
                 blood_group=rec.pet.blood_group.blood_group.title,
                 place=rec.clinic.address,
                 deadline=f"До {rec.end_actual_date.strftime('%d %B %Y')}",
-                reason=rec.reason
+                reason=rec.reason,
+                number_required=rec.donor_amount
             ) for rec in recipient
             if (rec.end_actual_date >= datetime.date.today() and
                 bool(rec.pet.pet_type.id == rec_filter.animal_type if rec_filter.animal_type else True) and

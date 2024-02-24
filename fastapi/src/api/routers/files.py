@@ -12,9 +12,9 @@ router = APIRouter(
 
 
 @router.get('/assets/{path}')
-async def get_cities(path: str):
+async def get_file(path: str):
     try:
-        image_path = settings_app.APP_PATH + '/storage/assets/' + path
+        image_path = settings_app.APP_PATH + '/storage/asdsets/' + path
         return FileResponse(image_path)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail={"cause": e.with_traceback})
