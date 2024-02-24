@@ -72,19 +72,19 @@ async def get_blood_components():
 
 @router.get('/my', response_model=List[MyPetResponse])
 async def get_my(request: Request, auth: Auth = Depends()):
-    await auth.check_access_token(request)
+    #await auth.check_access_token(request)
     try:
         my_pets: List[models.Pet] = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet) \
-            .get_multi(user_id=request.state.user.id)
+            .get_multi(user_id=17)
 
         return [MyPetResponse(
             id=pet.id,
-            blood_group_title=pet.blood_group.title,
-            breed_title=pet.breed.title,
+            blood_group_title=pet.blood_group.blood_group.title,
+            breed_title=pet.breed if pet.breed else pet._breed.title,
             pet_type_title=pet.pet_type.title,
             avatar_path=pet.avatar.photo_path,
             name=pet.name,
-            age=pet.name,
+            age=pet.age,
             weight=pet.weight,
             vaccinations=[vac.title for vac in pet.vaccinations]
 

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Button } from 'antd';
 import { Input } from 'antd';
 import { Select, Space } from 'antd';
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectPets } from '../redux/slices/PetsSlice';
 import PetSelect from '../components/Forms/PetSelect';
 import MyPetSelect from '../components/Forms/MyPetSelect';
+import { getAnimalTypes, getBloodTypes, getBreeds, getComponentTypes } from '../service/data.service';
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState('');
@@ -24,12 +25,39 @@ const DonorForm = () => {
   const pets = useSelector(selectPets);
   const navigate = useNavigate();
 
+  const [breedOptions, setBreedOptions] = useState<any[]>([]);
+  const [animalTypeOptions, setAnimalTypeOptions] = useState<any[]>([]);
+  const [bloodComponentOptions, setBloodComponentOptions] = useState<any[]>([]);
+  const [bloodGroupOptions, setBloodGroupOptions] = useState<any[]>([]);
+
   const handleSelectChange = (value: string[]) => {
     console.log(`selected ${value}`);
   };
 
+  const mapBreedOptions = () => {
+    let options = breedOptions.map((item) => ({
+      value: item.title,
+      label: item.title,
+    }));
+    return options;
+  };
+
   const onChange = (e: RadioChangeEvent) => {
     console.log(`radio checked:${e.target.value}`);
+  };
+
+  const onChangeAnimalType = (e: RadioChangeEvent) => {
+    setAnimalType(e.target.value);
+    setBreedOptions(getBreeds(animalType) as any);
+    setBloodGroupOptions(getBloodTypes(animalType) as any);
+  };
+
+  const onChangeBloodGroup = (e: RadioChangeEvent) => {
+    setBloodGroup(e.target.value);
+  };
+
+  const onChangeComponentType = (e: RadioChangeEvent) => {
+    setBloodComponent(e.target.value);
   };
 
   const handleImageChange = (event: any) => {
@@ -38,6 +66,13 @@ const DonorForm = () => {
   };
 
   const handleSend = () => {};
+
+  // useEffect(() => {
+  // setAnimalTypeOptions(getAnimalTypes() as any);
+  // setBloodComponentOptions(getComponentTypes() as any);
+  // setBreedOptions(getBreeds() as any);
+  // setBloodGroupOptions(getBloodTypes() as any);
+  // },[])
 
   const options: SelectProps['options'] = [];
 
@@ -58,39 +93,52 @@ const DonorForm = () => {
       <MyPetSelect />
       <div>
         <div>Тип животного</div>
-        <Radio.Group onChange={onChange} defaultValue="a">
-          <Radio.Button value="a">кот</Radio.Button>
-          <Radio.Button value="b">собака</Radio.Button>
-          <Radio.Button value="c">Beijing</Radio.Button>
-          <Radio.Button value="d">Chengdu</Radio.Button>
-        </Radio.Group>
+        {animalTypeOptions && (
+          <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
+            {animalTypeOptions.map((pet) => (
+              <div key={pet.id}>
+                <Radio.Button value={pet.id}>{pet.title}</Radio.Button>
+              </div>
+            ))}
+          </Radio.Group>
+        )}
 
         <div>Группа крови</div>
-        <Radio.Group onChange={onChange} defaultValue="a">
-          <Radio.Button value="a">Hangzhou</Radio.Button>
-          <Radio.Button value="b">Shanghai</Radio.Button>
-          <Radio.Button value="c">Beijing</Radio.Button>
-          <Radio.Button value="d">Chengdu</Radio.Button>
-        </Radio.Group>
+        {bloodGroupOptions && (
+          <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
+            {bloodGroupOptions.map((group) => (
+              <div key={group.id}>
+                <Radio.Button value={group.id}>{group.title}</Radio.Button>
+              </div>
+            ))}
+          </Radio.Group>
+        )}
 
         <div>Компонент крови</div>
-        <Radio.Group onChange={onChange} defaultValue="a">
-          <Radio.Button value="a">Hangzhou</Radio.Button>
-          <Radio.Button value="b">Shanghai</Radio.Button>
-          <Radio.Button value="c">Beijing</Radio.Button>
-          <Radio.Button value="d">Chengdu</Radio.Button>
-        </Radio.Group>
+        {bloodComponentOptions && (
+          <Radio.Group onChange={onChangeComponentType} defaultValue="a">
+            {bloodComponentOptions.map((component) => (
+              <div key={component.id}>
+                <Radio.Button value={component.id}>{component.title}</Radio.Button>
+              </div>
+            ))}
+          </Radio.Group>
+        )}
 
-        <Select
-          placeholder={'Порода'}
-          onChange={(e) => handleChange(e, setBreed)}
-          options={[
-            { value: 'jack', label: 'Jack' },
-            { value: 'lucy', label: 'Lucy' },
-            { value: 'Yiminghe', label: 'yiminghe' },
-            { value: 'disabled', label: 'Disabled', disabled: true },
-          ]}
-        />
+        {breedOptions && (
+          <Select
+            placeholder={'Порода'}
+            onChange={(e) => handleChange(e, setBreed)}
+            options={(() => mapBreedOptions) as any}
+            // options={[
+            //   { value: 'jack', label: 'Jack' },
+            //   { value: 'lucy', label: 'Lucy' },
+            //   { value: 'Yiminghe', label: 'yiminghe' },
+            //   { value: 'disabled', label: 'Disabled', disabled: true },
+            // ]}
+          />
+        )}
+
         <Input placeholder={'Кличка'} value={petName} type="text" onChange={(e) => handleChange(e, setPetName)} />
         <Input placeholder={'Возраст'} value={age} type="text" onChange={(e) => handleChange(e, setAge)} />
         <Input placeholder={'Вес'} value={weight} type="text" onChange={(e) => handleChange(e, setWeight)} />

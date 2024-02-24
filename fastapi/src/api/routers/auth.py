@@ -13,11 +13,10 @@ router = APIRouter(
 
 
 @router.post("/register")
-# async def register(user: RegisterUser, file: UploadFile):
-async def register(file: UploadFile, form_data: RegisterUser = Depends(RegisterUser.as_form)):
-    return 'kek'
+# async def register(user: RegisterUser):
+async def register(avatar: UploadFile, user: RegisterUser = Depends(RegisterUser.as_form)):
     try:
-        registered_user: UserType = await RegisterUseCase.register(user)
+        registered_user: UserType = await RegisterUseCase.register(user, avatar)
         access_token, refresh_token, user = await LoginUseCase.login(
             LoginUser(username=user.username, password=user.password))
     except Exception as e:
