@@ -10,11 +10,12 @@ from src.schemas.recipients import Recipient
 class DonorCreate(BaseModel):
     pet_id: int
     city_id: int
+    recipient_id: Optional[int] = None
 
 
 class Donor(BaseModel):
     id: int
     pet: Pet
     city: City
-    recipient: Optional[Recipient]
+    recipient: Optional[Recipient] = None
 
