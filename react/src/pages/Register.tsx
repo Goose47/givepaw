@@ -1,10 +1,10 @@
 import { Input } from 'antd';
-import type { UploadProps } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload } from 'antd';
+import { Button } from 'antd';
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CitySelect from '../components/global/CitySelect';
+import { useDispatch } from 'react-redux';
+import { fetchRegister } from '../redux/slices/UserSlice';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -15,29 +15,24 @@ const Register = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState<number>(-1);
   const [image, setImage] = useState(undefined);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleRegister = () => {
+    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
+      navigate(`/profile`)
+    );
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
   };
 
-  const props: UploadProps = {
-    name: 'file',
-    action: 'https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188',
-    headers: {
-      authorization: 'authorization-text',
-    },
-    onChange(info) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    setImage(file);
   };
 
   return (
@@ -127,18 +122,14 @@ const Register = () => {
 
         <label htmlFor="city_id">Ваш город</label>
         <div className="Form__City">
-          <CitySelect size="large">
+          <CitySelect size="large" onChange={(value: number) => setCity(value)}>
             <></>
           </CitySelect>
         </div>
 
-        <Upload {...props}>
-          <Button size="large" icon={<UploadOutlined />}>
-            Загрузите аватарку
-          </Button>
-        </Upload>
+        <input type="file" onChange={handleImageChange} />
 
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={handleRegister}>
           Зарегистрироваться
         </Button>
 

@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './slices/UserSlice';
+import petsReducer from './slices/PetsSlice';
+
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    pets: petsReducer,
   },
 });
 
