@@ -17,10 +17,18 @@ class RegisterUseCase:
         crypt = Crypt()
 
         hashed_password = crypt.hash(data.password)
-        data.password = hashed_password
         data.user_role_id = 1  # todo enum
 
-        user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(data)
+        user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(RegisterUser(
+            username=data.username,
+            name=data.name,
+            surname=data.surname,
+            patronymic=data.patronymic,
+            email=data.email,
+            password=hashed_password,
+            city_id=data.city_id,
+            user_role_id=1,
+        ))
         await SqlAlchemyRepository(db_manager.get_session, model=UserConfig)\
             .create(UserConfigCreateType(user_id=user.id))
         await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork)\

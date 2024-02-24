@@ -12,23 +12,34 @@ router = APIRouter(
 )
 
 
-@router.post("/register", response_model=UserType)
+@router.post("/register")
 async def register(user: RegisterUser):
     try:
-        user: UserType = await RegisterUseCase.register(user)
+        registered_user: UserType = await RegisterUseCase.register(user)
+        access_token, refresh_token, user = await LoginUseCase.login(LoginUser(username=user.username, password=user.password))
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
-    return user
+    return format_jwt_response(access_token, refresh_token, registered_user)
 
 
-@router.post("/login", response_model=UserType)
+@router.post("/login")
 async def login(user: LoginUser):
     try:
-        access_token, refresh_token = await LoginUseCase.login(user)
+        access_token, refresh_token, user = await LoginUseCase.login(user)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
-    return format_jwt_response(access_token, refresh_token)
+    return format_jwt_response(access_token, refresh_token, UserType(
+            id=user.id,
+            username=user.username,
+            name=user.name,
+            surname=user.surname,
+            patronymic=user.patronymic,
+            email=user.email,
+            user_role_id=user.user_role_id,
+            city_id=user.city_id,
+            avatar_id=user.avatar_id
+        ))
 
 
 @router.post("/logout")
@@ -52,11 +63,10 @@ async def refresh(request: Request, auth: Auth = Depends()):
     return format_jwt_response(access_token, refresh_token)
 
 
-def format_jwt_response(access_token: str, refresh_token: str):
+def format_jwt_response(access_token: str, refresh_token: str, user=None):
     response = JSONResponse(
         content={
-            'access_token': access_token,
-            'refresh_token': refresh_token,
+            'user': dict(user) if user else None
         },
         status_code=HTTPStatus.OK
     )
