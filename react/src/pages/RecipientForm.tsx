@@ -22,8 +22,9 @@ const RecipientForm = () => {
 
   return (
     <div>
-      <div>Форма реципиента</div>
       <div className="Form">
+
+        <h1>Форма реципиента</h1>
 
         <label htmlFor="email">Ваш email</label>
         <Input
@@ -65,7 +66,7 @@ const RecipientForm = () => {
           onChange={(e) => handleChange(e, setDeadline)}
         />
 
-        <Button onClick={handleSend}>Отправить заявку</Button>
+        <Button type="primary" onClick={handleSend}>Отправить заявку</Button>
 
       </div>
     </div>

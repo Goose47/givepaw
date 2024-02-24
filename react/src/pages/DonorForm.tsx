@@ -1,23 +1,20 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Button, Input, Radio, Select, Space } from 'antd';
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import type { RadioChangeEvent } from "antd";
+import { Button, Input, Radio, Select, Space } from "antd";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { selectPets } from '../redux/slices/PetsSlice';
-import type { SelectProps } from 'antd';
-import type { RadioChangeEvent } from 'antd';
-import { Flex } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
-import { getAnimalTypes, getBloodTypes, getBreeds, getComponentTypes } from '../service/data.service';
+import { useSelector } from "react-redux";
+import { selectPets } from "../redux/slices/PetsSlice";
+import { getAnimalTypes, getBloodTypes, getBreeds, getComponentTypes } from "../service/data.service";
 
 const DonorForm = () => {
-  const [animalType, setAnimalType] = useState('');
-  const [breed, setBreed] = useState('');
-  const [bloodGroup, setBloodGroup] = useState('');
-  const [petName, setPetName] = useState('');
-  const [bloodComponent, setBloodComponent] = useState('');
+  const [animalType, setAnimalType] = useState("");
+  const [breed, setBreed] = useState("");
+  const [bloodGroup, setBloodGroup] = useState("");
+  const [petName, setPetName] = useState("");
+  const [bloodComponent, setBloodComponent] = useState("");
   const [image, setImage] = useState(undefined);
-  const [age, setAge] = useState('');
-  const [weight, setWeight] = useState('');
+  const [age, setAge] = useState("");
+  const [weight, setWeight] = useState("");
   const [vaccinations, setVaccinations] = useState([]);
   const pets = useSelector(selectPets);
 
@@ -75,7 +72,7 @@ const DonorForm = () => {
   for (let i = 10; i < 36; i++) {
     options.push({
       label: i.toString(36) + i,
-      value: i.toString(36) + i,
+      value: i.toString(36) + i
     });
   }
 
@@ -85,9 +82,10 @@ const DonorForm = () => {
 
   return (
     <div>
-      <div>Форма донора</div>
 
-      <div>
+      <div className="Form">
+        <h1>Форма донора</h1>
+
         {animalTypeOptions && (
           <>
             <div>Тип животного</div>
@@ -100,52 +98,65 @@ const DonorForm = () => {
         )}
 
         {bloodGroupOptions && (
-          <>
+          <div className="Form__Element">
             <div>Группа крови</div>
             <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
               {bloodGroupOptions.map((bloodGroup) => (
                 <Radio.Button key={bloodGroup.id} value={bloodGroup.id}>{bloodGroup.title}</Radio.Button>
               ))}
             </Radio.Group>
-          </>
+          </div>
         )}
 
         {bloodComponentOptions && (
-          <>
+          <div className="Form__Element">
             <div>Компонент крови</div>
             <Radio.Group onChange={onChangeComponentType} defaultValue="a">
               {bloodComponentOptions.map((component) => (
                 <Radio.Button key={component.id} value={component.id}>{component.title}</Radio.Button>
               ))}
             </Radio.Group>
-          </>
+          </div>
         )}
 
-        {breedOptions && (
-          <Select
-            placeholder="Порода"
-            onChange={(e) => handleChange(e, setBreed)}
-            options={breedOptions.map((breed) => ({ value: breed.id, label: breed.title }))}
-          />
-        )}
+        <div className="Form__Element">
+          <label htmlFor="breed">Порода</label>
+          {breedOptions && (
+            <Select
+              id="breed"
+              placeholder="Порода"
+              onChange={(e) => handleChange(e, setBreed)}
+              options={breedOptions.map((breed) => ({ value: breed.id, label: breed.title }))}
+            />
+          )}
+        </div>
 
-        <Input placeholder="Кличка" value={petName} type="text" onChange={(e) => handleChange(e, setPetName)} />
-        <Input placeholder="Возраст" value={age} type="text" onChange={(e) => handleChange(e, setAge)} />
-        <Input placeholder="Вес" value={weight} type="text" onChange={(e) => handleChange(e, setWeight)} />
-        <input type="file" onChange={handleImageChange} />
+        <label htmlFor="name">Кличка</label>
+        <Input id="name" placeholder="Кличка" value={petName} type="text" onChange={(e) => handleChange(e, setPetName)} />
 
-        <Space style={{ width: '100%' }} direction="vertical">
+        <label htmlFor="age">Возраст</label>
+        <Input id="age" placeholder="Возраст" value={age} type="text" onChange={(e) => handleChange(e, setAge)} />
+
+        <label htmlFor="weight">Вес</label>
+        <Input id="weight" placeholder="Вес" value={weight} type="text" onChange={(e) => handleChange(e, setWeight)} />
+
+        <label htmlFor="file">Аватар животного</label>
+        <input id="file" type="file" onChange={handleImageChange} />
+
+        <Space style={{ width: "100%" }} direction="vertical">
           <Select
             mode="multiple"
             allowClear
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             placeholder="Прививки"
             defaultValue={vaccinations}
             onChange={handleSelectChange}
             options={options}
           />
         </Space>
-        <Button onClick={handleSend}>Отправить заявку</Button>
+
+        <Button type="primary" onClick={handleSend}>Отправить заявку</Button>
+
       </div>
     </div>
   );
