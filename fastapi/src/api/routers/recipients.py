@@ -17,6 +17,21 @@ router = APIRouter(
     tags=["recipients"],
 )
 
+months_dict = {
+    'January': 'Января',
+    'February': 'Февраля',
+    'March': 'Марта',
+    'April': 'Апреля',
+    'May': 'Мая',
+    'June': 'Июня',
+    'July': 'Июля',
+    'August': 'Августа',
+    'September': 'Сентября',
+    'October': 'Октября',
+    'November': 'Ноября',
+    'December': 'Декабря'
+}
+
 
 @router.get('/', response_model=List[recipients.Recipient])
 async def index():
@@ -56,7 +71,7 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
                 name=rec.pet.name,
                 blood_group=rec.pet.blood_group.blood_group.title,
                 place=rec.clinic.address,
-                deadline=f"До {rec.end_actual_date.strftime('%d %B %Y')}",
+                deadline=f"До {rec.end_actual_date.strftime('%d')} {months_dict[rec.end_actual_date.strftime('%B')]}",
                 reason=rec.reason,
                 number_required=rec.donor_amount
             ) for rec in recipient
