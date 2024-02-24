@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectPets } from '../redux/slices/PetsSlice';
 import PetSelect from '../components/Forms/PetSelect';
 import MyPetSelect from '../components/Forms/MyPetSelect';
-import { getAnimalTypes, getBloodTypes, getBreeds } from '../service/data.service';
+import { getAnimalTypes, getBloodTypes, getBreeds, getComponentTypes } from '../service/data.service';
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState('');
@@ -44,6 +44,20 @@ const DonorForm = () => {
 
   const onChange = (e: RadioChangeEvent) => {
     console.log(`radio checked:${e.target.value}`);
+  };
+
+  const onChangeAnimalType = (e: RadioChangeEvent) => {
+    setAnimalType(e.target.value);
+    setBreedOptions(getBreeds(animalType) as any);
+    setBloodGroupOptions(getBloodTypes(animalType) as any);
+  };
+
+  const onChangeBloodGroup = (e: RadioChangeEvent) => {
+    setBloodGroup(e.target.value);
+  };
+
+  const onChangeComponentType = (e: RadioChangeEvent) => {
+    setBloodComponent(e.target.value);
   };
 
   const handleImageChange = (event: any) => {
@@ -80,7 +94,7 @@ const DonorForm = () => {
       <div>
         <div>Тип животного</div>
         {animalTypeOptions && (
-          <Radio.Group onChange={onChange} defaultValue="a">
+          <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
             {animalTypeOptions.map((pet) => (
               <div key={pet.id}>
                 <Radio.Button value={pet.id}>{pet.title}</Radio.Button>
@@ -91,7 +105,7 @@ const DonorForm = () => {
 
         <div>Группа крови</div>
         {bloodGroupOptions && (
-          <Radio.Group onChange={onChange} defaultValue="a">
+          <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
             {bloodGroupOptions.map((group) => (
               <div key={group.id}>
                 <Radio.Button value={group.id}>{group.title}</Radio.Button>
@@ -102,7 +116,7 @@ const DonorForm = () => {
 
         <div>Компонент крови</div>
         {bloodComponentOptions && (
-          <Radio.Group onChange={onChange} defaultValue="a">
+          <Radio.Group onChange={onChangeComponentType} defaultValue="a">
             {bloodComponentOptions.map((component) => (
               <div key={component.id}>
                 <Radio.Button value={component.id}>{component.title}</Radio.Button>
