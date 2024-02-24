@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import RecipientForm from './pages/RecipientForm';
 import DonorForm from './pages/DonorForm';
 import Mockup from './pages/Mockup';
-import ScrollToTop from './util/ScrollToTop';
+import Profile from './pages/Profile';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 
@@ -52,6 +52,14 @@ function App() {
       element: (
         <RouterWrapper>
           <DonorForm />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/profile',
+      element: (
+        <RouterWrapper>
+          <Profile />
         </RouterWrapper>
       ),
     },

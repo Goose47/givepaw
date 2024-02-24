@@ -45,13 +45,13 @@ export const getClinics = async () => {
 };
 
 export const createPet = async () => {
-    try {
-      const response = await axios.post('pets');
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  try {
+    const response = await axios.post('pets');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export const createdDonor = async (pet_id: number, city_id: number, clinic_id: number) => {
   try {
@@ -62,8 +62,15 @@ export const createdDonor = async (pet_id: number, city_id: number, clinic_id: n
   }
 };
 
-export const createRecipient = async (reason: string, blood_component_id: number, blood_amount: number, donor_amount: number,
-    pet_id: number, clinic_id: number, end_actual_date: string) => {
+export const createRecipient = async (
+  reason: string,
+  blood_component_id: number,
+  blood_amount: number,
+  donor_amount: number,
+  pet_id: number,
+  clinic_id: number,
+  end_actual_date: string
+) => {
   try {
     const response = await axios.post('recipients');
     return response.data;
