@@ -19,32 +19,20 @@ router = APIRouter(
 async def index(request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
-        un: List[UserNetwork] = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork)\
+        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork) \
             .get_single(user_id=request.state.user.id)
         return create_user_network(un)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.post('/', response_model=user_networks.UserNetwork)
-async def store(data: user_networks.UserNetworkCreate, request: Request, auth: Auth = Depends()):
-    await auth.check_access_token(request)
-    try:
-        data.user_id = request.state.user.id
-        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(data)
-        return un
-
-    except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
-
-
 @router.put('/', response_model=user_networks.UserNetwork)
-async def store(data: user_networks.UserNetworkUpdate, request: Request, auth: Auth = Depends()):
+async def update(data: user_networks.UserNetworkUpdate, request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
-        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).update(data, id=data.id)
+        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork) \
+            .update(data=data, id=request.state.user.id)
         return un
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
-
