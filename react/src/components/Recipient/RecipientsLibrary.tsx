@@ -6,50 +6,9 @@ import { Recipient } from '../Home/HomeRecipientsLibrary';
 import PetSelect from '../Forms/PetSelect';
 
 const RecipientsLibrary = () => {
-  const [recipients, setRecipients] = useState<Recipient[]>([
-    {
-      id: 1,
-      name: 'Cat 1',
-      avatar: 'https://http.cat/101',
-      blood_group: '4++',
-      place: 'Каменоостровский проспект д. 56',
-      number_required: 7,
-      deadline: 'до 30 февраля',
-      reason: 'lorem ipsum dolor',
-    },
-    {
-      id: 2,
-      name: 'Cat 2',
-      avatar: 'https://http.cat/403',
-      blood_group: '1-',
-      place: 'Вяземский пер. 5-7',
-      number_required: 7,
-      deadline: 'до 26 февраля',
-      reason: 'lorem ipsum dolor',
-    },
-    {
-      id: 1,
-      name: 'Cat 1',
-      avatar: 'https://http.cat/200',
-      blood_group: '4++',
-      place: 'Каменоостровский проспект д. 56',
-      number_required: 7,
-      deadline: 'до 30 февраля',
-      reason: 'lorem ipsum dolor',
-    },
-    {
-      id: 2,
-      name: 'Cat 2',
-      avatar: 'https://http.cat/502',
-      blood_group: '1-',
-      place: 'Вяземский пер. 5-7',
-      number_required: 7,
-      deadline: 'до 26 февраля',
-      reason: 'lorem ipsum dolor',
-    },
-  ]);
 
-  const [petType, setPetType] = useState<number>();
+  const [recipients, setRecipients] = useState<Recipient[]>([]);
+  const [petType, setPetType] = useState<number>()
 
   return (
     <div className="RecipientsLibrary">

@@ -1,0 +1,50 @@
+.Profile {
+  padding-top: 100px;
+  padding-bottom: 400px;
+  h4 {
+    margin-top: 30px;
+    a {
+      color: $medium;
+      text-decoration: none;
+    }
+  }
+  &__Header {
+    display: flex;
+    align-items: center;
+    &__Avatar {
+      width: 100px;
+      height: 100px;
+      overflow: hidden;
+      border-radius: 50%;
+      margin-right: 15px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+  &__Pets {
+    margin-top: 30px;
+  }
+  &__Info {
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+  &__Row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  &__Item {
+    flex: 0 0 25%;
+    width: 25%;
+    margin-bottom: 15px;
+  }
+}
+
+.PetItem {
+
+}
