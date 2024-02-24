@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import RecipientForm from './pages/RecipientForm';
 import DonorForm from './pages/DonorForm';
 import Mockup from './pages/Mockup';
-import ScrollToTop from "./util/ScrollToTop";
+import ScrollToTop from './util/ScrollToTop';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 

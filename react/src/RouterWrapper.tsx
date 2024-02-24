@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import Header from './components/global/Header';
 import Footer from './components/global/Footer';
-import ScrollToTop from "./util/ScrollToTop";
+import ScrollToTop from './util/ScrollToTop';
 
 interface RouterWrapperProps {
   children: ReactNode;

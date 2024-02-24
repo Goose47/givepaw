@@ -47,7 +47,13 @@ const Register = () => {
         <Input id="name" placeholder={'Имя'} value={name} type="text" onChange={(e) => handleChange(e, setName)} />
 
         <label htmlFor="surname">Ваша фамилия</label>
-        <Input id="surname" placeholder={'Фамилия'} value={surname} type="text" onChange={(e) => handleChange(e, setSurname)} />
+        <Input
+          id="surname"
+          placeholder={'Фамилия'}
+          value={surname}
+          type="text"
+          onChange={(e) => handleChange(e, setSurname)}
+        />
 
         <label htmlFor="surname">Ваше отчество (необязательно)</label>
         <Input
@@ -59,16 +65,33 @@ const Register = () => {
         />
 
         <label htmlFor="surname">Ваш email</label>
-        <Input id="email" placeholder={'Email'} value={email} type="email" onChange={(e) => handleChange(e, setEmail)} />
+        <Input
+          id="email"
+          placeholder={'Email'}
+          value={email}
+          type="email"
+          onChange={(e) => handleChange(e, setEmail)}
+        />
 
         <label htmlFor="phone">Номер телефона</label>
-        <Input id="phone" placeholder={'Номер телефона'} value={phone} type="tel" onChange={(e) => handleChange(e, setPhone)} />
+        <Input
+          id="phone"
+          placeholder={'Номер телефона'}
+          value={phone}
+          type="tel"
+          onChange={(e) => handleChange(e, setPhone)}
+        />
 
         <label htmlFor="password">Ваш пароль</label>
         <Input placeholder={'Пароль'} value={password} type="text" onChange={(e) => handleChange(e, setPassword)} />
 
         <label htmlFor="password">Подтвердите пароль</label>
-        <Input placeholder={'Пароль'} value={passwordConfirmation} type="text" onChange={(e) => handleChange(e, setPasswordConfirmation)} />
+        <Input
+          placeholder={'Пароль'}
+          value={passwordConfirmation}
+          type="text"
+          onChange={(e) => handleChange(e, setPasswordConfirmation)}
+        />
 
         <Upload {...props}>
           <Button icon={<UploadOutlined />}>Загрузите аватарку</Button>
@@ -79,7 +102,6 @@ const Register = () => {
         <div className="Form__Link">
           <Link to={'/login'}>Уже есть аккаунт? Войти</Link>
         </div>
-
       </div>
     </div>
   );

@@ -2,23 +2,23 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { login as enter, register } from '../../auth/auth.service';
 
 export const fetchLogin = createAsyncThunk('user/fetchUser', async (login: any, password: any) => {
-    const res = await enter(login, password);
-    return res;
-  });
+  const res = await enter(login, password);
+  return res;
+});
 
-export const fetchRegister = createAsyncThunk('user/fetchRegister' , async (data: any) => {
-    const res = await register(
-        data.email,
-        data.phone,
-        data.password,
-        data.name,
-        data.surname,
-        data.patronymic,
-        data.city,
-        data.image);
-    return res;
-  });
-
+export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data: any) => {
+  const res = await register(
+    data.email,
+    data.phone,
+    data.password,
+    data.name,
+    data.surname,
+    data.patronymic,
+    data.city,
+    data.image
+  );
+  return res;
+});
 
 const UserSlice = createSlice({
   name: 'user',
@@ -32,7 +32,7 @@ const UserSlice = createSlice({
       state.user = {};
       state.isLoading = false;
       state.hasError = false;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -62,12 +62,12 @@ const UserSlice = createSlice({
         state.hasError = true;
         state.isLoading = false;
       });
-  }
+  },
 });
 
-export const selectUser = (state: { user: { user: any; }; }) => state.user.user;
-export const selectLoading = (state: { user: { isLoading: any; }; }) => state.user.isLoading;
-export const selectError = (state: { user: { hasError: any; }; }) => state.user.hasError;
+export const selectUser = (state: { user: { user: any } }) => state.user.user;
+export const selectLoading = (state: { user: { isLoading: any } }) => state.user.isLoading;
+export const selectError = (state: { user: { hasError: any } }) => state.user.hasError;
 export const { logout } = UserSlice.actions;
 
 export default UserSlice.reducer;
