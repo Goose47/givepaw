@@ -21,7 +21,8 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = () => {
-    dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
+    
+    dispatch(fetchRegister({username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
       navigate(`/profile`)
     );
   };
