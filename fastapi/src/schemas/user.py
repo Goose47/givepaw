@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 from src.schemas.location import City
@@ -36,6 +38,6 @@ class UserProfile(BaseModel):
     email: str
     user_role: UserRole
     city: City
-    avatar: Avatar
+    avatar: Optional[Avatar]
     user_network: UserNetwork
     user_config: UserConfig
