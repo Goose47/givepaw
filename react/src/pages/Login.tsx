@@ -42,7 +42,7 @@ const Login = () => {
           size="large"
           placeholder={'Пароль'}
           value={password}
-          type="text"
+          type="password"
           onChange={(e) => handleChange(e, setPassword)}
         />
         <Button size="large" type="primary" onClick={handleLogin}>
