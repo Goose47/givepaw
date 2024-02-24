@@ -10,3 +10,7 @@ class Breed(BaseModel):
     id: int
     title: str
     pet_type_id: int
+
+
+def create_breed(breed):
+    return Breed(id=breed.id, title=breed.title)

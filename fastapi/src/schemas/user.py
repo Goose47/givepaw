@@ -16,6 +16,12 @@ class Avatar(BaseModel):
     photo_thumb: str
 
 
+def create_avatar(avatar):
+    if avatar:
+        return Avatar(id=avatar.id, photo_path=avatar.photo_path, photo_thumb=avatar.photo_thumb)
+    return avatar
+
+
 class UserNetwork(BaseModel):
     id: int
     telegram: str
@@ -42,6 +48,8 @@ class UserProfile(BaseModel):
     user_network: UserNetwork
     user_config: UserConfig
 
+def create_user(user):
+    user = UserProfile(id=user.id, surname=user.surname, name=)
 
 class UserConfigViewType(BaseModel):
     id: int

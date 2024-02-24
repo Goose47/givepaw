@@ -26,3 +26,5 @@ class RecipientCreate(BaseModel):
     pet_id: int
     clinic_id: int
     end_actual_date: datetime.date
+
+
