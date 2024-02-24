@@ -54,6 +54,3 @@ class RecipientFilter(BaseModel):
     breed: Optional[int]
     city: Optional[int]
     offset: Optional[int]
-
-    def get_fields(self):
-        return [(k, v) for k, v in self.__dict__.items() if v]
