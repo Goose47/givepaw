@@ -67,6 +67,15 @@ class UserProfile(BaseModel):
     user_config: UserConfig
 
 
+class UserUpdate(BaseModel):
+    surname: Optional[str] = None
+    name: Optional[str] = None
+    patronymic: [str] = None
+    username: Optional[str] = None
+    email: Optional[str] = None
+    city_id: Optional[int] = None
+
+
 def create_user(user):
     user = UserProfile(id=user.id, surname=user.surname, name=user.name, patronymic=user.patronymic,
                        username=user.username,
@@ -106,13 +115,3 @@ class UserNetworksCreateType(BaseModel):
     vk: Optional[str] = None
 
     user_id: int
-
-
-class UserUpdate(BaseModel):
-    surname: Optional[str] = None
-    name: Optional[str] = None
-    patronymic: [str] = None
-    username: Optional[str] = None
-    email: Optional[str] = None
-    city_id: Optional[int] = None
-    # avatar: Optional[Avatar] = None
