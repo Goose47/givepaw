@@ -102,9 +102,9 @@ class UserConfig(Base):
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    phone_number_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
-    social_networks_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
-    email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+    phone_number_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False, default=1)
+    social_networks_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False, default=1)
+    email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False, default=1)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     user: Mapped["User"] = relationship(uselist=False, lazy="selectin", overlaps="user_config")
@@ -115,8 +115,8 @@ class UserNetwork(Base):
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    telegram: Mapped[str] = mapped_column(String)
-    vk: Mapped[str] = mapped_column(String)
+    telegram: Mapped[str] = mapped_column(String, default='-')
+    vk: Mapped[str] = mapped_column(String, default='-')
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     user: Mapped["User"] = relationship(uselist=False, lazy="selectin", overlaps="user_config")
