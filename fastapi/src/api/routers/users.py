@@ -37,7 +37,7 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
 
         return user.UserProfile(id=user_info.id, surname=user_info.surname, name=user_info.name,
                                 patronymic=user_info.patronymic, username=user_info.username,
-                                email=user_info.email, user_role=user_role, city=city, avatar=avatar,
+                                email=user_info.email, user_role=user_role, city=city, avatar_link=user_info.avatar_link,
                                 user_network=user_network, user_config=user_config)
 
     except Exception as e:

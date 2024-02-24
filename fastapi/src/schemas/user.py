@@ -62,7 +62,7 @@ class UserProfile(BaseModel):
     email: str
     user_role: UserRole
     city: City
-    avatar: Optional[Avatar]
+    avatar_link: str
     user_network: UserNetwork
     user_config: UserConfig
 
