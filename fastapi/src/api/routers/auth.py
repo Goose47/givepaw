@@ -21,8 +21,8 @@ async def register(user: RegisterUser):
     return user
 
 
-@router.post("/login")
-async def login(user: LoginUser, response_model=UserType):
+@router.post("/login", response_model=UserType)
+async def login(user: LoginUser):
     try:
         # access_token, refresh_token = await LoginUseCase.login(user)
         data = await LoginUseCase.login(user)
