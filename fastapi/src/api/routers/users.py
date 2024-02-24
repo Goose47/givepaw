@@ -31,7 +31,7 @@ async def get_my(request: Request, auth: Auth = Depends()):
     city = City(id=user_info.city.id, title=user_info.city.title, region=region)
 
     avatar = Avatar(id=user_info.avatar.id, photo_path=user_info.avatar.photo_path,
-                    photo_thumb=user_info.avatar.photo_thumb) if user_info.avatar else None
+                    photo_thumb=user_info.avatar.photo_thumb) if user_info.avatar else user_info.avatar
 
     user_network = UserNetwork(id=user_info.user_network.id, telegram=user_info.user_network.telegram,
                                vk=user_info.user_network.vk)
