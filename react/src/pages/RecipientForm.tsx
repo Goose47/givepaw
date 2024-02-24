@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Input } from 'antd';
 import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 const RecipientForm = () => {
   const [reason, setReason] = useState('');
@@ -43,7 +44,9 @@ const RecipientForm = () => {
           type="date"
           onChange={(e) => handleChange(e, setDeadline)}
         />
-        <Button>Отправить заявку</Button>
+        <Link to={'/profile'}>
+          <Button>Отправить заявку</Button>
+        </Link>
       </div>
     </div>
   );
