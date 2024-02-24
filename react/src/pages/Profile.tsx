@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser, selectUser } from '../redux/slices/UserSlice';
 import { useEffect } from 'react';
-import { selectPets } from '../redux/slices/PetsSlice';
+import { fetchPets, selectPets } from '../redux/slices/PetsSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -10,6 +10,7 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(fetchUser() as any);
+    dispatch(fetchPets() as any);
   }, [dispatch]);
 
   return (
@@ -18,9 +19,7 @@ const Profile = () => {
         <div>
           {/* todo: add photo */}
           <div>{user.username}</div>
-          <div>
-            ФИО: {user.name}+ + {user.surname} + {user.patronymic}
-          </div>
+          <div>ФИО: {user.name + ' ' + user.surname + ' ' + user.patronymic}</div>
           <div>Email: {user.email}</div>
         </div>
         {pets && (
