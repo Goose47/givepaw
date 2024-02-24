@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Input } from 'antd';
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
@@ -24,27 +24,28 @@ const RecipientForm = () => {
     <div>
       <div>Форма реципиента</div>
       <div>
+        <label htmlFor="email">Ваш email</label>
         <Input
-          placeholder={'Причина поиска животного-донора'}
+          placeholder={"Причина поиска животного-донора"}
           value={reason}
           type="text"
           onChange={(e) => handleChange(e, setReason)}
         />
         <Input
-          placeholder={'Ветеринарная клиника'}
+          placeholder={"Ветеринарная клиника"}
           value={veterinaryСlinic}
           type="text"
           onChange={(e) => handleChange(e, setVeterinaryСlinic)}
         />
         <Input
-          placeholder={'Количество крови'}
+          placeholder={"Количество крови"}
           value={bloodAmount}
           type="number"
           onChange={(e) => handleChange(e, setBloodAmount)}
         />
         <div>Дата, до которой поиск актуален</div>
         <Input
-          placeholder={'Дата, до которой поиск актуален'}
+          placeholder={"Дата, до которой поиск актуален"}
           value={deadline}
           type="date"
           onChange={(e) => handleChange(e, setDeadline)}

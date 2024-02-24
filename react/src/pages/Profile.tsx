@@ -21,7 +21,9 @@ const Profile = () => {
 
   const handleLogout = () => {
     axios.post('auth/logout', {}).then(response => {
-      navigate("/")
+      setTimeout(() => {
+        window.location.replace("https://uvuv643.ru/");
+      }, 500)
     })
   }
 
