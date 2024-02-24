@@ -113,4 +113,4 @@ async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depend
 
         return create_pet(pet)
     except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(data.vaccinations))
