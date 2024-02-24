@@ -4,6 +4,7 @@ from typing import List
 from sqlalchemy import ForeignKey, Integer, String, Float, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.database.models.base import Base
+from src.config.app.config import settings_app
 
 
 class User(Base):
@@ -33,6 +34,9 @@ class User(Base):
 
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
+    @property
+    def avatar_link(self):
+        return (settings_app.APP_URL + '/files/avatars/' + self.avatar.photo_path) if self.avatar_id else None
 
     user_network: Mapped["UserNetwork"] = relationship(uselist=False, lazy="selectin")
 
