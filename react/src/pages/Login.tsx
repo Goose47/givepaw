@@ -1,13 +1,14 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from 'antd';
 import { Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchLogin } from '../redux/slices/UserSlice';
 
 const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
@@ -15,7 +16,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    dispatch(fetchLogin({ username, password }) as any);
+    dispatch(fetchLogin({ username, password }) as any).then(navigate(`/profile`));
   };
 
   return (
@@ -40,11 +41,9 @@ const Login = () => {
           type="text"
           onChange={(e) => handleChange(e, setPassword)}
         />
-        <Link to="/profile">
-          <Button size="large" type="primary" onClick={handleLogin}>
-            Войти
-          </Button>
-        </Link>
+        <Button size="large" type="primary" onClick={handleLogin}>
+          Войти
+        </Button>
         <div className="Form__Link">
           <Link to={'/register'}> Нет аккаунта? Зарегистрироваться</Link>
         </div>

@@ -6,7 +6,6 @@ import { Recipient } from "../Home/HomeRecipientsLibrary";
 import PetSelect from "../Forms/PetSelect";
 
 const RecipientsLibrary = () => {
-
   const [recipients, setRecipients] = useState<Recipient[]>([
     {
       id: 1,
@@ -75,9 +74,8 @@ const RecipientsLibrary = () => {
           </div>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
 export default RecipientsLibrary;

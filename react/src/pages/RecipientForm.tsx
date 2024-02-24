@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Input } from 'antd';
 import { Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RecipientForm = () => {
   const [reason, setReason] = useState('');
@@ -10,9 +10,14 @@ const RecipientForm = () => {
   const [bloodComponent, setBloodComponent] = useState('');
   const [donorAmount, setDonorAmount] = useState('');
   const [deadline, setDeadline] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
+  };
+
+  const handleSend = () => {
+    // .then(navigate(`/profile`));
   };
 
   return (
@@ -44,9 +49,7 @@ const RecipientForm = () => {
           type="date"
           onChange={(e) => handleChange(e, setDeadline)}
         />
-        <Link to={'/profile'}>
-          <Button>Отправить заявку</Button>
-        </Link>
+        <Button onClick={handleSend}>Отправить заявку</Button>
       </div>
     </div>
   );
