@@ -10,6 +10,7 @@ interface PetTypeInterface {
 
 interface PetSelectProps {
   onChange: (id: number) => void;
+  id?: string;
 }
 
 const PetSelect = (props: PetSelectProps) => {
@@ -17,21 +18,36 @@ const PetSelect = (props: PetSelectProps) => {
 
   useEffect(() => {
     axios.get('pets/pet_types').then((response) => {
-      setPetTypes(response.data);
+      setPetTypes([{
+        id: null, title: "Не выбрано", icon: null,
+      }, ...response.data]);
     });
   }, []);
 
   return (
     petTypes && (
-      <div>
+      <div className="PetSelect">
         <Select
+          size="large"
+          id={props.id}
+          placeholder={"Выберите животное"}
+          defaultValue={null}
           onChange={props.onChange}
           options={petTypes.map((el) => {
             return {
               label: (
-                <>
-                  <img src={el.icon} alt="#" /> {el.title}
-                </>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  { el.icon && <img
+                    src={el.icon}
+                    alt="#"
+                    style={{
+                      width: 20,
+                      height: 20,
+                      marginRight: 15,
+                    }}
+                  /> }
+                  {el.title}
+                </div>
               ),
               value: el.id,
             };

@@ -44,10 +44,26 @@
 .ant-select-selector {
   max-width: 150px;
 }
+.ant-select-selector, .ant-select-selection-search, .ant-select-selection-search-input  {
+  width: 100% !important;
+  max-width: 100% !important;
+}
 
 @media (max-width: 768px) {
   .ant-select-dropdown {
     width: calc(100% - 30px) !important;
     left: 15px !important;
   }
+}
+
+.City__Select {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.Spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
 }

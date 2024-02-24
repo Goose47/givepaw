@@ -15,14 +15,18 @@ const Register = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
-  const [city, setCity] = useState<number>(-1);
+  const [city, setCity] = useState<number>(1);
   const [image, setImage] = useState(undefined);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleRegister = () => {
     dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, image }) as any).then(
-      navigate(`/profile`)
+      () => {
+        setTimeout(() => {
+          window.location.replace('https://uvuv643.ru/profile');
+        }, 300);
+      }
     );
   };
 
@@ -106,7 +110,7 @@ const Register = () => {
           id="password"
           placeholder={'Пароль'}
           value={password}
-          type="text"
+          type="password"
           onChange={(e) => handleChange(e, setPassword)}
         />
 
@@ -116,7 +120,7 @@ const Register = () => {
           id="passowrd-confirm"
           placeholder={'Пароль'}
           value={passwordConfirmation}
-          type="text"
+          type="password"
           onChange={(e) => handleChange(e, setPasswordConfirmation)}
         />
 

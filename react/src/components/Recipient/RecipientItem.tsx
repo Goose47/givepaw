@@ -2,6 +2,7 @@ import React from 'react';
 import { Recipient } from '../Home/HomeRecipientsLibrary';
 import { Button, Tag } from 'antd';
 import { BsCalendar2DateFill, BsGeoAltFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 interface RecipientProps {
   recipient: Recipient;
@@ -35,7 +36,17 @@ const RecipientItem = (props: RecipientProps) => {
           <div>{recipient.reason}</div>
         </div>
         <div className="RecipientItem__Footer">
-          <Button type="primary">Откликнуться</Button>
+          <Link
+            to="/respond-form"
+            state={{
+              bloodGroup: recipient.blood_group,
+              id: recipient.id,
+              place: recipient.place,
+              deadline: recipient.deadline,
+            }}
+          >
+            <Button type="primary">Откликнуться</Button>
+          </Link>
         </div>
       </div>
     </div>

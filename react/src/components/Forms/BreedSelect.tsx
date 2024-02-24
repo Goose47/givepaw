@@ -7,28 +7,39 @@ interface BreedTypeInterface {
   title: string;
 }
 
-interface BreedSelectProps {
+interface PetSelectProps {
   onChange: (id: number) => void;
-  petType: number;
+  id?: string;
+  petType?: number
+  value?: number
 }
 
-const BreedSelect = (props: BreedSelectProps) => {
+const BreedSelect = (props: PetSelectProps) => {
   const [breedTypes, setBreedTypes] = useState<BreedTypeInterface[]>([]);
 
   useEffect(() => {
-    axios.get('/pets/breeds/' + props.petType).then((response) => {
+    axios.get('pets/breeds/' + props.petType).then((response) => {
       setBreedTypes(response.data);
     });
-  }, []);
+  }, [props.petType]);
 
   return (
     breedTypes && (
-      <div>
+      <div className="PetSelect">
         <Select
+          size="large"
+          id={props.id}
+          value={props.value}
+          placeholder={"Выберите породу"}
+          defaultValue={null}
           onChange={props.onChange}
           options={breedTypes.map((el) => {
             return {
-              label: <>{el.title}</>,
+              label: (
+                <div>
+                  {el.title}
+                </div>
+              ),
               value: el.id,
             };
           })}
@@ -36,7 +47,6 @@ const BreedSelect = (props: BreedSelectProps) => {
       </div>
     )
   );
-  return <></>;
 };
 
 export default BreedSelect;

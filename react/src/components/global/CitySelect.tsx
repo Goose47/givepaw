@@ -16,25 +16,32 @@ const CitySelect = (props: CitySelectProps) => {
 
   const handleSelectCity = (id: any) => {
     if (props.onChange) {
-      alert(id);
       props.onChange(id);
     }
-    let targetCities = cities.filter((city) => city.id == id);
+    let targetCities = cities.filter((city) => city.id == id && id);
     if (targetCities.length) {
       let targetCity = targetCities[0];
       localStorage.setItem('city', targetCity.title);
       localStorage.setItem('cityId', targetCity.id);
-      localStorage.setItem('region', targetCity.region.title);
+      localStorage.setItem('region', targetCity.region?.title);
       setSelectedCity(true);
     }
   };
 
   useEffect(() => {
     setSelectedCity(!!localStorage.getItem('city') && !!localStorage.getItem('region'));
+    try {
+      if (props.onChange && localStorage.getItem('cityId')) {
+        props.onChange(JSON.parse(localStorage.getItem('cityId') as string))
+      }
+    } catch (e) {}
   }, []);
 
   const handleShowSelect = () => {
     setSelectedCity(false);
+    if (props.onChange) {
+      props.onChange(0);
+    }
   };
 
   useEffect(() => {
@@ -42,14 +49,17 @@ const CitySelect = (props: CitySelectProps) => {
       .get('cities/')
       .then((response) => {
         if (response.status === 200 && response.data) {
-          setCities(response.data);
+          setCities([{
+            id: null,
+            title: "Не выбрано"
+          }, ...response.data]);
         }
       })
       .catch((error) => console.error(error));
   }, []);
 
   return (
-    <>
+    <div className="City__Select">
       {selectedCity ? (
         <span onClick={handleShowSelect} className="Header__Region--Selected">
           <BsGeoAltFill />
@@ -78,7 +88,7 @@ const CitySelect = (props: CitySelectProps) => {
           />
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -16,7 +16,11 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    dispatch(fetchLogin({ username, password }) as any).then(navigate(`/profile`));
+    dispatch(fetchLogin({ username, password }) as any).then(() => {
+      setTimeout(() => {
+        window.location.replace('https://uvuv643.ru/profile');
+      }, 300);
+    });
   };
 
   return (
@@ -38,7 +42,7 @@ const Login = () => {
           size="large"
           placeholder={'Пароль'}
           value={password}
-          type="text"
+          type="password"
           onChange={(e) => handleChange(e, setPassword)}
         />
         <Button size="large" type="primary" onClick={handleLogin}>

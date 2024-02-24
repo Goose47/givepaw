@@ -20,8 +20,7 @@ export const register = async (
   formData.append('email', email);
   formData.append('password', password);
   formData.append('city_id', city.toString());
-  formData.append('avatar', image);
-  console.log(image);
+  formData.append('file', image);
   try {
     const response = await axios.post('auth/register', formData, {
       headers: {

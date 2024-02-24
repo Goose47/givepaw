@@ -11,6 +11,7 @@ import DonorForm from './pages/DonorForm';
 import Mockup from './pages/Mockup';
 import Profile from './pages/Profile';
 import RecipientsLibrary from './components/Recipient/RecipientsLibrary';
+import RespondForm from './pages/RespondForm';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 axios.defaults.withCredentials = true;
@@ -46,6 +47,14 @@ function App() {
       element: (
         <RouterWrapper>
           <RecipientForm />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/respond-form',
+      element: (
+        <RouterWrapper>
+          <RespondForm />
         </RouterWrapper>
       ),
     },
