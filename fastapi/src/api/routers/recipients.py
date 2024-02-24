@@ -50,6 +50,7 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter]):
 
         result = [
             recipients.RecipientForSortByData(
+                id=rec.id,
                 avatar=rec.pet.avatar.photo_path,
                 name=rec.pet.name,
                 blood_group=rec.pet.blood_group.blood_group.title,
