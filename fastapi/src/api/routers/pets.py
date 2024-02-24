@@ -132,13 +132,14 @@ async def create_user_pet(
 ):
     # await auth.check_access_token(request)
     try:
-        # if avatar:
-        #     storage = Storage()
-        #     path = storage.save(avatar, 'avatars')
-        #     avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
-        #         .create(AvatarCreate(photo_path=path, photo_thumb=path))
+        avatar = None
+        if data.avatar:
+            storage = Storage()
+            path = storage.save_from_base64(data.avatar, 'avatars')
+            avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
+                .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
-        # data.avatar_id = avatar.id if avatar else None
+        data.avatar_id = avatar.id if avatar else None
         # data.user_id = request.state.user.id
         data.user_id = 17
         pet_data = create_pet_model(data)
@@ -148,9 +149,8 @@ async def create_user_pet(
         if len(data.vaccinations):
             vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.vaccination_id,
                                            vaccination_date=v.vaccination_date) for v in data.vaccinations]
-            vaccinations = await SqlAlchemyRepository(db_manager.get_session,
-                                                      model=models.PetVaccination).bulk_create(
-                vaccinations)
+            vaccinations = await SqlAlchemyRepository(db_manager.get_session, model=models.PetVaccination)\
+                .bulk_create(vaccinations)
 
         return create_pet(pet)
     except Exception as e:
