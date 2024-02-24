@@ -50,7 +50,7 @@ const Profile = () => {
         </div>
         {pets.length > 0 ? (
           <div className="Profile__Pets">
-            <h3>Ваши питомцы: </h3>
+            <h3>Мои питомцы: </h3>
             <div className="Profile__Row">
               {pets.map((pet: Pet) => (
                 <div className="Profile__Item">

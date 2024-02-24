@@ -76,6 +76,7 @@ const DonorForm = () => {
         user
       );
     };
+    fetchSend();
   };
 
   useEffect(() => {

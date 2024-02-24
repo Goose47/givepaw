@@ -72,7 +72,7 @@ export const createPet = async (
   age: string,
   weight: string,
   vaccinations: string[],
-  user: any,
+  user: any
 ) => {
   try {
     const response = await axios.post('pets', {

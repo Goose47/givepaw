@@ -25,7 +25,7 @@ const RecipientForm = () => {
       <div className="Form">
         <h1>Форма реципиента</h1>
 
-        <label htmlFor="email">Ваш email</label>
+        <label htmlFor="email">Причина поиска животного-донора</label>
         <Input
           size="large"
           id="email"
