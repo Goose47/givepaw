@@ -1,3 +1,5 @@
+import datetime
+
 from sqlalchemy import Integer, String
 
 from sqlalchemy.orm import Mapped, mapped_column
@@ -12,7 +14,7 @@ class PetType(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
-    icon: Mapped[str] = mapped_column(String)
+    icon: Mapped[str] = mapped_column(String, nullable=True)
 
     @property
     def link(self):
@@ -26,7 +28,7 @@ class BloodComponent(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
     title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
 
-    icon: Mapped[str] = mapped_column(String)
+    icon: Mapped[str] = mapped_column(String, nullable=True)
 
 
 class UserRole(Base):
@@ -67,11 +69,8 @@ class Avatar(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
 
-    photo_path: Mapped[str] = mapped_column(String)
-    photo_thumb: Mapped[str] = mapped_column(String)
-
-
-# TODO: Проверить что нет лишнего unique
+    photo_path: Mapped[str] = mapped_column(String, nullable=False)
+    photo_thumb: Mapped[str] = mapped_column(String, nullable=True)
 
 
 class BloodGroup(Base):

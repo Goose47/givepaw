@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, Request, HTTPException, UploadFile, Form
+from fastapi import APIRouter, Depends, Request, HTTPException, UploadFile, Form, File
 from fastapi.responses import JSONResponse
 from http import HTTPStatus
 
 from src.api.dependencies.auth import Auth
 from src.api.use_cases.auth import *
 from src.schemas.auth import *
-
+from typing import Optional, Annotated
 router = APIRouter(
     prefix="/auth",
     tags=["auth"],
@@ -13,13 +13,11 @@ router = APIRouter(
 
 
 @router.post("/register")
-# async def register(user: RegisterUser, file: UploadFile):
-async def register(file: UploadFile, form_data: RegisterUser = Depends(RegisterUser.as_form)):
-
-    return 'kek'
+async def register(user: RegisterUser = Depends(RegisterUser.as_form), avatar: Optional[Annotated[bytes, File()]] = None):
     try:
-        registered_user: UserType = await RegisterUseCase.register(user)
-        access_token, refresh_token, user = await LoginUseCase.login(LoginUser(username=user.username, password=user.password))
+        registered_user: UserType = await RegisterUseCase.register(user, avatar)
+        access_token, refresh_token, user = await LoginUseCase.login(
+            LoginUser(username=user.username, password=user.password))
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
     return format_jwt_response(access_token, refresh_token, registered_user)
@@ -33,16 +31,17 @@ async def login(user: LoginUser):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
     return format_jwt_response(access_token, refresh_token, UserType(
-            id=user.id,
-            username=user.username,
-            name=user.name,
-            surname=user.surname,
-            patronymic=user.patronymic,
-            email=user.email,
-            user_role_id=user.user_role_id,
-            city_id=user.city_id,
-            avatar_id=user.avatar_id
-        ))
+        id=user.id,
+        username=user.username,
+        name=user.name,
+        surname=user.surname,
+        patronymic=user.patronymic,
+        email=user.email,
+        user_role_id=user.user_role_id,
+        city_id=user.city_id,
+        avatar_id=user.avatar_id,
+        avatar_link=user.avatar_link,
+    ))
 
 
 @router.post("/logout")

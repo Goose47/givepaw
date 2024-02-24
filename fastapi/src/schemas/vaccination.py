@@ -1,9 +1,22 @@
+import datetime
+
 from pydantic import BaseModel
 
 
 class Vaccination(BaseModel):
     id: int
     title: str
+
+
+class PetVaccinationCreate(BaseModel):
+    vaccination_id: int
+    vaccination_date: datetime.date
+
+
+class PetVaccination(BaseModel):
+    vaccination_id: int
+    pet_id: int
+    vaccination_date: datetime.date
 
 
 def create_vaccination(vaccination):

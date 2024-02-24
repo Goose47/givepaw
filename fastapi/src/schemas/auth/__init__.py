@@ -16,7 +16,7 @@ class RegisterUser(BaseModel):
 
     city_id: int
     user_role_id: Optional[int] = None
-    # todo avatar
+    avatar_id: Optional[int] = None
 
     @classmethod
     def as_form(
@@ -28,7 +28,6 @@ class RegisterUser(BaseModel):
             email: EmailStr = Form(),
             password: str = Form(),
             city_id: int = Form(),
-            user_role_id: int = Form(),
     ):
         return cls(
             username=username,
@@ -38,7 +37,6 @@ class RegisterUser(BaseModel):
             email=email,
             password=password,
             city_id=city_id,
-            user_role_id=user_role_id,
         )
 
 
@@ -55,6 +53,7 @@ class UserType(BaseModel):
     user_role_id: int
     city_id: int
     avatar_id: Optional[int]
+    avatar_link: Optional[str]
 
 
 class LoginUser(BaseModel):

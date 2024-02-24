@@ -1,14 +1,19 @@
 from src.utils.crypt import Crypt
 from src.schemas.auth import RegisterUser, UserType
 from src.schemas.user import UserConfigCreateType, UserNetworksCreateType
+from src.schemas.avatars import AvatarCreate
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.database.session_manager import db_manager
 from src.database.models.associative import User, UserConfig, UserNetwork
+from src.database.models.characteristics import Avatar
+from fastapi import UploadFile
+from src.utils.storage import Storage
+from typing import Optional
 
 
 class RegisterUseCase:
     @staticmethod
-    async def register(data: RegisterUser) -> UserType:
+    async def register(data: RegisterUser, avatar: Optional[UploadFile]) -> UserType:
         if await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(username=data.username):
             raise Exception('This username is already taken')
         if await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(email=data.email):
@@ -17,7 +22,13 @@ class RegisterUseCase:
         crypt = Crypt()
 
         hashed_password = crypt.hash(data.password)
-        data.user_role_id = 1  # todo enum
+        # data.user_role_id = 1  # todo enum
+
+        if avatar:
+            storage = Storage()
+            path = storage.save(avatar, 'avatars')
+            avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
+                .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(RegisterUser(
             username=data.username,
@@ -27,6 +38,7 @@ class RegisterUseCase:
             email=data.email,
             password=hashed_password,
             city_id=data.city_id,
+            avatar_id=avatar.id if avatar else None,
             user_role_id=1,
         ))
         await SqlAlchemyRepository(db_manager.get_session, model=UserConfig)\
@@ -43,5 +55,6 @@ class RegisterUseCase:
             email=user.email,
             user_role_id=user.user_role_id,
             city_id=user.city_id,
-            avatar_id=user.avatar_id
+            avatar_id=avatar.id if avatar else None,
+            avatar_link=user.avatar_link,
         )
