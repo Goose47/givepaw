@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.schemas.location import City
+from src.schemas.location import City, create_city
 
 
 class Clinic(BaseModel):
@@ -10,3 +10,8 @@ class Clinic(BaseModel):
     email: str
     phone: str
     city: City
+
+
+def create_clinic(clinic):
+    return Clinic(id=clinic.id, title=clinic.title, address=clinic.address, email=clinic.email, phone=clinic.phone,
+                  city=create_city(clinic.city))
