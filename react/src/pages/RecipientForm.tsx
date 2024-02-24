@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Input } from 'antd';
 import { Button } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import MyPetSelect from '../components/Forms/MyPetSelect';
 
 const RecipientForm = () => {
   const [reason, setReason] = useState('');
@@ -24,35 +23,50 @@ const RecipientForm = () => {
   return (
     <div>
       <div>Форма реципиента</div>
-      <MyPetSelect />
-      <div>
+      <div className="Form">
+
         <label htmlFor="email">Ваш email</label>
         <Input
+          size="large"
+          id="email"
           placeholder={"Причина поиска животного-донора"}
           value={reason}
           type="text"
           onChange={(e) => handleChange(e, setReason)}
         />
+
+        <label htmlFor="clinic">Ветеринарная клиника</label>
         <Input
+          size="large"
+          id="clinic"
           placeholder={"Ветеринарная клиника"}
           value={veterinaryСlinic}
           type="text"
           onChange={(e) => handleChange(e, setVeterinaryСlinic)}
         />
+
+        <label htmlFor="blood-amount">Количество крови (мл)</label>
         <Input
+          size="large"
+          id="blood-amount"
           placeholder={"Количество крови"}
           value={bloodAmount}
           type="number"
           onChange={(e) => handleChange(e, setBloodAmount)}
         />
-        <div>Дата, до которой поиск актуален</div>
+
+        <label htmlFor="deadline">Дата, до которой поиск актуален</label>
         <Input
+          size="large"
+          id="deadline"
           placeholder={"Дата, до которой поиск актуален"}
           value={deadline}
           type="date"
           onChange={(e) => handleChange(e, setDeadline)}
         />
+
         <Button onClick={handleSend}>Отправить заявку</Button>
+
       </div>
     </div>
   );

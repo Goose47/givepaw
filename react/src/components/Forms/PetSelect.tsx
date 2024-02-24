@@ -32,9 +32,15 @@ const PetSelect = (props: PetSelectProps) => {
           options={petTypes.map((el) => {
             return {
               label: (
-                <>
-                  <img src={el.icon} alt="#" /> {el.title}
-                </>
+                <div style={{display: "flex",
+                  alignItems: "center",
+                }}>
+                  <img src={el.icon} alt="#" style={{
+                    width: 20,
+                    height: 20,
+                    marginRight: 15
+                  }}/> {el.title}
+                </div>
               ),
               value: el.id,
             };
