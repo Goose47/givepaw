@@ -130,6 +130,7 @@ async def create_user_pet(
         data: CreatePet,
         auth: Auth = Depends()
 ):
+    raise Exception('keke')
     await auth.check_access_token(request)
     try:
         # if avatar:
