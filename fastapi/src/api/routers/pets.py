@@ -127,24 +127,23 @@ async def get_all(request: Request):
 @router.post('/', response_model=Pet)
 async def create_user_pet(
         request: Request,
-        data: CreatePet = Depends(CreatePet.as_form),
-        avatar: UploadFile = File(),
+        data: CreatePet,
         auth: Auth = Depends()
 ):
     await auth.check_access_token(request)
     try:
-        if avatar:
-            storage = Storage()
-            path = storage.save(avatar, 'avatars')
-            avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
-                .create(AvatarCreate(photo_path=path, photo_thumb=path))
+        # if avatar:
+        #     storage = Storage()
+        #     path = storage.save(avatar, 'avatars')
+        #     avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
+        #         .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
-        data.avatar_id = avatar.id if avatar else None
+        # data.avatar_id = avatar.id if avatar else None
         data.user_id = request.state.user.id
         pet_data = create_pet_model(data)
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)
 
-        if len(data.vaccinations) > 0:
+        if len(data.vaccinations):
             vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.vaccination_id,
                                            vaccination_date=v.vaccination_date) for v in data.vaccinations]
             vaccinations = await SqlAlchemyRepository(db_manager.get_session,
