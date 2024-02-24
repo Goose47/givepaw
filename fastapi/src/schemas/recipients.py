@@ -50,7 +50,7 @@ class RecipientForSortByData(BaseModel):
 
 
 class RecipientFilter(BaseModel):
-    animal_type: Optional[int]
-    breed: Optional[int]
-    city: Optional[int]
-    offset: Optional[int]
+    animal_type: Optional[int] = None
+    breed: Optional[int] = None
+    city: Optional[int] = None
+    offset: Optional[int] = None
