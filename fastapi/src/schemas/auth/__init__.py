@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
+from pydantic import EmailStr, Field
 
 
 class RegisterUser(BaseModel):
@@ -9,7 +10,7 @@ class RegisterUser(BaseModel):
     surname: str
     patronymic: str
 
-    email: str
+    email: EmailStr = Field()
     password: str
 
     city_id: int

@@ -10,6 +10,8 @@ class RegisterUseCase:
     async def register(data: RegisterUser) -> UserType:
         if await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(username=data.username):
             raise Exception('This username is already taken')
+        if await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(email=data.email):
+            raise Exception('This email is already taken')
 
         crypt = Crypt()
 
