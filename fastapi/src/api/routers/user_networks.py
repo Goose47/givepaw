@@ -26,16 +26,16 @@ async def index(request: Request, auth: Auth = Depends()):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.post('/', response_model=user_networks.UserNetwork)
-async def store(data: user_networks.UserNetworkCreate, request: Request, auth: Auth = Depends()):
-    await auth.check_access_token(request)
-    try:
-        data.user_id = request.state.user.id
-        un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(data)
-        return un
-
-    except Exception as e:
-        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+# @router.post('/', response_model=user_networks.UserNetwork)
+# async def store(data: user_networks.UserNetworkCreate, request: Request, auth: Auth = Depends()):
+#     await auth.check_access_token(request)
+#     try:
+#         data.user_id = request.state.user.id
+#         un: UserNetwork = await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(data)
+#         return un
+#
+#     except Exception as e:
+#         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
 @router.put('/', response_model=user_networks.UserNetwork)
