@@ -3,17 +3,27 @@ import { fetchUser, selectUser } from '../redux/slices/UserSlice';
 import React, { useEffect } from 'react';
 import { fetchPets, selectPets } from '../redux/slices/PetsSlice';
 import PetItem, { Pet } from '../components/global/PetItem';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "antd";
+import axios from "axios";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const pets = useSelector(selectPets);
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     dispatch(fetchUser() as any);
     dispatch(fetchPets() as any);
   }, [dispatch]);
+
+  const handleLogout = () => {
+    axios.post('auth/logout', {}).then(response => {
+      navigate("/")
+    })
+  }
 
   return (
     user && (
@@ -28,6 +38,7 @@ const Profile = () => {
               <h2>{user.username}</h2>
               <div>{user.name + " " + user.surname + " " + user.patronymic}</div>
               <div>{user.email}</div>
+              <div><Button type="link" onClick={handleLogout}>Выйти из аккаунта</Button></div>
             </div>
           </div>
         </div>
