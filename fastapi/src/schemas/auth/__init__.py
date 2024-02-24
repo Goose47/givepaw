@@ -16,6 +16,7 @@ class RegisterUser(BaseModel):
 
     city_id: int
     user_role_id: Optional[int] = None
+    avatar: Optional[str] = None
     avatar_id: Optional[int] = None
 
     @classmethod
