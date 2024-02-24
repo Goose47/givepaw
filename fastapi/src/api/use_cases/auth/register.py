@@ -6,9 +6,8 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.database.session_manager import db_manager
 from src.database.models.associative import User, UserConfig, UserNetwork
 from src.database.models.characteristics import Avatar
-from fastapi import UploadFile, HTTPException
+from fastapi import HTTPException
 from src.utils.storage import Storage
-from typing import Optional
 from http import HTTPStatus
 
 
