@@ -3,9 +3,8 @@ import { login as enter, register } from '../../auth/auth.service';
 import { getUser } from '../../service/data.service';
 
 // check if backend fixed response
-export const fetchLogin = createAsyncThunk('user/fetchLogin', async (login: any, password: any) => {
-  const res = await enter(login, password);
-  return res;
+export const fetchLogin = createAsyncThunk('user/fetchLogin', async (data: any) => {
+  return await enter(data.username, data.password);
 });
 
 export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data: any) => {

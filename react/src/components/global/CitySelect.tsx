@@ -7,7 +7,7 @@ import { SizeType } from 'antd/es/config-provider/SizeContext';
 interface CitySelectProps {
   size: SizeType;
   children: React.ReactNode;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  onChange?: (value: number) => void;
 }
 
 const CitySelect = (props: CitySelectProps) => {
@@ -15,6 +15,10 @@ const CitySelect = (props: CitySelectProps) => {
   const [selectedCity, setSelectedCity] = useState<boolean>(false);
 
   const handleSelectCity = (id: any) => {
+    if (props.onChange) {
+      alert(id);
+      props.onChange(id);
+    }
     let targetCities = cities.filter((city) => city.id == id);
     if (targetCities.length) {
       let targetCity = targetCities[0];

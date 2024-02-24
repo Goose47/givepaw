@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { getPets } from '../../service/data.service';
 
 export const fetchPets = createAsyncThunk('pets/fetchPets', async () => {
-  const res = await getPets();
-  return res;
+  return await getPets();
 });
 
 const PetSlice = createSlice({

@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { fetchLogin } from '../redux/slices/UserSlice';
 
 const Login = () => {
-  const [login, setLogin] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    dispatch(fetchLogin({ login, password }) as any);
+    dispatch(fetchLogin({ username, password }) as any);
   };
 
   return (
@@ -27,9 +27,9 @@ const Login = () => {
           id="email"
           size="large"
           placeholder={'Email'}
-          value={login}
+          value={username}
           type="text"
-          onChange={(e) => handleChange(e, setLogin)}
+          onChange={(e) => handleChange(e, setUsername)}
         />
         <label htmlFor="password">Ваш пароль</label>
         <Input
