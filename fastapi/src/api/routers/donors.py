@@ -19,6 +19,8 @@ router = APIRouter(
 async def index():
     try:
         donors: List[models.Donor] = await SqlAlchemyRepository(db_manager.get_session, model=Donor).get_multi()
+
+
         return donors
 
     except Exception as e:
