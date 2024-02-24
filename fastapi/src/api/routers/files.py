@@ -14,7 +14,7 @@ router = APIRouter(
 @router.get('/assets/{path}')
 async def get_file(path: str):
     try:
-        image_path = settings_app.APP_PATH + '/storage/assets/' + path
+        image_path = settings_app.APP_PATH + '/storage/asdsets/' + path
         with open(image_path, 'rb') as huy:
             return huy
         return FileResponse(image_path)
