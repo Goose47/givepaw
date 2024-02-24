@@ -5,7 +5,6 @@ from src.config.jwt.config import settings_jwt
 from src.schemas.auth import LoginUser
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.database.session_manager import db_manager
-from src.schemas.auth import UserType
 
 
 class LoginUseCase:
@@ -19,8 +18,7 @@ class LoginUseCase:
         access_token = jwt.generate_access_token(data.username)
         refresh_token = jwt.generate_refresh_token(data.username)
 
-        return user
-        # return access_token, refresh_token
+        return access_token, refresh_token
 
     @staticmethod
     async def authenticate_user(username: str, password: str):
