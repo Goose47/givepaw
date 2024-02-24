@@ -48,7 +48,7 @@ def create_pet(pet):
         age=pet.age,
         weight=pet.weight,
         user=create_user(pet.user) if pet.user else None,
-        vaccinations=create_vaccinations(pet.vaccinations) if pet.vaccinations else None,
+        vaccinations=create_vaccinations(pet.vaccinations),
         avatar_link=pet.avatar_link,
     )
     return pet
