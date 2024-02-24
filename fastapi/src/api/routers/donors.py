@@ -11,6 +11,7 @@ from src.database import models
 from src.schemas.donors import Donor
 from src.schemas.location import create_city
 from src.schemas.pets import create_pet
+from src.schemas.recipients import create_recipient
 
 router = APIRouter(
     prefix="/donors",
@@ -33,7 +34,10 @@ async def store(data: donors.DonorCreate):
     try:
         donor: models.Donor = await SqlAlchemyRepository(db_manager.get_session, model=model.Donor).create(data)
 
-        return donors.Donor(id=donor.id, pet=create_pet(donor.pet), city=create_city(donor.city))
+        return donors.Donor(id=donor.id,
+                            pet=create_pet(donor.pet),
+                            city=create_city(donor.city),
+                            recipient=create_recipient(donor.recipient) if donor.recipient else None)
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
