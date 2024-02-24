@@ -6,7 +6,7 @@ from src.config.app.config import settings_app
 
 
 class PetType(Base):
-    __tablename__ = "pet_types"
+    __tablename__ = "pet_types.json"
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)

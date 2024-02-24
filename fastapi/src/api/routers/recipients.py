@@ -17,6 +17,21 @@ router = APIRouter(
     tags=["recipients"],
 )
 
+months_dict = {
+    'January': 'Января',
+    'February': 'Февраля',
+    'March': 'Марта',
+    'April': 'Апреля',
+    'May': 'Мая',
+    'June': 'Июня',
+    'July': 'Июля',
+    'August': 'Августа',
+    'September': 'Сентября',
+    'October': 'Октября',
+    'November': 'Ноября',
+    'December': 'Декабря'
+}
+
 
 @router.get('/', response_model=List[recipients.Recipient])
 async def index():
@@ -47,7 +62,7 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
     try:
         recipient: list[Recipient] = await SqlAlchemyRepository(
             db_manager.get_session,
-            model=Recipient).get_multi(order="end_actual_date")
+            model=Recipient).get_multi()
 
         result = [
             recipients.RecipientForSortByData(
@@ -56,16 +71,17 @@ async def sort_recep_by_data(rec_filter: Optional[RecipientFilter] =
                 name=rec.pet.name,
                 blood_group=rec.pet.blood_group.blood_group.title,
                 place=rec.clinic.address,
-                deadline=f"До {rec.end_actual_date.strftime('%d %B %Y')}",
+                deadline=f"До {rec.end_actual_date.strftime('%d')} {months_dict[rec.end_actual_date.strftime('%B')]}",
                 reason=rec.reason,
                 number_required=rec.donor_amount
             ) for rec in recipient
+
             if (rec.end_actual_date >= datetime.date.today() and
                 bool(rec.pet.pet_type.id == rec_filter.animal_type if rec_filter.animal_type else True) and
                 bool(rec.pet.breed_id == rec_filter.breed if rec_filter.breed else True) and
                 bool(rec.clinic.city.id == rec_filter.city if rec_filter.city else True)
                 )
-            for rec in recipient]
+            ]
 
         if rec_filter.offset:
             return result[:rec_filter.offset]
