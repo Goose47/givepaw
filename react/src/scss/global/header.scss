@@ -27,6 +27,16 @@
   &__Logo {
     margin-right: 30px;
   }
+  &__Region {
+    &--Selected {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      svg {
+        margin-right: 5px;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {

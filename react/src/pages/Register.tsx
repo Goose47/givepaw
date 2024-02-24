@@ -9,6 +9,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
@@ -39,24 +40,46 @@ const Register = () => {
 
   return (
     <div>
-      <div>
-        <Input placeholder={'Имя'} value={name} type="text" onChange={(e) => handleChange(e, setName)} />
-        <Input placeholder={'Фамилия'} value={surname} type="text" onChange={(e) => handleChange(e, setSurname)} />
+      <div className="Form">
+        <h1>Зарегистрироваться</h1>
+
+        <label htmlFor="name">Ваше имя</label>
+        <Input id="name" placeholder={'Имя'} value={name} type="text" onChange={(e) => handleChange(e, setName)} />
+
+        <label htmlFor="surname">Ваша фамилия</label>
+        <Input id="surname" placeholder={'Фамилия'} value={surname} type="text" onChange={(e) => handleChange(e, setSurname)} />
+
+        <label htmlFor="surname">Ваше отчество (необязательно)</label>
         <Input
+          id="patronymic"
           placeholder={'Отчество'}
           value={patronymic}
           type="text"
           onChange={(e) => handleChange(e, setPatronymic)}
         />
-        <Input placeholder={'Email'} value={email} type="email" onChange={(e) => handleChange(e, setEmail)} />
-        <Input placeholder={'Номер телефона'} value={phone} type="tel" onChange={(e) => handleChange(e, setPhone)} />
+
+        <label htmlFor="surname">Ваш email</label>
+        <Input id="email" placeholder={'Email'} value={email} type="email" onChange={(e) => handleChange(e, setEmail)} />
+
+        <label htmlFor="phone">Номер телефона</label>
+        <Input id="phone" placeholder={'Номер телефона'} value={phone} type="tel" onChange={(e) => handleChange(e, setPhone)} />
+
+        <label htmlFor="password">Ваш пароль</label>
         <Input placeholder={'Пароль'} value={password} type="text" onChange={(e) => handleChange(e, setPassword)} />
-        <Input placeholder={'Город'} value={city} type="text" onChange={(e) => handleChange(e, setCity)} />
+
+        <label htmlFor="password">Подтвердите пароль</label>
+        <Input placeholder={'Пароль'} value={passwordConfirmation} type="text" onChange={(e) => handleChange(e, setPasswordConfirmation)} />
+
         <Upload {...props}>
           <Button icon={<UploadOutlined />}>Загрузите аватарку</Button>
         </Upload>
-        <Button>Зарегистрироваться</Button>
-        <Link to={'/login'}>Уже есть аккаунт? Войти</Link>
+
+        <Button type="primary">Зарегистрироваться</Button>
+
+        <div className="Form__Link">
+          <Link to={'/login'}>Уже есть аккаунт? Войти</Link>
+        </div>
+
       </div>
     </div>
   );

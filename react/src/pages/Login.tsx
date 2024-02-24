@@ -18,16 +18,23 @@ const Login = () => {
 
   return (
     <>
-      <div>
+      <div className="Form">
+        <h1>Войти в аккаунт</h1>
+        <label htmlFor="email">Ваш email</label>
         <Input
-          placeholder={'Номер телефона или Email'}
+          id="email"
+          size="large"
+          placeholder={'Email'}
           value={login}
           type="text"
           onChange={(e) => handleChange(e, setLogin)}
         />
-        <Input placeholder={'Пароль'} value={password} type="text" onChange={(e) => handleChange(e, setPassword)} />
-        <Button>Войти</Button>
-        <Link to={'/register'}> Нет аккаунта? Зарегистрироваться</Link>
+        <label htmlFor="password">Ваш пароль</label>
+        <Input id="password" size="large" placeholder={'Пароль'} value={password} type="text" onChange={(e) => handleChange(e, setPassword)} />
+        <Button size="large" type="primary">Войти</Button>
+        <div className="Form__Link">
+          <Link to={'/register'}> Нет аккаунта? Зарегистрироваться</Link>
+        </div>
       </div>
     </>
   );

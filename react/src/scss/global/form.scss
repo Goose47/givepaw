@@ -1,0 +1,39 @@
+.Form {
+
+  max-width: 500px;
+  margin: 100px auto 200px;
+
+  h1 {
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  input {
+    display: block;
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .ant-btn {
+    display: block;
+    margin: auto;
+  }
+  &__Link {
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+    a {
+      color: $medium;
+      text-decoration: none;
+      font-size: 13px;
+    }
+  }
+  .ant-upload-wrapper {
+    display: block;
+    margin-bottom: 30px;
+  }
+}

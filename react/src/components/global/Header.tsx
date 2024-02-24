@@ -5,11 +5,14 @@ import { BsGeoAltFill } from 'react-icons/bs';
 import axios from 'axios';
 
 const Header = () => {
+
   const [cities, setCities] = useState<any[]>([]);
+
+  const [selectedCity, setSelectedCity] = useState<boolean>(false)
 
   useEffect(() => {
     axios
-      .get('mock/pet_blood_group/1')
+      .get('cities/')
       .then((response) => {
         if (response.status === 200 && response.data) {
           setCities(response.data);
@@ -17,6 +20,25 @@ const Header = () => {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  const handleSelectCity = (id : any) => {
+    let targetCities = cities.filter(city => city.id == id)
+    if (targetCities.length) {
+      let targetCity = targetCities[0]
+      localStorage.setItem("city", targetCity.title)
+      localStorage.setItem("cityId", targetCity.id)
+      localStorage.setItem("region", targetCity.region.title)
+      setSelectedCity(true)
+    }
+  }
+
+  useEffect(() => {
+    setSelectedCity(!!localStorage.getItem("city") && !!localStorage.getItem("region"))
+  }, []);
+
+  const handleShowSelect = () => {
+    setSelectedCity(false)
+  }
 
   return (
     <header className="Header">
@@ -32,28 +54,38 @@ const Header = () => {
             <Link to="/haha">Как сдать кровь?</Link>
           </div>
           <div className="Header__Right">
-            <Select
-              showSearch
-              onClick={(e) => e?.stopPropagation()}
-              placeholder={
-                <div className="Select__Placeholder">
-                  <BsGeoAltFill />
-                  <span className="Select__Placeholder__Title">Ваш регион</span>
-                </div>
-              }
-              optionFilterProp="search"
-              options={cities.map((item) => {
-                return {
-                  label: (
-                    <>
-                      {item.rhesus_type.title} <span>{item.rhesus_type.title}</span>
-                    </>
-                  ),
-                  value: item.rhesus_type.id,
-                  search: item.rhesus_type.title,
-                };
-              })}
-            />
+            {
+              selectedCity ? (
+                <span onClick={handleShowSelect} className="Header__Region--Selected">
+                    <BsGeoAltFill />
+                   { localStorage.getItem("city") }
+                </span>
+              ) : <>
+                <Select
+                  showSearch
+                  onClick={(e) => e?.stopPropagation()}
+                  onChange={handleSelectCity}
+                  placeholder={
+                    <div className="Select__Placeholder">
+                      <BsGeoAltFill />
+                      <span className="Select__Placeholder__Title">Ваш регион</span>
+                    </div>
+                  }
+                  optionFilterProp="search"
+                  options={cities.map((item) => {
+                    return {
+                      label: (
+                        <>
+                          {item.title} <span>{item.region?.title}</span>
+                        </>
+                      ),
+                      value: item.id,
+                      search: item.title + " " + item.region?.title,
+                    };
+                  })}
+                />
+              </>
+            }
             <Button type="primary">
               <Link to={'/login'}>Войти</Link>{' '}
             </Button>
