@@ -37,7 +37,7 @@ async def update_city(city_id: int, request: Request, data_city: UpdateCity):
         city: models.City = await SqlAlchemyRepository(db_manager.get_session,
                                                        model=models.City).get_single(id=city_id)
         if not city:
-            raise Exception("Город с данным id не найден.")
+            raise Exception()
 
         city = await SqlAlchemyRepository(db_manager.get_session, model=models.City).update(data=data_city, id=city_id)
         return create_city(city)
