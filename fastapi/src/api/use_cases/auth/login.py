@@ -18,7 +18,7 @@ class LoginUseCase:
         access_token = jwt.generate_access_token(data.username)
         refresh_token = jwt.generate_refresh_token(data.username)
 
-        return access_token, refresh_token
+        return access_token, refresh_token, user
 
     @staticmethod
     async def authenticate_user(username: str, password: str):
