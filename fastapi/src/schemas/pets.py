@@ -21,7 +21,8 @@ class PetType(BaseModel):
 class Pet(BaseModel):
     id: int
     blood_group: PetBloodGroup
-    breed: Breed
+    _breed: Breed
+    breed: str
     pet_type: PetType
     avatar: Avatar
     name: str
@@ -36,7 +37,7 @@ def create_pet_type(pet_type):
 
 
 def create_pet(pet):
-    pet = Pet(id=pet.id, blood_group=pet.blood_group, breed=create_breed(pet.breed),
+    pet = Pet(id=pet.id, blood_group=pet.blood_group, _breed=create_breed(pet._breed), breed=pet.breed,
               pet_type=create_pet_type(pet.pet_type), avatar=create_avatar(pet.avatar),
               name=pet.name, age=pet.age, weight=pet.weight, user=create_user(pet.user),
               vaccinations=create_vaccinations(pet.vaccinations))
