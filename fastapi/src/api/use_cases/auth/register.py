@@ -1,8 +1,9 @@
 from src.utils.crypt import Crypt
 from src.schemas.auth import RegisterUser, UserType
+from src.schemas.user import UserConfigCreateType, UserNetworksCreateType
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.database.session_manager import db_manager
-from src.database.models.associative import User
+from src.database.models.associative import User, UserConfig, UserNetwork
 
 
 class RegisterUseCase:
@@ -20,6 +21,9 @@ class RegisterUseCase:
         data.user_role_id = 1  # todo enum
 
         user = await SqlAlchemyRepository(db_manager.get_session, model=User).create(data)
+        await SqlAlchemyRepository(db_manager.get_session, model=UserConfig).create(UserConfigCreateType())
+        await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork).create(UserNetworksCreateType())
+
         return UserType(
             id=user.id,
             username=user.username,
