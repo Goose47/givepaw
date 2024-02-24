@@ -21,7 +21,8 @@ class PetType(BaseModel):
 class Pet(BaseModel):
     id: int
     blood_group: PetBloodGroup
-    breed: Breed
+    _breed: Breed
+    breed: str
     pet_type: PetType
     avatar: Avatar
     name: str
