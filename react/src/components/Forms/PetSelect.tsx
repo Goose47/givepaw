@@ -12,7 +12,7 @@ const PetSelect = () => {
   //     })}
   //   </div>
   // );
-  return <></>
+  return <></>;
 };
 
 export default PetSelect;
