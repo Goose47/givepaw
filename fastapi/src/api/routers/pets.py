@@ -136,6 +136,6 @@ async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depend
                                                       model=models.PetVaccination).bulk_create(
                 vaccinations)
 
-        return create_pet(pet)
+        return create_pet(pet)s
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
