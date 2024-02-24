@@ -8,7 +8,7 @@ from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 
 from src.schemas import pets, vaccination, breed
 from src.database import models
-from src.schemas.pets import PetViewType
+from src.schemas.pets import Pet
 
 from src.api.dependencies.auth import Auth
 
@@ -57,7 +57,7 @@ async def get_breeds(pet_type_id: int):
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": "Artem"})
 
 
-@router.get('/my', response_model=List[PetViewType])
+@router.get('/my', response_model=List[Pet])
 async def get_my(request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
@@ -69,9 +69,10 @@ async def get_my(request: Request, auth: Auth = Depends()):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.post('/')
-async def create_pet(request: Request):
+@router.post('/', response_model=Pet)
+async def create_pet(new_pet: Pet):
     try:
-        huy = 'huy'
+        added_pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(new_pet)
+        return added_pet
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
