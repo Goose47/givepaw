@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectPets } from '../redux/slices/PetsSlice';
 import PetSelect from '../components/Forms/PetSelect';
+import MyPetSelect from '../components/Forms/MyPetSelect';
 
 const DonorForm = () => {
   const [animalType, setAnimalType] = useState('');
@@ -54,7 +55,7 @@ const DonorForm = () => {
   return (
     <div>
       <div>Форма донора</div>
-      <PetSelect />
+      <MyPetSelect />
       <div>
         <div>Тип животного</div>
         <Radio.Group onChange={onChange} defaultValue="a">

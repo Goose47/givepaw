@@ -13,8 +13,7 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/101',
       blood_group: '4++',
       place: 'Каменоостровский проспект д. 56',
-      numberTaken: 4,
-      numberRequired: 7,
+      number_required: 7,
       deadline: 'до 30 февраля',
       reason: 'lorem ipsum dolor',
     },
@@ -24,8 +23,7 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/403',
       blood_group: '1-',
       place: 'Вяземский пер. 5-7',
-      numberTaken: 3,
-      numberRequired: 6,
+      number_required: 7,
       deadline: 'до 26 февраля',
       reason: 'lorem ipsum dolor',
     },
@@ -35,8 +33,7 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/200',
       blood_group: '4++',
       place: 'Каменоостровский проспект д. 56',
-      numberTaken: 4,
-      numberRequired: 7,
+      number_required: 7,
       deadline: 'до 30 февраля',
       reason: 'lorem ipsum dolor',
     },
@@ -46,19 +43,20 @@ const RecipientsLibrary = () => {
       avatar: 'https://http.cat/502',
       blood_group: '1-',
       place: 'Вяземский пер. 5-7',
-      numberTaken: 3,
-      numberRequired: 6,
+      number_required: 7,
       deadline: 'до 26 февраля',
       reason: 'lorem ipsum dolor',
     },
   ]);
+
+  const [petType, setPetType] = useState<number>();
 
   return (
     <div className="RecipientsLibrary">
       <h1>Потребность в донорах</h1>
       <div className="RecipientsLibrary__Filters">
         <div className="RecipientsLibrary__Filter">
-          <PetSelect />
+          <PetSelect onChange={setPetType} />
         </div>
       </div>
       <div className="RecipientsLibrary__Items">
