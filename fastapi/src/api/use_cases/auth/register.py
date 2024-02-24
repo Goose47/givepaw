@@ -47,12 +47,6 @@ class RegisterUseCase:
         await SqlAlchemyRepository(db_manager.get_session, model=UserNetwork)\
             .create(UserNetworksCreateType(user_id=user.id))
 
-        # class UpdateUserAvatar(BaseModel):
-        #     avatar_id: int
-
-        # await SqlAlchemyRepository(db_manager.get_session, model=User)\
-        #     .update(UpdateUserAvatar(avatar_id=avatar.id), id=user.id)
-
         return UserType(
             id=user.id,
             username=user.username,
@@ -62,5 +56,6 @@ class RegisterUseCase:
             email=user.email,
             user_role_id=user.user_role_id,
             city_id=user.city_id,
-            avatar_id=avatar.id if avatar else None
+            avatar_id=avatar.id if avatar else None,
+            avatar_link=user.avatar_link,
         )
