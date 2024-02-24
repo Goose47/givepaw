@@ -7,8 +7,8 @@ from src.database import models
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import user
-from src.schemas.location import Region, City, create_region, create_city
-from src.schemas.user import UserRole, Avatar, UserNetwork, UserConfig, create_user_role, create_avatar, \
+from src.schemas.location import create_city
+from src.schemas.user import create_user_role, create_avatar, \
     create_user_network, create_user_config, UserUpdate, create_user
 
 router = APIRouter(
@@ -48,7 +48,7 @@ async def get_user_info(request: Request, auth: Auth = Depends()):
 async def update_user(request: Request, data_user: UserUpdate, auth: Auth = Depends()):
     try:
         await auth.check_access_token(request)
-        user: models.City = await SqlAlchemyRepository(db_manager.get_session,
+        user: models.User = await SqlAlchemyRepository(db_manager.get_session,
                                                        model=models.User).get_single(id=request.state.user.id)
         if not user:
             raise Exception()
