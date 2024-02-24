@@ -5,7 +5,7 @@ export interface Pet {
   "blood_group_title": "string",
   "breed_title": "string",
   "pet_type_title": "string",
-  "avatar_path": "string",
+  "avatar_link": "string",
   "name": "string",
   "age": 0,
   "weight": 0,
@@ -26,7 +26,7 @@ const PetItem = (props: PetItemProps) => {
     <div className={"PetItem " + (props.selectable ? '_hoverable' : '')}>
       <div className="PetItem__Wrapper">
         <div className="PetItem__Avatar">
-          <img src={pet.avatar_path} alt={pet.name} />
+          <img src={pet.avatar_link} alt={pet.name} />
         </div>
         <div className="PetItem__Data">
           <h3>{pet.name}</h3>
