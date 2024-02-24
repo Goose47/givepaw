@@ -22,7 +22,7 @@ router = APIRouter(
 @router.get('/', response_model=List[donors.Donor])
 async def index():
     try:
-        all_donors: List[models.Donor] = await SqlAlchemyRepository(db_manager.get_session, model=Donor).get_multi()
+        all_donors: List[models.Donor] = await SqlAlchemyRepository(db_manager.get_session, model=model.Donor).get_multi()
         return [donors.Donor(
             id=donor.id,
             pet=create_pet(donor.pet),
