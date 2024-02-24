@@ -18,7 +18,7 @@ export const getUser = async () => {
   }
 };
 
-export const getBloodTypes = async (pet_type_id: number) => {
+export const getBloodTypes = async (pet_type_id: any) => {
   try {
     const response = await axios.get(`blood_group/${pet_type_id}`);
     return response.data;
@@ -44,9 +44,9 @@ export const getAnimalTypes = async () => {
   }
 };
 
-export const getComponentTypes = async (pet_type_id: number) => {
+export const getComponentTypes = async () => {
   try {
-    const response = await axios.get('pets/pet_types');
+    const response = await axios.get('pets/blood_components');
     return response.data;
   } catch (error) {
     console.error(error);
