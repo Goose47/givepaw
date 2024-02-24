@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from typing import List
 
-from fastapi import APIRouter, HTTPException, Request, Depends
+from fastapi import APIRouter, HTTPException, Request, Depends, UploadFile, File
 
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
@@ -13,6 +13,9 @@ from src.schemas.blood_group import create_blood_component
 
 from src.api.dependencies.auth import Auth
 from src.schemas.vaccination import PetVaccination
+from src.schemas.avatars import AvatarCreate
+from src.utils.storage import Storage
+from src.database.models.characteristics import Avatar
 
 router = APIRouter(
     prefix="/pets",
@@ -122,9 +125,16 @@ async def get_all(request: Request):
 
 
 @router.post('/', response_model=Pet)
-async def create_user_pet(data: CreatePet, request: Request, auth: Auth = Depends()):
+async def create_user_pet(request: Request, data: CreatePet, avatar: UploadFile = File(),  auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
+        if avatar:
+            storage = Storage()
+            path = storage.save(avatar, 'avatars')
+            avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
+                .create(AvatarCreate(photo_path=path, photo_thumb=path))
+
+        data.avatar_id = avatar.id if avatar else None
         data.user_id = request.state.user.id
         pet_data = create_pet_model(data)
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)

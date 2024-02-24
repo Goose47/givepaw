@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from pydantic import BaseModel
+from fastapi import Form
 
 from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group
 from src.schemas.breed import Breed, create_breed
@@ -80,6 +81,33 @@ class CreatePet(BaseModel):
     weight: float
     user_id: int
     vaccinations: Optional[List[PetVaccinationCreate]]
+
+    avatar_id: Optional[int] = None
+
+    @classmethod
+    def as_form(
+            cls,
+            blood_group_id: int = Form(),
+            breed_id: Optional[int] = Form(None),
+            breed: Optional[str] = Form(None),
+            pet_type_id: int = Form(),
+            name: str = Form(),
+            age: int = Form(),
+            weight: float = Form(),
+            user_id: int = Form(),
+            vaccinations: list[PetVaccinationCreate] = Form([]),
+    ):
+        return cls(
+            blood_group_id=blood_group_id,
+            breed_id=breed_id,
+            breed=breed,
+            pet_type_id=pet_type_id,
+            name=name,
+            age=age,
+            weight=weight,
+            user_id=user_id,
+            vaccinations=vaccinations,
+        )
 
 
 class CreatePetModel(BaseModel):
