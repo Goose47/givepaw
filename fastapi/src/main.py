@@ -5,7 +5,6 @@ from fastapi import FastAPI
 from src.api.responses.api_response import ApiResponse
 from src.api.routers.base import create_routes
 from src.config.app.config import settings_app
-from src.utils.validator.exceptions import AppValidationException
 
 
 def get_application() -> FastAPI:
@@ -21,11 +20,11 @@ def get_application() -> FastAPI:
 
 app = get_application()
 
-
+"""
 @app.exception_handler(AppValidationException)
 async def validation_failed(request: Request, exc: AppValidationException):
     return ApiResponse.errors(exc.errors, status_code=422)
-
+"""
 
 if __name__ == "__main__":
     uvicorn.run(

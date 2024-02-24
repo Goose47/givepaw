@@ -34,6 +34,10 @@ class User(Base):
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
 
+    user_network: Mapped["UserNetwork"] = relationship(uselist=False, lazy="selectin")
+
+    user_config: Mapped["UserConfig"] = relationship(uselist=False, lazy="selectin")
+
 
 class City(Base):
     __tablename__ = "cities"
@@ -54,7 +58,7 @@ class Pet(Base):
 
     blood_group_id: Mapped[int] = mapped_column(ForeignKey("pet_blood_groups.id"))
     blood_group: Mapped["PetBloodGroup"] = relationship(uselist=False, lazy="selectin")
-
+    # PetBloodGroup
     breed_id: Mapped[int] = mapped_column(ForeignKey("breeds.id"), nullable=False)
     _breed: Mapped["Breed"] = relationship(uselist=False, lazy="selectin")
 
@@ -93,17 +97,17 @@ class PetBloodGroup(Base):
     rhesus: Mapped["Rhesus"] = relationship(uselist=False, lazy="selectin")
 
 
-class UsersConfig(Base):
+class UserConfig(Base):
     __tablename__ = "users_configs"
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    phone_number_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
-    social_networks_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
-    email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False)
+    phone_number_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False, default=1)
+    social_networks_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False, default=1)
+    email_status: Mapped[int] = mapped_column(Integer, index=True, nullable=False, default=1)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
-    user: Mapped["User"] = relationship(uselist=False, lazy="selectin")
+    user: Mapped["User"] = relationship(uselist=False, lazy="selectin", overlaps="user_config")
 
 
 class UserNetwork(Base):
@@ -111,8 +115,11 @@ class UserNetwork(Base):
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    telegram: Mapped[str] = mapped_column(String)
-    vk: Mapped[str] = mapped_column(String)
+    telegram: Mapped[str] = mapped_column(String, default=None, nullable=True)
+    vk: Mapped[str] = mapped_column(String, default=None, nullable=True)
+
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    user: Mapped["User"] = relationship(uselist=False, lazy="selectin", overlaps="user_config")
 
 
 class Breed(Base):
@@ -137,7 +144,7 @@ class Donor(Base):
 
 
 class Recipient(Base):
-    __tablename__ = "demands"
+    __tablename__ = "recipient"
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
@@ -159,6 +166,7 @@ class Recipient(Base):
     end_actual_date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
+# TODO: SCHEDULE
 class Clinic(Base):
     __tablename__ = "clinics"
     extend_existing = True

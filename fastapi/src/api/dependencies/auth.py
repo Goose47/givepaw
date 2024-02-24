@@ -6,6 +6,9 @@ from typing import Optional
 from src.utils.jwt.jwt_auth import JWT
 from src.utils.jwt.token_type import TokenType
 from src.config.jwt.config import settings_jwt
+from src.repository.crud.base_crud_repository import SqlAlchemyRepository
+from src.database.session_manager import db_manager
+from src.database.models.associative import User
 
 
 class Auth:
@@ -36,10 +39,10 @@ class Auth:
         if payload['type'] != type:
             self.raise_credentials_exception()
 
-        email: str = payload['sub']
-        if email is None:
+        username: str = payload['sub']
+        if username is None:
             self.raise_credentials_exception()
-        user: User = await user_repo.get_single(email=email)
+        user: User = await SqlAlchemyRepository(db_manager.get_session, model=User).get_single(username=username)
         if user is None:
             self.raise_credentials_exception()
 

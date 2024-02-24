@@ -1,13 +1,10 @@
-from fastapi import APIRouter, Depends, Request, HTTPException
+from fastapi import APIRouter, Depends, Request, HTTPException, UploadFile, Form
 from fastapi.responses import JSONResponse
 from http import HTTPStatus
 
 from src.api.dependencies.auth import Auth
-from src.api.responses.api_response import ApiResponse
 from src.api.use_cases.auth import *
-from src.database.models import User
 from src.schemas.auth import *
-
 
 router = APIRouter(
     prefix="/auth",
@@ -15,23 +12,37 @@ router = APIRouter(
 )
 
 
-@router.post("/register", response_model=RegisterUser)
-async def register(user: RegisterUser):
+@router.post("/register")
+# async def register(user: RegisterUser, file: UploadFile):
+async def register(file: UploadFile, form_data: RegisterUser = Depends(RegisterUser.as_form)):
+
+    return 'kek'
     try:
-        user: User = await RegisterUseCase.register(user)
+        registered_user: UserType = await RegisterUseCase.register(user)
+        access_token, refresh_token, user = await LoginUseCase.login(LoginUser(username=user.username, password=user.password))
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
-    return user
+    return format_jwt_response(access_token, refresh_token, registered_user)
 
 
 @router.post("/login")
 async def login(user: LoginUser):
     try:
-        access_token, refresh_token = await LoginUseCase.login(user)
+        access_token, refresh_token, user = await LoginUseCase.login(user)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
-    return format_jwt_response(access_token, refresh_token)
+    return format_jwt_response(access_token, refresh_token, UserType(
+            id=user.id,
+            username=user.username,
+            name=user.name,
+            surname=user.surname,
+            patronymic=user.patronymic,
+            email=user.email,
+            user_role_id=user.user_role_id,
+            city_id=user.city_id,
+            avatar_id=user.avatar_id
+        ))
 
 
 @router.post("/logout")
@@ -50,16 +61,15 @@ async def refresh(request: Request, auth: Auth = Depends()):
     try:
         access_token, refresh_token = await RefreshUseCase.refresh(payload)
     except Exception as e:
-        return ApiResponse.error(str(e), 401)
+        raise HTTPException(status_code=HTTPStatus.UNAUTHORIZED)
 
     return format_jwt_response(access_token, refresh_token)
 
 
-def format_jwt_response(access_token: str, refresh_token: str):
+def format_jwt_response(access_token: str, refresh_token: str, user=None):
     response = JSONResponse(
         content={
-            'access_token': access_token,
-            'refresh_token': refresh_token,
+            'user': dict(user) if user else None
         },
         status_code=HTTPStatus.OK
     )

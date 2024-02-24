@@ -1,14 +1,39 @@
+import random
+from http import HTTPStatus
+from typing import List
+
+from fastapi import APIRouter, Request, HTTPException
+import src.schemas.blood_group as schemas
+import src.database.models.associative as models
+from src.database.session_manager import db_manager
+from src.repository.crud.base_crud_repository import SqlAlchemyRepository
+
+router = APIRouter(
+    prefix="/blood_group",
+    tags=["blood_group"],
+)
 
 
-@router.get("/pet_blood_group/{animal_type}", response_model=list[MockPetBloodGroupSchema])
-async def mock_blood_group(request: Request, animal_type: str):
-    return [MockPetBloodGroupSchema(
-        id=random.randint(1, 100),
-        mock_pet_type=MockPetType(id=random.randint(1, 100), title=animal_type),
-        mock_blood_group=MockBloodGroup(id=random.randint(1, 100), title=random.choice(["I", "II", "III"])),
-        mock_rhesus_type=MockRhesusType(id=random.randint(1, 100), title=random.choice([
-            f"фактор {animal_type} 1",
-            f"фактор {animal_type} 2",
-            f"фактор {animal_type} 3"
-        ]))
-    ) for _ in range(10)]
+@router.get(
+    "/{pet_type_id}", response_model=list[schemas.PetBloodGroup]
+)
+async def get_blood_group(request: Request, pet_type_id: int):
+    try:
+        blood_groups: List[models.PetBloodGroup] = await SqlAlchemyRepository(
+            db_manager.get_session, model=models.PetBloodGroup
+        ).get_multi(pet_type_id=pet_type_id)
+        return [
+            schemas.PetBloodGroup(
+                id=pet_blood_group.id,
+                blood_group=schemas.BloodGroup(
+                    id=pet_blood_group.blood_group.id, title=pet_blood_group.blood_group.title
+                ),
+                rhesus_type=schemas.RhesusType(
+                    id=pet_blood_group.rhesus.id, title=pet_blood_group.rhesus.title
+                ),
+            )
+            for pet_blood_group in blood_groups
+        ]
+
+    except Exception as e:
+        raise Exception
