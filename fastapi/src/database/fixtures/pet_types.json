@@ -1,14 +1,17 @@
 [
   {
     "id": 1,
-    "title": "Кот"
+    "title": "Кот",
+    "icon": "cat.png"
   },
   {
     "id": 2,
-    "title": "Собака"
+    "title": "Собака",
+    "icon": "dog.png"
   },
   {
     "id": 3,
-    "title": "Пингвин"
+    "title": "Пингвин",
+    "icon": "penguin.png"
   }
 ]
