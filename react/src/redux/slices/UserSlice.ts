@@ -10,12 +10,12 @@ export const fetchLogin = createAsyncThunk('user/fetchLogin', async (data: any) 
 export const fetchRegister = createAsyncThunk('user/fetchRegister', async (data: any) => {
   const res = await register(
     data.username,
-    data.email,
-    data.phone,
-    data.password,
     data.name,
+    data.phone,
     data.surname,
     data.patronymic,
+    data.email,
+    data.password,
     data.city,
     data.image
   );

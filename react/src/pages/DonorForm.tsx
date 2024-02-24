@@ -48,8 +48,19 @@ const DonorForm = () => {
 
   const onChangeAnimalType = (e: RadioChangeEvent) => {
     setAnimalType(e.target.value);
-    setBreedOptions(getBreeds(animalType) as any);
-    setBloodGroupOptions(getBloodTypes(animalType) as any);
+    const fetchBreedOptions = async () => {
+      const options = await getBreeds(animalType);
+      setBreedOptions(options);
+    };
+  
+    fetchBreedOptions();
+
+    const fetchBloodTypes = async () => {
+      const options = await getBloodTypes(animalType);
+      setBloodGroupOptions(options);
+    };
+  
+    fetchBloodTypes();
   };
 
   const onChangeBloodGroup = (e: RadioChangeEvent) => {
@@ -67,12 +78,15 @@ const DonorForm = () => {
 
   const handleSend = () => {};
 
-  // useEffect(() => {
-  // setAnimalTypeOptions(getAnimalTypes() as any);
-  // setBloodComponentOptions(getComponentTypes() as any);
-  // setBreedOptions(getBreeds() as any);
-  // setBloodGroupOptions(getBloodTypes() as any);
-  // },[])
+  useEffect(() => {
+    const fetchAnimalTypes = async () => {
+      const options = await getAnimalTypes();
+      setAnimalTypeOptions(options);
+    };
+  
+    fetchAnimalTypes();
+  },[])
+
 
   const options: SelectProps['options'] = [];
 
@@ -94,14 +108,14 @@ const DonorForm = () => {
       <div>
         <div>Тип животного</div>
         {animalTypeOptions && (
-          <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
-            {animalTypeOptions.map((pet) => (
-              <div key={pet.id}>
-                <Radio.Button value={pet.id}>{pet.title}</Radio.Button>
-              </div>
-            ))}
-          </Radio.Group>
-        )}
+        <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
+          {animalTypeOptions.map((pet) => (
+            <div key={pet.id}>
+              <Radio.Button value={pet.id}>{pet.title}</Radio.Button>
+            </div>
+          ))}
+        </Radio.Group>
+      )}
 
         <div>Группа крови</div>
         {bloodGroupOptions && (
