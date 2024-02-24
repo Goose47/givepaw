@@ -48,7 +48,8 @@ class UserConfig(BaseModel):
 def create_user_config(user_config):
     if user_config:
         return UserConfig(id=user_config.id, phone_number_status=user_config.phone_number_status,
-                          social_networks_status=user_config.social_networks_status, email=user_config.email_status)
+                          social_networks_status=user_config.social_networks_status,
+                          email_status=user_config.email_status)
     return user_config
 
 
