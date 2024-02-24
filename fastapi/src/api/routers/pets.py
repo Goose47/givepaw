@@ -135,7 +135,10 @@ async def create_user_pet(
         avatar = None
         if data.avatar:
             storage = Storage()
-            path = storage.save_from_base64(data.avatar, 'avatars')
+            try:
+                path = storage.save_from_base64(data.avatar, 'avatars')
+            except Exception as e:
+                raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail='Wrong image format')
             avatar = await SqlAlchemyRepository(db_manager.get_session, model=Avatar) \
                 .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
