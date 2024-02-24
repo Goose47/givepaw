@@ -7,10 +7,14 @@ class UserNetwork(BaseModel):
     id: int
     telegram: Optional[str] = None
     vk: Optional[str] = None
+
+
 class UserNetworkCreate(BaseModel):
     telegram: Optional[str] = None
     vk: Optional[str] = None
     user_id: Optional[int] = None
+
+
 class UserNetworkUpdate(BaseModel):
     telegram: Optional[str] = None
     vk: Optional[str] = None
@@ -22,4 +26,3 @@ def create_user_network(un):
         telegram=un.telegram,
         vk=un.vk,
     )
-
