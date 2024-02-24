@@ -7,6 +7,7 @@ import { SizeType } from 'antd/es/config-provider/SizeContext';
 interface CitySelectProps {
   size: SizeType;
   children: React.ReactNode;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const CitySelect = (props: CitySelectProps) => {
