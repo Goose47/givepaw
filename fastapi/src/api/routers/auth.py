@@ -6,7 +6,6 @@ from src.api.dependencies.auth import Auth
 from src.api.use_cases.auth import *
 from src.schemas.auth import *
 
-
 router = APIRouter(
     prefix="/auth",
     tags=["auth"],

@@ -24,7 +24,7 @@ class RegisterUseCase:
             surname=user.surname,
             patronymic=user.patronymic,
             email=user.email,
-            user_role_id=1,  # todo enum
+            user_role_id=user.user_role_id,  # todo enum
             city_id=user.city_id,
-            avatar_id=None  # todo create avatar
+            avatar_id=user.avatar_id  # todo create avatar
         )

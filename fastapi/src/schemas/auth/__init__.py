@@ -12,7 +12,10 @@ class RegisterUser(BaseModel):
     email: str
     password: str
 
-    city_id: int  # todo avatar
+    city_id: int
+    avatar_id: Optional[int]
+    user_role_id: int
+
 
 
 class UserType(BaseModel):
