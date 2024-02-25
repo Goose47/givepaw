@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser, selectUser } from '../redux/slices/UserSlice';
+import { fetchUpdateUser, fetchUser, selectUser } from '../redux/slices/UserSlice';
 import { Input } from 'antd';
 import { Button } from 'antd';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CitySelect from '../components/global/CitySelect';
 import UploadPhoto from "../components/global/UploadPhoto";
+import { fetchUpdateSocial } from '../redux/slices/SocialSlice';
 
 const ProfileEdit = () => {
   const [username, setUsername] = useState('');
@@ -16,7 +17,7 @@ const ProfileEdit = () => {
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [patronymic, setPatronymic] = useState('');
-  const [city, setCity] = useState<number>(1);
+  const [city_id, setCity] = useState<number>(1);
   const [telegram, setTelegram] = useState('');
   const [vk, setVk] = useState('');
   const [image, setImage] = useState(undefined);
@@ -24,7 +25,6 @@ const ProfileEdit = () => {
   const navigate = useNavigate();
 
   const [avatar, setAvatar] = useState<any>()
-
   const [error, setError] = useState<any>()
 
   const handleSave = () => {
@@ -45,24 +45,19 @@ const ProfileEdit = () => {
       setError("Вы должны выбрать корректный аватар")
     } else {
       setError(null)
-    //   dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, avatar }) as any).then(
-    //     () => {
-    //       setError(null)
-    //       // setTimeout(() => {
-    //       //   window.location.replace('https://uvuv643.ru/profile');
-    //       // }, 300);
-    //     }
-    //   ).catch((error : any) => {
-    //     console.log(error)
-    //     if (error.response.status === 400) {
-    //       setError(error.response.data.detail)
-    //     }
-    //   });
-
-    }
-
-
+      dispatch(fetchUpdateUser({ surname, name, patronymic,username, email, city_id}) as any)
+      .then(dispatch(fetchUpdateSocial({telegram, vk}) as any))
+      .then(
+        () => {
+          alert("AAAAAAAA")
+          setError(null)
+          setTimeout(() => {
+            window.location.replace('https://uvuv643.ru/profile');
+          }, 300);
+        }
+      );
   };
+};
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
@@ -170,12 +165,12 @@ const ProfileEdit = () => {
 
         <label htmlFor="password-confirm">Подтвердите пароль</label>
         <Input
-          size="large"
-          id="passowrd-confirm"
-          placeholder={'Пароль'}
-          value={passwordConfirmation}
-          type="password"
-          onChange={(e) => handleChange(e, setPasswordConfirmation)}
+        size="large"
+        id="password-confirm"
+        placeholder={'Пароль'}
+        value={passwordConfirmation}
+        type="password"
+        onChange={(e) => handleChange(e, setPasswordConfirmation)}
         />
 
         <label htmlFor="city_id">Ваш город</label>
@@ -184,8 +179,6 @@ const ProfileEdit = () => {
             <></>
           </CitySelect>
         </div>
-
-        <UploadPhoto setBase={setAvatar}/>
 
         <Button type="primary" size="large" onClick={handleSave}>
           Сохранить
@@ -199,4 +192,3 @@ const ProfileEdit = () => {
 };
 
 export default ProfileEdit;
-

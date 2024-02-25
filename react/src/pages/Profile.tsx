@@ -6,6 +6,7 @@ import PetItem, { Pet } from '../components/global/PetItem';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import axios from 'axios';
+import SocialForm from '../components/global/SocialForm';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -48,6 +49,14 @@ const Profile = () => {
                   <Link to={"/profile-edit"}>
                   <Button type="primary">
                     Редактировать профиль
+                  </Button>
+                  </Link>
+                </div>
+                <SocialForm/>
+                <div>
+                  <Link to={"/social-edit"}>
+                  <Button type="primary">
+                    Редактировать соц.сети
                   </Button>
                   </Link>
                 </div>

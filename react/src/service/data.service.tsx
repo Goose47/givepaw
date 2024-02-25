@@ -35,6 +35,43 @@ export const getVaccines = async () => {
   }
 };
 
+export const editSocial = async (telegram: string, vk: string) => {
+  try {
+    const response = await axios.put('user_networks', {telegram, vk});
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getSocial = async () => {
+  try {
+    const response = await axios.get('user_networks');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const editUser = async (surname: string, name: string, patronymic: string, username: string, email: string, city_id: string) => {
+  try {
+    const response = await axios.put('users/user', {surname, name, patronymic,username, email, city_id });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const editPassword = async () => {
+  try {
+    const response = await axios.put('users/user/change_password');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
 export const getAnimalTypes = async () => {
   try {
     const response = await axios.get('pets/pet_types');

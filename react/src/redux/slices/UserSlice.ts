@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { login as enter, register } from '../../auth/auth.service';
-import { getUser } from '../../service/data.service';
+import { editUser, getUser } from '../../service/data.service';
 
 // check if backend fixed response
 export const fetchLogin = createAsyncThunk('user/fetchLogin', async (data: any) => {
@@ -26,6 +26,12 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   const res = await getUser();
   return res;
 });
+
+export const fetchUpdateUser = createAsyncThunk('user/fetchUpdateUser', async (data: any) => {
+    const res = await editUser(data.surname, data.name, data.patronymic, data.username, data.email, data.city_id);
+    return res;
+  });
+  
 
 const UserSlice = createSlice({
   name: 'user',
@@ -79,6 +85,19 @@ const UserSlice = createSlice({
         state.hasError = false;
       })
       .addCase(fetchUser.rejected, (state, action) => {
+        state.hasError = true;
+        state.isLoading = false;
+      })
+      .addCase(fetchUpdateUser.pending, (state, action) => {
+        state.isLoading = true;
+        state.hasError = false;
+      })
+      .addCase(fetchUpdateUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isLoading = false;
+        state.hasError = false;
+      })
+      .addCase(fetchUpdateUser.rejected, (state, action) => {
         state.hasError = true;
         state.isLoading = false;
       });

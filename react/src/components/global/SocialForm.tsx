@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Input } from 'antd';
+
 
 const SocialForm = () => {
-  const [telegram, setTelegram] = useState('');
-  const [vk, setVk] = useState('');
+    const [telegram, setTelegram] = useState('');
+    const [vk, setVk] = useState('');
 
   const handleChange = (event: any, setter: any) => {
     setter(event.target.value);
@@ -14,18 +16,26 @@ const SocialForm = () => {
 
   return (
     <div>
-      <div>
-        <label htmlFor="facebook">Facebook:</label>
-        <input type="text" id="facebook" value={telegram} onChange={(e) => handleChange(e, setTelegram)} />
-      </div>
-      <div>
-        <label htmlFor="twitter">Twitter:</label>
-        <input type="text" id="twitter" value={vk} onChange={(e) => handleChange(e, setVk)} />
-      </div>
-      {/* <div>
-        <button onClick={() => handleSave(setTelegram)}>Save Facebook</button>
-        <button onClick={() => handleSave(setVk)}>Save Twitter</button>
-      </div> */}
+       <label htmlFor="telegram">Telegram</label>
+        <Input
+          size="large"
+          id="telegram"
+          placeholder={'@telegramTag'}
+          value={telegram}
+          type="text"
+          onChange={(e) => handleChange(e, setTelegram)}
+        />
+
+        <label htmlFor="vk">VK</label>
+        <Input
+          size="large"
+          id="vk"
+          placeholder={'https://vk.com/yourname'}
+          value={vk}
+          type="text"
+          onChange={(e) => handleChange(e, setVk)}
+        />
+
     </div>
   );
 };
