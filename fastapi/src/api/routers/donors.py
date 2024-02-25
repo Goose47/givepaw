@@ -38,21 +38,14 @@ async def index():
 @router.post('/', response_model=donors.NewDonor)
 async def store(data: donors.NewDonorCreate):
     try:
-        old_donor = donors.DonorCreate(pet_id=data.pet_id,
-                                       city_id=1,
-                                       recipient_id=data.recipient_id if data.recipient_id else None
-                                       )
         donor: models.Donor = await SqlAlchemyRepository(db_manager.get_session,
-                                                         model=models.Donor).create(old_donor)
-
-        clinic = create_clinic(await SqlAlchemyRepository(db_manager.get_session,
-                                                          model=models.Clinic).get_single(id=data.clinic_id))
+                                                         model=models.Donor).create(data)
 
         return donors.NewDonor(id=donor.id,
                                pet=create_pet(donor.pet),
                                recipient=create_recipient(donor.recipient) if donor.recipient else None,
-                               clinic=clinic,
-                               date=data.date)
+                               clinic=donor.clinic,
+                               date=donor.date)
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
