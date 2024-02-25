@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { RadioChangeEvent } from "antd";
 import { Button, Input, Radio, Select, Space } from "antd";
+import { Checkbox } from 'antd';
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPets, selectPets } from "../redux/slices/PetsSlice";
@@ -303,7 +304,9 @@ const AnimalForm = (props: any) => {
                   })
                 }
               </div>
-
+              <div>
+              <Checkbox onChange={() => {}}><div> Нужна переноска</div></Checkbox>
+              </div>
             </>
           )
         }
