@@ -49,14 +49,14 @@ const Profile = () => {
               <div className='Profile__Header__Buttons'>
                 <div>
                   <Link to={"/profile-edit"}>
-                    <Button type="primary" {...user}>
+                    <Button type="primary" >
                       Редактировать профиль
                     </Button>
                   </Link>
                 </div>
                 <div>
                   <Link to={"/password-edit"}>
-                    <Button type="primary" {...user}>
+                    <Button type="primary" >
                       Изменить пароль
                     </Button>
                   </Link>
