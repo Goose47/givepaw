@@ -4,14 +4,7 @@ import { Button, Input, Radio, Select, Space } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPets, selectPets } from "../redux/slices/PetsSlice";
-import {
-  createPet,
-  getAnimalTypes,
-  getBloodTypes,
-  getBreeds,
-  getComponentTypes,
-  getVaccines
-} from "../service/data.service";
+import { getAnimalTypes, getBloodTypes, getBreeds, getComponentTypes, getVaccines } from "../service/data.service";
 import { selectUser } from "../redux/slices/UserSlice";
 import MyPetSelect from "../components/Forms/MyPetSelect";
 import { useNavigate } from "react-router-dom";
@@ -64,24 +57,26 @@ const AnimalForm = (props: any) => {
     setImage(file);
   };
 
-  const [error, setError] = useState<string>()
+  const [error, setError] = useState<string>();
 
   const handleSend = () => {
     if (!animalType) {
-      setError("Неверно указан тип животного")
+      setError("Неверно указан тип животного");
     } else if (!breed) {
-      setError("Неверно указана порода животного")
+      setError("Неверно указана порода животного");
     } else if (!bloodGroup) {
-      setError("Неверно указана группа крови")
+      setError("Неверно указана группа крови");
     } else if (!petName) {
-      setError("Неверно указано имя питомца")
+      setError("Неверно указано имя питомца");
     } else if (!age) {
-      setError("Неверно указан возраст питомца")
+      setError("Неверно указан возраст питомца");
     } else if (!weight) {
-      setError("Неверно указан вес питомца")
+      setError("Неверно указан вес питомца");
+    } else if (vaccinesDates.filter((el) => !el).length) {
+      setError("Неверно указаны даты вакцинаций");
     } else {
-      setError(undefined)
-      axios.post('pets/', {
+      setError(undefined);
+      axios.post("pets/", {
         "blood_group_id": bloodGroup,
         "breed_id": breed,
         "breed": null,
@@ -90,13 +85,18 @@ const AnimalForm = (props: any) => {
         "name": petName,
         "age": age,
         "weight": weight,
-        "vaccinations": [
-          {
-            "vaccination_id": 1,
-            "vaccination_date": "2024-02-24"
-          }
-        ]
-      })
+        "vaccinations": vaccinations
+      }).then(response => {
+        if (props.mode === "donor") {
+          navigate("/donor/" + response.data.id);
+        } else {
+          navigate("/recipient/" + response.data.id);
+        }
+      }).catch(error => {
+        if (error.response.status === 400) {
+          alert(error.response.data.detail);
+        }
+      });
     }
 
   };
@@ -120,7 +120,7 @@ const AnimalForm = (props: any) => {
   const [selectedPetId, setSelectedPetId] = useState<number>();
   const [selectingPetId, setSelectingPetId] = useState<boolean>(false);
 
-  const [avatar, setAvatar] = useState<any>(null)
+  const [avatar, setAvatar] = useState<any>(null);
 
   const dispatch = useDispatch();
   const pets = useSelector(selectPets);
@@ -131,31 +131,54 @@ const AnimalForm = (props: any) => {
 
   useEffect(() => {
     if (pets.length > 0 && !selectingPetId && !selectedPetId) {
-      setSelectingPetId(true)
+      setSelectingPetId(true);
     }
   }, [pets]);
 
   const handleAppend = () => {
-    console.log(vaccinationsOptions)
+    console.log(vaccinationsOptions);
     setSelectingPetId(false);
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSelect = (value: number) => {
-    setSelectedPetId(value)
-    setSelectingPetId(false)
+    setSelectedPetId(value);
+    setSelectingPetId(false);
     if (props.mode === "donor") {
-      navigate('/donor/' + value)
+      navigate("/donor/" + value);
     } else {
-      navigate('/recipient/' + value)
+      navigate("/recipient/" + value);
     }
-  }
+  };
 
-  const [selectedVaccines, setSelectedVaccines] = useState<number[]>([])
+  const [selectedVaccines, setSelectedVaccines] = useState<number[]>([]);
+  const [vaccinesDates, setVaccinesDate] = useState<string[]>([]);
 
-  const handleSelectVaccines = (vaccines : any) => {
-    setSelectedVaccines(vaccines)
+  useEffect(() => {
+    let vaccinesDatesCopy = JSON.parse(JSON.stringify(vaccinesDates))
+    while (vaccinesDatesCopy.length < selectedVaccines.length) {
+      vaccinesDatesCopy.push("")
+    }
+    while (vaccinesDatesCopy.length > selectedVaccines.length) {
+      vaccinesDatesCopy.pop()
+    }
+    setVaccinesDate(vaccinesDatesCopy)
+  }, [selectedVaccines]);
+
+  const handleSelectVaccines = (vaccines: any) => {
+    setSelectedVaccines(vaccines);
+  };
+
+  const handleUpdateVaccineById = (id: number, e: any) => {
+    console.log(selectedVaccines, vaccinesDates)
+    let vaccineDatesCopy = JSON.parse(JSON.stringify(vaccinesDates))
+    for (let i = 0; i < selectedVaccines.length; i++) {
+      if (selectedVaccines[i] === id) {
+        vaccineDatesCopy[i] = e.target.value
+      }
+    }
+    setVaccinesDate(vaccineDatesCopy)
   }
 
   return (
@@ -180,7 +203,13 @@ const AnimalForm = (props: any) => {
                   <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
                     {animalTypeOptions.map((animalType) => (
                       <Radio.Button key={animalType.id} value={animalType.id}>
-                        {animalType.title}
+                        <span style={{ display: 'flex', alignItems: 'center' }}>
+                        <img style={{
+                          width: 20,
+                          height: 20,
+                          marginRight: 5,
+                        }} src={animalType.icon} alt="#" /> {animalType.title}
+                          </span>
                       </Radio.Button>
                     ))}
                   </Radio.Group>
@@ -224,36 +253,39 @@ const AnimalForm = (props: any) => {
               <Input id="weight" placeholder="Вес" value={weight} type="text" onChange={(e) => setWeight(e.target.value)} />
 
               <label htmlFor="file">Аватар животного</label>
-              <UploadPhoto setBase={setAvatar}/>
+              <UploadPhoto setBase={setAvatar} />
 
-              <Space style={{ width: "100%" }} direction="vertical">
-                <Select
-                  mode="multiple"
-                  allowClear
-                  style={{ width: "100%" }}
-                  placeholder="Прививки"
-                  defaultValue={vaccinations}
-                  onChange={handleSelectVaccines}
-                  options={vaccinationsOptions.map((el: any) => {
-                    return {
-                      value: el.id,
-                      label: el.title
-                    };
-                  })}
-                />
-              </Space>
+              <div className="Vaccine__Main">
+                <Space style={{ width: "100%" }} direction="vertical">
+                  <Select
+                    mode="multiple"
+                    allowClear
+                    style={{ width: "100%" }}
+                    placeholder="Прививки"
+                    onChange={handleSelectVaccines}
+                    options={vaccinationsOptions.map((el: any) => {
+                      return {
+                        value: el.id,
+                        label: el.title
+                      };
+                    })}
+                  />
+                </Space>
+              </div>
 
-              <label htmlFor="file">Даты прививок</label>
               <div className="Vaccines__Dates">
+                <div className="Vaccines__Dates__Title">Даты прививок</div>
                 {
                   selectedVaccines.map(el => {
-                    let currentVaccine : any = vaccinationsOptions.filter((k : any) => k.id == el)[0]
+                    let currentVaccine: any = vaccinationsOptions.filter((k: any) => k.id == el)[0];
                     return (
-                      <div className="Vaccines__Items">
-                        <div>{ currentVaccine.title }</div>
-                        <div><input type="date" onChange={(e : any) => 0}/></div>
+                      <div className="Vaccines__Dates__Item">
+                        <div>{currentVaccine.title}</div>
+                        <div>
+                          <input type="date" onChange={(e: any) => handleUpdateVaccineById(el, e)} />
+                        </div>
                       </div>
-                    )
+                    );
                   })
                 }
               </div>
@@ -287,9 +319,8 @@ const AnimalForm = (props: any) => {
       {/*)}*/}
 
 
-
     </div>
-  )
-}
+  );
+};
 
 export default AnimalForm;
