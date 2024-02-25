@@ -157,7 +157,7 @@ export const createRecipient = async (
 
 export const getPets = async () => {
   try {
-    const response = await axios.get('pets/get_all');
+    const response = await axios.get('pets/me');
     return response.data;
   } catch (error : any) {
     if (error.response.status === 401) {
