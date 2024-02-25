@@ -120,7 +120,7 @@ export const createRecipient = async (
 
 export const getPets = async () => {
   try {
-    const response = await axios.get('pets/get_all');
+    const response = await axios.get('pets/me');
     return response.data;
   } catch (error) {
     console.error(error);
