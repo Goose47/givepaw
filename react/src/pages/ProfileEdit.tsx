@@ -28,7 +28,7 @@ useEffect(() => {
     dispatch(fetchUser() as any)
     console.log(user);
 
-},[dispatch, user]) 
+},[dispatch]) 
 
 
   const handleSave = () => {
