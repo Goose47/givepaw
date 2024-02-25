@@ -29,7 +29,6 @@ class NewDonorCreate(BaseModel):
 class NewDonor(BaseModel):
     id: int
     pet: Pet
-    city: City
     recipient: Optional[Recipient] = None
     clinic: Clinic
 
