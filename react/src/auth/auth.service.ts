@@ -31,7 +31,10 @@ export const register = async (
   } catch (error : any) {
     if (error.response.status === 400) {
       alert(error.response.data.detail)
+    } else if (error.response.status === 422) {
+      alert("Некорректный e-mail адрес")
     }
+    return null;
   }
 };
 
