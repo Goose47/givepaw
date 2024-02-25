@@ -149,13 +149,12 @@ async def create_user_pet(
 
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)
 
-        if len(data.vaccinations):
+        if len(data.vaccinations) > 0:
             vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.vaccination_id,
                                            vaccination_date=v.vaccination_date) for v in data.vaccinations]
-            vaccinations = await SqlAlchemyRepository(db_manager.get_session, model=models.PetVaccination)\
+            vaccinations = await SqlAlchemyRepository(db_manager.get_session, model=models.PetVaccination) \
                 .bulk_create(vaccinations)
 
         return create_pet(pet)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
-
