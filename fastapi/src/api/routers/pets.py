@@ -130,7 +130,7 @@ async def create_user_pet(
         data: CreatePet,
         auth: Auth = Depends()
 ):
-    # await auth.check_access_token(request)
+    await auth.check_access_token(request)
     try:
         avatar = None
         if data.avatar:
@@ -143,8 +143,8 @@ async def create_user_pet(
                 .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
         data.avatar_id = avatar.id if avatar else None
-        # data.user_id = request.state.user.id
-        data.user_id = 17
+        data.user_id = request.state.user.id
+
         pet_data = create_pet_model(data)
 
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)
