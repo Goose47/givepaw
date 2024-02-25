@@ -8,7 +8,7 @@
         @livewireStyles
     </head>
     <body>
-        @section('table')
+        @yield('table')
         @livewireScripts
     </body>
 </html>
