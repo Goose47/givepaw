@@ -10,14 +10,14 @@ import { fetchUpdateSocial } from '../redux/slices/SocialSlice';
 
 const ProfileEdit = () => {
 const user = useSelector(selectUser);
-  const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
-  const [name, setName] = useState(user.name);
-  const [surname, setSurname] = useState(user.surname);
-  const [patronymic, setPatronymic] = useState(user.patronymic);
-  const [city_id, setCity] = useState<number>(user.city.id);
-  const [telegram, setTelegram] = useState(user.user_network.telegram);
-  const [vk, setVk] = useState(user.user_network.vk);
+  const [username, setUsername] = useState(user?.username);
+  const [email, setEmail] = useState(user?.email);
+  const [name, setName] = useState(user?.name);
+  const [surname, setSurname] = useState(user?.surname);
+  const [patronymic, setPatronymic] = useState(user?.patronymic);
+  const [city_id, setCity] = useState<number>(user?.city.id);
+  const [telegram, setTelegram] = useState(user?.user_network.telegram);
+  const [vk, setVk] = useState(user?.user_network.vk);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState<any>()

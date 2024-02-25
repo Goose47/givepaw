@@ -20,7 +20,7 @@ const Profile = () => {
   useEffect(() => {
     dispatch(fetchUser() as any);
     dispatch(fetchPets() as any);
-    console.log(user.avatar);
+    console.log(user);
   }, [dispatch]);
 
   const handleLogout = () => {
