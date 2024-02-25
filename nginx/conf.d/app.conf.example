@@ -77,45 +77,9 @@ server {
       proxy_buffering off;
       proxy_pass http://uvicorn;
   }
-}
 
-
-server {
-  listen 80;
-  server_name {laravel_server_name};
-
-  location /.well-known/acme-challenge/ {
-    root /var/www/certbot;
-  }
-
-  location / {
-    return 301 https://$host$request_uri;
-  }
-}
-
-server {
-    listen 443;
-
-    ssl_certificate /etc/letsencrypt/live/givepaw/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/givepaw/privkey.pem; # managed by Certbot
-
-    server_name {{laravel_server_name}};
-    root /var/www/app/laravel/public;
-    index index.php;
-
-    charset utf-8;
-
-    location ~ \.php$ {
-        try_files $uri =404;
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass givepaw_laravel:9000;
-        fastcgi_index index.php;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param PATH_INFO $fastcgi_path_info;
-    }
-    location / {
-        try_files $uri $uri/ /index.php?$query_string;
-        gzip_static on;
+  location /static {
+      root /path/to/app/static;
     }
 }
+
