@@ -37,18 +37,20 @@ export const getVaccines = async () => {
 
 export const editSocial = async (telegram: string, vk: string) => {
   try {
-    const response = await axios.put('user_networks', {telegram, vk});
+    const response = await axios.put('user_networks/', {telegram, vk});
     console.log(editSocial);
     console.log(response.data);
     return response.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error : any) {
+    if (error.response.status === 400) {
+      alert(error.response.data.detail)
+    }
   }
 };
 
 export const getSocial = async () => {
   try {
-    const response = await axios.get('user_networks');
+    const response = await axios.get('user_networks/');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -57,7 +59,7 @@ export const getSocial = async () => {
 
 export const editUser = async (surname: string, name: string, patronymic: string, username: string, email: string, city_id: string) => {
   try {
-    const response = await axios.put('users/user', {surname, name, patronymic,username, email, city_id });
+    const response = await axios.put('users/user/', {surname, name, patronymic,username, email, city_id });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -159,7 +161,7 @@ export const createRecipient = async (
 
 export const getPets = async () => {
   try {
-    const response = await axios.get('pets/get_all');
+    const response = await axios.get('pets/me');
     return response.data;
   } catch (error : any) {
     if (error.response.status === 401) {

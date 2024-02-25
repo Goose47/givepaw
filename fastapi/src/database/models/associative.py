@@ -74,6 +74,7 @@ class Pet(Base):
 
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
+
     @property
     def avatar_link(self):
         return (settings_app.APP_URL + '/files/avatars/' + self.avatar.photo_path) if self.avatar_id else None
@@ -152,8 +153,10 @@ class Donor(Base):
     recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), nullable=True)
     recipient: Mapped["Recipient"] = relationship(lazy="selectin", uselist=False)
 
-    city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
-    city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
+    clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
+    clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
+
+    date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
 class Recipient(Base):
@@ -184,10 +187,29 @@ class Clinic(Base):
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    address: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    phone: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    title: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    address: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    email: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    phone: Mapped[str] = mapped_column(String, index=True, nullable=False)
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
     city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
+
+
+class DonorBlood(Base):
+    __tablename__ = "donors__bloods"
+    extend_existing = True
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    donor_id: Mapped[int] = mapped_column(ForeignKey("donors.id"), nullable=False)
+    donor: Mapped["Donor"] = relationship(lazy="selectin", uselist=False)
+
+    recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), nullable=True)
+    recipient: Mapped["Recipient"] = relationship(lazy="selectin", uselist=False)
+
+    clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=True)
+    clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
+
+    date: Mapped[datetime.date] = mapped_column(nullable=False)
+    blood_amount: Mapped[float] = mapped_column(nullable=False, default=0)

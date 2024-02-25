@@ -124,13 +124,35 @@ async def get_all(request: Request):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
+@router.get('/{pet_id}', response_model=MyPetResponse)
+async def get_pet_by_id(pet_id: int):
+    try:
+        pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet) \
+            .get_single(id=pet_id)
+
+        return MyPetResponse(
+            id=pet.id,
+            blood_group_title=pet.blood_group.blood_group.title,
+            breed_title=pet.breed if pet.breed else pet._breed.title,
+            pet_type_title=pet.pet_type.title,
+            avatar_link=pet.avatar_link,
+            name=pet.name,
+            age=pet.age,
+            weight=pet.weight,
+            vaccinations=[vac.title for vac in pet.vaccinations]
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
 @router.post('/', response_model=Pet)
 async def create_user_pet(
         request: Request,
         data: CreatePet,
         auth: Auth = Depends()
 ):
-    # await auth.check_access_token(request)
+    await auth.check_access_token(request)
     try:
         avatar = None
         if data.avatar:
@@ -143,8 +165,8 @@ async def create_user_pet(
                 .create(AvatarCreate(photo_path=path, photo_thumb=path))
 
         data.avatar_id = avatar.id if avatar else None
-        # data.user_id = request.state.user.id
-        data.user_id = 17
+        data.user_id = request.state.user.id
+
         pet_data = create_pet_model(data)
 
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet).create(pet_data)
@@ -152,10 +174,9 @@ async def create_user_pet(
         if len(data.vaccinations):
             vaccinations = [PetVaccination(pet_id=pet.id, vaccination_id=v.vaccination_id,
                                            vaccination_date=v.vaccination_date) for v in data.vaccinations]
-            vaccinations = await SqlAlchemyRepository(db_manager.get_session, model=models.PetVaccination)\
+            vaccinations = await SqlAlchemyRepository(db_manager.get_session, model=models.PetVaccination) \
                 .bulk_create(vaccinations)
 
         return create_pet(pet)
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
-

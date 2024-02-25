@@ -35,13 +35,24 @@ months_dict = {
 
 @router.get('/', response_model=List[recipients.Recipient])
 async def index():
-    # try:
-    recipient_list: List[model.Recipient] = await SqlAlchemyRepository(db_manager.get_session,
-                                                                       model=model.Recipient).get_multi()
-    return [create_recipient(r) for r in recipient_list]
+    try:
+        recipient_list: List[model.Recipient] = await SqlAlchemyRepository(db_manager.get_session,
+                                                                           model=model.Recipient).get_multi()
+        return [create_recipient(r) for r in recipient_list]
 
-    # except Exception as e:
-    # raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.get('/{recipient_id}', response_model=recipients.Recipient)
+async def get_recipient_by_id(recipient_id: int):
+    try:
+        recipient: model.Recipient = await SqlAlchemyRepository(db_manager.get_session,
+                                                                model=model.Recipient).get_single(id=recipient_id)
+        return create_recipient(recipient)
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
 @router.post('/', response_model=recipients.Recipient)
