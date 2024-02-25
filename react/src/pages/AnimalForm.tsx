@@ -7,7 +7,7 @@ import { fetchPets, selectPets } from "../redux/slices/PetsSlice";
 import { getAnimalTypes, getBloodTypes, getBreeds, getComponentTypes, getVaccines } from "../service/data.service";
 import { selectUser } from "../redux/slices/UserSlice";
 import MyPetSelect from "../components/Forms/MyPetSelect";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import UploadPhoto from "../components/global/UploadPhoto";
 
@@ -58,6 +58,7 @@ const AnimalForm = (props: any) => {
   };
 
   const [error, setError] = useState<string>();
+  const { id } = useParams()
 
   const handleSend = () => {
     if (!animalType) {
@@ -99,7 +100,7 @@ const AnimalForm = (props: any) => {
         } else if (props.mode === "recipient") {
           navigate("/recipient/" + response.data.id);
         } else {
-          navigate("/respond/" + response.data.id);
+          navigate("/respond/" + response.data.id + "/" + id);
         }
       }).catch(error => {
         if (error.response.status === 400) {
@@ -159,7 +160,7 @@ const AnimalForm = (props: any) => {
     } else if (props.mode === "recipient") {
       navigate("/recipient/" + value);
     } else {
-      navigate("/respond/" + value);
+      navigate("/respond/" + value + '/' + id);
     }
   };
 

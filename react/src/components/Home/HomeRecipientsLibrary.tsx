@@ -10,6 +10,7 @@ export interface Recipient {
   name: string;
   blood_group: string;
   place: string;
+  clinic_id?: number;
   number_required: number;
   deadline: string;
   reason: string;

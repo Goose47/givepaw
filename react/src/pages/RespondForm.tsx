@@ -4,10 +4,14 @@ import axios from "axios";
 import { Button, notification, Select } from "antd";
 import DateSelector from "../components/global/DateSelector";
 import { BloodComponent, Clinic } from "./DonorForm";
+import PetItem, { Pet } from "../components/global/PetItem";
+import { Recipient } from "../components/Home/HomeRecipientsLibrary";
 
 const RespondForm = () => {
   const location = useLocation();
   const { pet, id } = useParams();
+
+  const [currentRecipient, setCurrentRecipient] = useState<any>()
 
   const navigate = useNavigate()
   const [bloods, setBloods] = useState<BloodComponent[]>([])
@@ -22,6 +26,9 @@ const RespondForm = () => {
     // })
     axios.get('clinics/').then(response => {
       setClinics(response.data)
+    })
+    axios.get('recipients/' + id).then(response => {
+      setCurrentRecipient(response.data)
     })
   }, []);
 
@@ -47,67 +54,33 @@ const RespondForm = () => {
   };
 
   const handleDonorCreate = () => {
-    axios.post('donors/', {
-      'clinic_id': clinic,
-      'pet_id': id,
-      'recipient_id': pet,
-      'date': date
-    }).then(response => {
-      openNotificationWithIcon()
-      setTimeout(() => {
-        navigate('/')
-      }, 3000)
-    }).catch(error => {
-      if (error.response.status === 400) {
-        alert(error.response.data.detail)
-      }
-    })
+    if (currentRecipient) {
+      axios.post('donors/', {
+        'clinic_id': currentRecipient.clinic.id,
+        'pet_id': pet,
+        'recipient_id': id,
+        'date': date
+      }).then(response => {
+        openNotificationWithIcon()
+        setTimeout(() => {
+          navigate('/')
+        }, 3000)
+      }).catch(error => {
+        if (error.response.status === 400) {
+          alert(error.response.data.detail)
+        }
+      })
+    }
+
   }
 
   return (
     <div className="Form">
       <h1>Срочный сбор крови</h1>
-      {contextHolder}
-      {/*<div className="Form__Item">*/}
-      {/*  <div>Компонент крови</div>*/}
-      {/*  {bloods && (*/}
-      {/*    <div className="Form__Element">*/}
-      {/*      <Radio.Group size="large" onChange={handleChangeBloodComponent} defaultValue="a">*/}
-      {/*        {bloods.map((component) => (*/}
-      {/*          <Radio.Button key={component.id} value={component.id}>*/}
-      {/*            {component.title}*/}
-      {/*          </Radio.Button>*/}
-      {/*        ))}*/}
-      {/*      </Radio.Group>*/}
-      {/*    </div>*/}
-      {/*  )}*/}
-      {/*</div>*/}
 
-      {/*<div className="Form__Item Form__Clinic">*/}
-      {/*  <div>Выберите клинику, в которой вам удобно сдать кровь</div>*/}
-      {/*  {clinics && (*/}
-      {/*    <Select*/}
-      {/*      size="large"*/}
-      {/*      showSearch*/}
-      {/*      onClick={(e) => e?.stopPropagation()}*/}
-      {/*      onChange={handleSelectClinic}*/}
-      {/*      placeholder="Выберите клинику"*/}
-      {/*      optionFilterProp="search"*/}
-      {/*      options={clinics.map((item) => {*/}
-      {/*        return {*/}
-      {/*          label: (*/}
-      {/*            <>*/}
-      {/*              {item.title} {' '}*/}
-      {/*              <span>{item.city?.title}</span>*/}
-      {/*            </>*/}
-      {/*          ),*/}
-      {/*          value: item.id,*/}
-      {/*          search: item.title + ', ' + item.city?.title,*/}
-      {/*        };*/}
-      {/*      })}*/}
-      {/*    />*/}
-      {/*  )}*/}
-      {/*</div>*/}
+      { currentRecipient && <PetItem pet={currentRecipient.pet} /> }
+
+      {contextHolder}
 
       <div className="Form__Item">
         <div>Когда вам удобно прийти?</div>
