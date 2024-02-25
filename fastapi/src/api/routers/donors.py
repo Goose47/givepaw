@@ -38,7 +38,7 @@ async def index():
 @router.post('/', response_model=donors.NewDonor)
 async def store(data: donors.NewDonorCreate):
     try:
-        old_donor = donors.DonorCreate(id=data.id,
+        old_donor = donors.DonorCreate(pet_id=data.pet_id,
                                        city_id=1,
                                        recipient_id=data.recipient_id if data.recipient_id else None
                                        )
