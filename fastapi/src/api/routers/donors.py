@@ -19,17 +19,17 @@ router = APIRouter(
 )
 
 
-@router.get('/', response_model=List[donors.Donor])
+@router.get('/', response_model=List[donors.NewDonor])
 async def index():
     try:
         all_donors: List[models.Donor] = await SqlAlchemyRepository(db_manager.get_session,
                                                                     model=models.Donor).get_multi()
-        return [donors.Donor(
-            id=donor.id,
-            pet=create_pet(donor.pet),
-            city=create_city(donor.city),
-            recipient=create_recipient(donor.recipient) if donor.recipient else None)
-            for donor in all_donors]
+        return [donors.NewDonor(id=donor.id,
+                                pet=create_pet(donor.pet),
+                                recipient=create_recipient(donor.recipient) if donor.recipient else None,
+                                clinic=donor.clinic,
+                                date=donor.date)
+                for donor in all_donors]
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
@@ -51,16 +51,17 @@ async def store(data: donors.NewDonorCreate):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.get('/{user_id}', response_model=List[donors.Donor])
+@router.get('/{user_id}', response_model=List[donors.NewDonor])
 async def get_donors_by_user_id(user_id: int):
     try:
         all_donors: list[models.Donor] = await SqlAlchemyRepository(db_manager.get_session,
                                                                     model=models.Donor).get_multi()
 
-        return [donors.Donor(id=donor.id,
-                             pet=create_pet(donor.pet),
-                             city=create_city(donor.city)
-                             )
+        return [donors.NewDonor(id=donor.id,
+                                pet=create_pet(donor.pet),
+                                recipient=create_recipient(donor.recipient) if donor.recipient else None,
+                                clinic=donor.clinic,
+                                date=donor.date)
                 for donor in all_donors if donor.pet.user_id == user_id]
 
     except Exception as e:
