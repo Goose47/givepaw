@@ -33,7 +33,7 @@ const MostNecessary = () => {
     <div style={{ 'marginBottom' : '30px'}}> 
       <div style={{display: 'flex',
       }}>
-        <div  style={{'marginRight': '10px'
+        <div  style={{'marginRight': '10px', color:'#f63e3e'
       }}>Наиболее востребованная кровь:</div>
         <div  style={{'marginRight': '10px'
       }}>{necessary.blood_group.title},</div>
@@ -49,7 +49,7 @@ const MostNecessary = () => {
         </div>
         <div style={{display: 'flex'
       }}>
-         <div style={{'marginRight': '10px'
+         <div style={{'marginRight': '10px', color:'#f63e3e'
       }}>Кровь, которой меньше всего:</div>
         <div style={{'marginRight': '10px'
       }}>{min.blood_group.title},</div>

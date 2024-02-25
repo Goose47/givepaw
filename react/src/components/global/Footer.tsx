@@ -9,33 +9,30 @@ const Footer = () => {
             <h3>О донорстве</h3>
             <ul>
               <li>
-                <Link to="#">Донорство крови</Link>
+                <Link to="haha">Донорство крови</Link>
               </li>
               <li>
-                <Link to="#">Как стать донором?</Link>
+                <Link  to="haha">Как стать донором?</Link>
               </li>
               <li>
-                <Link to="#">Где сдать кровь?</Link>
+                <Link  to="haha">Где сдать кровь?</Link>
               </li>
               <li>
-                <Link to="#">Требования к донору</Link>
-              </li>
-              <li>
-                <Link to="#">Костный мозг</Link>
+                <Link  to="haha">Требования к донору</Link>
               </li>
             </ul>
           </div>
           <div className="Footer__Box">
-            <h3>О Donor.Search</h3>
+            <h3>О GivePaw</h3>
             <ul>
               <li>
-                <Link to="#">Наш магазин</Link>
+                <Link  to="haha">Наш магазин</Link>
               </li>
               <li>
-                <Link to="#">Журнал</Link>
+                <Link  to="haha">Журнал</Link>
               </li>
               <li>
-                <Link to="#">Мероприятия</Link>
+                <Link  to="haha">Мероприятия</Link>
               </li>
             </ul>
           </div>
@@ -43,19 +40,19 @@ const Footer = () => {
             <h3>НКО</h3>
             <ul>
               <li>
-                <Link to="#">Об организации</Link>
+                <Link  to="haha">Об организации</Link>
               </li>
               <li>
-                <Link to="#">Помочь проекту</Link>
+                <Link  to="haha">Помочь проекту</Link>
               </li>
               <li>
-                <Link to="#">Найти донора</Link>
+                <Link  to="haha">Найти донора</Link>
               </li>
               <li>
-                <Link to="#">Спецпроекты</Link>
+                <Link  to="haha">Спецпроекты</Link>
               </li>
               <li>
-                <Link to="#">Награды</Link>
+                <Link  to="haha">Награды</Link>
               </li>
             </ul>
           </div>
@@ -63,10 +60,10 @@ const Footer = () => {
             <h3>Наши партнеры</h3>
             <ul>
               <li>
-                <Link to="#">Благодарности</Link>
+                <Link  to="haha">Благодарности</Link>
               </li>
               <li>
-                <Link to="#">Партнеры</Link>
+                <Link  to="haha">Партнеры</Link>
               </li>
             </ul>
           </div>
@@ -74,16 +71,16 @@ const Footer = () => {
             <h3>Организациям</h3>
             <ul>
               <li>
-                <Link to="#">Партнерство с бизнесом</Link>
+                <Link  to="haha">Партнерство с бизнесом</Link>
               </li>
               <li>
-                <Link to="#">HR и донорство</Link>
+                <Link  to="haha">HR и донорство</Link>
               </li>
               <li>
-                <Link to="#">Бизнес и донорство</Link>
+                <Link  to="haha">Бизнес и донорство</Link>
               </li>
               <li>
-                <Link to="#">Бонусная программа</Link>
+                <Link  to="haha">Бонусная программа</Link>
               </li>
             </ul>
           </div>
@@ -91,7 +88,7 @@ const Footer = () => {
       </div>
       <div className="Footer__Message">
         <div>
-          DonorSearch © 2010-2024.Все права защищены. <br />
+          GivePaw © 2010-2024.Все права защищены. <br />
           Если не указано иное, все материалы сайта доступны по лицензии Creative Commons CC-BY-SA 4.0. <br />
           Прочтите нашу политику конфиденциальности и пользовательское соглашение. <br />
         </div>
