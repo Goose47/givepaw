@@ -130,7 +130,7 @@ const AnimalForm = (props: any) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (pets.length > 0 && !selectingPetId && !selectedPetId) {
+    if (pets?.length > 0 && !selectingPetId && !selectedPetId) {
       setSelectingPetId(true);
     }
   }, [pets]);

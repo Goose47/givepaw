@@ -159,7 +159,9 @@ export const getPets = async () => {
   try {
     const response = await axios.get('pets/my');
     return response.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error : any) {
+    if (error.response.status === 401) {
+      window.location.replace("/login")
+    }
   }
 };

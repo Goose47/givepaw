@@ -36,7 +36,7 @@ html {
 }
 
 .file-input {
-  display: none;
+  display: none !important;
   opacity: 0;
   transform: scale(0);
   height: 0;
@@ -65,6 +65,63 @@ html {
 }
 
 .ant-radio-group {
-  display: flex;
+  width: 100%;
+  & > * {
+    display: inline-block;
+  }
 }
 
+
+
+
+
+
+
+
+
+
+h2 {
+  text-align: center;
+}
+
+.date-options {
+  display: flex;
+  flex-wrap: wrap;
+  label {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+}
+
+.date-option {
+  margin-right: 5px;
+}
+
+input[type="radio"] {
+  display: none !important;
+  height: 0;
+  opacity: 0;
+}
+
+
+
+input[type="radio"]:checked + label {
+  background-color: #f63e3e;
+  color: #fff;
+}
+
+.selected-date {
+  margin-top: 20px;
+  text-align: center;
+}
+.Form__Item {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  div:first-child {
+    font-size: 18px;
+  }
+}

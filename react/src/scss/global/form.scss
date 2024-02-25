@@ -1,5 +1,5 @@
 .Form {
-  max-width: 500px;
+  max-width: 600px;
   margin: 100px auto 200px;
 
   h1 {
@@ -52,6 +52,12 @@
   }
 }
 
+.Form__Clinic {
+  .ant-select {
+    margin-top: 8px;
+    width: 100%;
+  }
+}
 
 .Vaccines__Dates {
   margin-top: 50px;

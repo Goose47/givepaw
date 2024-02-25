@@ -6,12 +6,13 @@
     height: 550px;
     margin: 20px;
     margin-top: 60px;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
     border: $medium;
 
     h1 {
       font-size: 50px;
     }
+
     h2 {
       font-size: 30px;
     }
@@ -37,15 +38,16 @@
     color: white;
   }
 
-  &__Info{
+  &__Info {
     display: flex;
-    padding-bottom: 100px;
+    padding-bottom: 30px;
   }
 
   &__Buttons {
     display: flex;
     align-items: center;
     justify-content: center;
+
     a {
       text-decoration: none;
     }
@@ -86,26 +88,40 @@
 }
 
 @media (max-width: 768px) {
+  .HomeHeader__Info {
+    display: block;
+  }
+  .HomeHeader__Wrapper {
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+@media (max-width: 768px) {
   .HomeHeader__Wrapper {
     display: inline;
+
     h1 {
       font-size: 24px;
     }
+
     h2 {
       font-size: 18px;
     }
+
     p {
       font-size: 14px;
     }
-    img{
-      display: none;
-    }
+
   }
 
   .HomeHeader {
     &__Buttons {
       display: block;
     }
+
     &__Button {
       margin: auto auto 15px;
     }

@@ -70,10 +70,18 @@ function App() {
       ),
     },
     {
-      path: '/donor/{id}',
+      path: '/donor/:id',
       element: (
         <RouterWrapper>
           <DonorForm />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/recipient/:id',
+      element: (
+        <RouterWrapper>
+          <RecipientForm />
         </RouterWrapper>
       ),
     },

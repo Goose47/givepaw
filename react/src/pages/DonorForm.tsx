@@ -1,232 +1,141 @@
 import React, { useEffect, useState } from "react";
-import type { RadioChangeEvent } from "antd";
-import { Button, Input, Radio, Select, Space } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import Radio from "antd/es/radio";
+import { Button, notification, Select } from "antd";
+import DateSelector from "../components/global/DateSelector";
 
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPets, selectPets } from "../redux/slices/PetsSlice";
-import {
-  createPet,
-  getAnimalTypes,
-  getBloodTypes,
-  getBreeds,
-  getComponentTypes,
-  getVaccines
-} from "../service/data.service";
-import { selectUser } from "../redux/slices/UserSlice";
-import MyPetSelect from "../components/Forms/MyPetSelect";
-import { useNavigate } from "react-router-dom";
+interface BloodComponent {
+  "id": 0,
+  "title": "string"
+}
+
+interface Clinic {
+  "id": 0,
+  "title": "string",
+  "address": "string",
+  "email": "string",
+  "phone": "string",
+  "city": {
+    "id": 0,
+    "title": "string",
+    "region": {
+      "id": 0,
+      "title": "string"
+    }
+  }
+}
 
 const DonorForm = () => {
-  const [animalType, setAnimalType] = useState("");
-  const [breed, setBreed] = useState("");
-  const [bloodGroup, setBloodGroup] = useState("");
-  const [petName, setPetName] = useState("");
-  const [bloodComponent, setBloodComponent] = useState("");
-  const [image, setImage] = useState("");
-  const [age, setAge] = useState("");
-  const [weight, setWeight] = useState("");
-  const [vaccinations, setVaccinations] = useState<any[]>([]);
-  const [vaccinationsOptions, setVaccinationsOptions] = useState([]);
-  const user = useSelector(selectUser);
-
-  const [breedOptions, setBreedOptions] = useState<any[]>([]);
-  const [animalTypeOptions, setAnimalTypeOptions] = useState<any[]>([]);
-  const [bloodComponentOptions, setBloodComponentOptions] = useState<any[]>([]);
-  const [bloodGroupOptions, setBloodGroupOptions] = useState<any[]>([]);
-
-  const handleSelectChange = (value: any) => {
-    setBreed(value);
-  };
-
-  const onChangeAnimalType = async (e: RadioChangeEvent) => {
-    const value = e.target.value;
-    setAnimalType(value);
-
-    const breeds = await getBreeds(value);
-    setBreedOptions(breeds);
-
-    const bloodTypes = await getBloodTypes(value);
-    setBloodGroupOptions(bloodTypes);
-  };
-
-  const onChangeBloodGroup = (e: RadioChangeEvent) => {
-    setBloodGroup(e.target.value);
-  };
-
-  const onChangeComponentType = (e: RadioChangeEvent) => {
-    setBloodComponent(e.target.value);
-  };
-
-  const handleImageChange = (event: any) => {
-    const file = event.target.files[0];
-    setImage(file);
-  };
-
-  const handleSend = () => {
-    const fetchSend = async () => {
-      const pet = await createPet(
-        animalType,
-        breed,
-        bloodGroup,
-        petName,
-        bloodComponent,
-        image,
-        age,
-        weight,
-        vaccinations,
-        user
-      );
-    };
-    fetchSend();
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const animalTypes = await getAnimalTypes();
-      setAnimalTypeOptions(animalTypes);
-
-      const components = await getComponentTypes();
-      setBloodComponentOptions(components);
-
-      const vaccinesOptions = await getVaccines();
-      setVaccinationsOptions(vaccinationsOptions);
-    };
-
-    fetchData();
-  }, []);
-
-  const options = [];
-
-  for (let i = 10; i < 36; i++) {
-    options.push({
-      label: i.toString(36) + i,
-      value: i.toString(36) + i
-    });
-  }
-
-  const [selectedPetId, setSelectedPetId] = useState<number>();
-  const [selectingPetId, setSelectingPetId] = useState<boolean>(false);
-
-  const dispatch = useDispatch();
-  const pets = useSelector(selectPets);
-
-  useEffect(() => {
-    dispatch(fetchPets() as any);
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (pets.length > 0 && !selectingPetId && !selectedPetId) {
-      setSelectingPetId(true)
-    }
-  }, [pets]);
-
-  const handleAppend = () => {
-    setSelectingPetId(false);
-  };
 
   const navigate = useNavigate()
+  const [bloods, setBloods] = useState<BloodComponent[]>([])
+  const [clinics, setClinics] = useState<Clinic[]>([])
+  const [blood, setBlood] = useState<number>()
+  const [clinic, setClinic] = useState<number>()
+  const [date, setDate] = useState<string>()
 
-  const handleSelect = (value: number) => {
-    setSelectedPetId(value)
-    setSelectingPetId(false)
-    navigate('/donor/' + value)
+  useEffect(() => {
+    // axios.get('pets/blood_components').then(response => {
+    //   setBloods(response.data)
+    // })
+    axios.get('clinics/').then(response => {
+      setClinics(response.data)
+    })
+  }, []);
+
+  const handleChangeBloodComponent = (value : any) => {
+    setBlood(value.target.value)
+  }
+
+  const handleSelectClinic = (value: any) => {
+    setClinic(value)
+  }
+
+  const handleChangeDate = (value: string) => {
+    setDate(value)
+  }
+
+  const { id } = useParams()
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = () => {
+    api["success"]({
+      message: 'Успешно создано!',
+      description:
+        'Спасибо за оставленную заявку. В ближайшее время с вами свяжется менеджер через социальные сети, указанные в профиле',
+    });
+  };
+
+  const handleDonorCreate = () => {
+    axios.post('donors/', {
+      'clinic_id': clinic,
+      'pet_id': id,
+      'recipient_id': null,
+      'date': date
+    }).then(response => {
+      openNotificationWithIcon()
+      setTimeout(() => {
+        navigate('/')
+      }, 3000)
+    }).catch(error => {
+      if (error.response.status === 400) {
+        alert(error.response.data.detail)
+      }
+    })
   }
 
   return (
-    <div>
+    <div className="Form">
       <h1>Форма донора</h1>
-      {
-        selectingPetId && <MyPetSelect onAppend={handleAppend} onSelect={handleSelect} />
-      }
-      <div className="Form">
-        {
-          !selectingPetId && (
-            <>
-              {animalTypeOptions && (
-                <>
-                  <div>Тип животного</div>
-                  <Radio.Group onChange={onChangeAnimalType} defaultValue="a">
-                    {animalTypeOptions.map((animalType) => (
-                      <Radio.Button key={animalType.id} value={animalType.id}>
-                        {animalType.title}
-                      </Radio.Button>
-                    ))}
-                  </Radio.Group>
-                </>
-              )}
-              {bloodGroupOptions.length > 1 && (
-                <div className="Form__Element">
-                  <div>Группа крови</div>
-                  <Radio.Group onChange={onChangeBloodGroup} defaultValue="a">
-                    {bloodGroupOptions.map((bloodGroup) => (
-                      <Radio.Button key={bloodGroup.id} value={bloodGroup.id}>
-                        {bloodGroup.blood_group.title}, {bloodGroup.rhesus.title}
-                      </Radio.Button>
-                    ))}
-                  </Radio.Group>
-                </div>
-              )}
-              <div className="Form__Element">
-                {breedOptions.length > 0 && (
-                  <Select
-                    id="breed"
-                    placeholder="Порода"
-                    onChange={handleSelectChange}
-                    options={breedOptions.map((breed) => ({ value: breed.id, label: breed.title }))}
-                  />
-                )}
-              </div>
-              <label htmlFor="name">Кличка</label>
-              <Input
-                id="name"
-                placeholder="Кличка"
-                value={petName}
-                type="text"
-                onChange={(e) => setPetName(e.target.value)}
-              />
+      {contextHolder}
+      {/*<div className="Form__Item">*/}
+      {/*  <div>Компонент крови</div>*/}
+      {/*  {bloods && (*/}
+      {/*    <div className="Form__Element">*/}
+      {/*      <Radio.Group size="large" onChange={handleChangeBloodComponent} defaultValue="a">*/}
+      {/*        {bloods.map((component) => (*/}
+      {/*          <Radio.Button key={component.id} value={component.id}>*/}
+      {/*            {component.title}*/}
+      {/*          </Radio.Button>*/}
+      {/*        ))}*/}
+      {/*      </Radio.Group>*/}
+      {/*    </div>*/}
+      {/*  )}*/}
+      {/*</div>*/}
 
-              <label htmlFor="age">Возраст</label>
-              <Input id="age" placeholder="Возраст" value={age} type="text" onChange={(e) => setAge(e.target.value)} />
-
-              <label htmlFor="weight">Вес</label>
-              <Input id="weight" placeholder="Вес" value={weight} type="text" onChange={(e) => setWeight(e.target.value)} />
-
-              <label htmlFor="file">Аватар животного</label>
-              <input id="file" type="file" onChange={handleImageChange} />
-
-            </>
-          )
-        }
-        <Button type="primary" onClick={handleSend}>
-          Добавить питомца
-        </Button>
+      <div className="Form__Item Form__Clinic">
+        <div>Выберите клинику, в которой вам удобно сдать кровь</div>
+        {clinics && (
+          <Select
+            size="large"
+            showSearch
+            onClick={(e) => e?.stopPropagation()}
+            onChange={handleSelectClinic}
+            placeholder="Выберите клинику"
+            optionFilterProp="search"
+            options={clinics.map((item) => {
+              return {
+                label: (
+                  <>
+                    {item.title} {' '}
+                    <span>{item.city?.title}</span>
+                  </>
+                ),
+                value: item.id,
+                search: item.title + ', ' + item.city?.title,
+              };
+            })}
+          />
+        )}
       </div>
 
+      <div className="Form__Item">
+        <div>Когда вам удобно прийти?</div>
+        <DateSelector onChange={handleChangeDate} />
+      </div>
 
-      {/*{bloodComponentOptions && (*/}
-      {/*  <div className="Form__Element">*/}
-      {/*    <div>Компонент крови</div>*/}
-      {/*    <Radio.Group onChange={onChangeComponentType} defaultValue="a">*/}
-      {/*      {bloodComponentOptions.map((component) => (*/}
-      {/*        <Radio.Button key={component.id} value={component.id}>*/}
-      {/*          {component.title}*/}
-      {/*        </Radio.Button>*/}
-      {/*      ))}*/}
-      {/*    </Radio.Group>*/}
-      {/*  </div>*/}
-      {/*)}*/}
-
-      {/*<Space style={{ width: "100%" }} direction="vertical">*/}
-      {/*  <Select*/}
-      {/*    mode="multiple"*/}
-      {/*    allowClear*/}
-      {/*    style={{ width: "100%" }}*/}
-      {/*    placeholder="Прививки"*/}
-      {/*    defaultValue={vaccinations}*/}
-      {/*    onChange={handleSelectChange}*/}
-      {/*    options={options}*/}
-      {/*  />*/}
-      {/*</Space>*/}
+      <Button style={{marginTop: 30}} size="large" type="primary" onClick={handleDonorCreate}>Создать</Button>
 
     </div>
   )
