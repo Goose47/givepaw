@@ -51,7 +51,8 @@ async def store(data: donors.NewDonorCreate):
         return donors.NewDonor(id=donor.id,
                                pet=create_pet(donor.pet),
                                recipient=create_recipient(donor.recipient) if donor.recipient else None,
-                               clinic=clinic)
+                               clinic=clinic,
+                               date=data.date)
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
