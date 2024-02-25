@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchUpdateUser, fetchUser, selectUser } from '../redux/slices/UserSlice';
 import { Input } from 'antd';
 import { Button } from 'antd';
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CitySelect from '../components/global/CitySelect';
 import UploadPhoto from "../components/global/UploadPhoto";
@@ -28,6 +28,10 @@ const ProfileEdit = (props: User) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState<any>()
+
+  useEffect(()=> {
+    console.log(props);
+  })
 
   const handleSave = () => {
 
