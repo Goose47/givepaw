@@ -12,8 +12,6 @@ const ProfileEdit = () => {
 const user = useSelector(selectUser);
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [name, setName] = useState(user.name);
   const [surname, setSurname] = useState(user.surname);
   const [patronymic, setPatronymic] = useState(user.patronymic);
@@ -37,10 +35,6 @@ useEffect(() => {
       setError("Не указано имя пользователя")
     } else if (!email) {
       setError("Не указан адрес электронной почты")
-    } else if (!password || !passwordConfirmation) {
-      setError("Не указан пароль")
-    } else if (password !== passwordConfirmation) {
-      setError("Подтверждение пароля не совпадает")
     } else if (!name || !surname || !patronymic) {
       setError("Не указано ФИО")
     } else {
@@ -136,26 +130,6 @@ useEffect(() => {
           value={vk}
           type="text"
           onChange={(e) => handleChange(e, setVk)}
-        />
-
-        <label htmlFor="password">Новый пароль</label>
-        <Input
-          size="large"
-          id="password"
-          placeholder={'Пароль'}
-          value={password}
-          type="password"
-          onChange={(e) => handleChange(e, setPassword)}
-        />
-
-        <label htmlFor="password-confirm">Повторите пароль</label>
-        <Input
-        size="large"
-        id="password-confirm"
-        placeholder={'Пароль'}
-        value={passwordConfirmation}
-        type="password"
-        onChange={(e) => handleChange(e, setPasswordConfirmation)}
         />
 
         <label htmlFor="city_id">Ваш город</label>
