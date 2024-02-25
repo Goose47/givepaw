@@ -29,7 +29,7 @@ async def get_min():
             await SqlAlchemyRepository(db_manager.get_session, model=models.DonorBlood).get_multi()
 
         bloods: List[tuple[models.PetBloodGroup, float]] = \
-            [(donors_blood.donor.pet.blood_group, donors_blood.amount) for donors_blood in donors_bloods]
+            [(donors_blood.donor.pet.blood_group, donors_blood.blood_amount) for donors_blood in donors_bloods]
 
         if not len(donors_bloods):
             raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail="no blood")
