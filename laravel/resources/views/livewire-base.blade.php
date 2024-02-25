@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+@vite('resources/css/app.css')
   @livewireStyles
 <script src="https://cdn.tailwindcss.com"></script>
   <meta charset="UTF-8">
@@ -11,6 +12,7 @@
 </head>
 
 <body>
+
 @livewireScripts
 </body>
 
