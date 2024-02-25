@@ -21,7 +21,7 @@ const HomeInfo = () => {
       </div>
       
       <div className="HomeHeader__Buttons">
-        <Link to={'donor-form'}>
+        <Link to={'/donor-form'}>
           <div className="HomeHeader__Button">
             <div>
               <div className="HomeHeader__Button__Icon">
@@ -31,7 +31,7 @@ const HomeInfo = () => {
             </div>
           </div>
         </Link>
-        <Link to={'recipient-form'}>
+        <Link to={'/recipient-form'}>
           <div className="HomeHeader__Button">
             <div>
               <div className="HomeHeader__Button__Icon">
