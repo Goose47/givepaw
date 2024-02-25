@@ -31,7 +31,7 @@ async def get_cities():
         raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail={"cause": e.with_traceback})
 
 
-@router.put('/{city_id}', response_model=schemas.City)
+@router.post('/{city_id}', response_model=schemas.City)
 async def update_city(city_id: int, request: Request, data_city: UpdateCity):
     try:
         city: models.City = await SqlAlchemyRepository(db_manager.get_session,
