@@ -45,7 +45,6 @@ const Register = () => {
       setError(null)
       dispatch(fetchRegister({ username, email, phone, password, name, surname, patronymic, city, avatar }) as any).then(
         () => {
-          return
           setError(null)
           setTimeout(() => {
             window.location.replace('https://uvuv643.ru/profile');
