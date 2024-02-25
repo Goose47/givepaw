@@ -68,7 +68,7 @@ export const getMostNecessary = async () => {
 
 export const editUser = async (surname: string, name: string, patronymic: string, username: string, email: string, city_id: string) => {
   try {
-    const response = await axios.post('users/user/', {surname, name, patronymic,username, email, city_id });
+    const response = await axios.post('https://dev.api.uvuv643.ru/users/user', {surname, name, patronymic,username, email, city_id });
     return response.data;
   } catch (error) {
     console.error(error);
