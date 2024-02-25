@@ -3,6 +3,7 @@ import RecipientItem from '../Recipient/RecipientItem';
 import { Link } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa6';
 import axios from 'axios';
+import MostNecessary from '../global/MostNecessary';
 
 export interface Recipient {
   id: number;
@@ -32,6 +33,7 @@ const HomeRecipientsLibrary = () => {
   return (
     <div className="HomeRecipients">
       <h1>Потребность в донорах</h1>
+      <MostNecessary/>
       <div className="HomeRecipients__Wrapper">
         <div className="HomeRecipients__Row">
           {recipients.map((recipient) => (
