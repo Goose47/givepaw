@@ -17,7 +17,7 @@ const RecipientItem = (props: RecipientProps) => {
         <div className="RecipientItem__Content">
           <div className="RecipientItem__Header">
             <div className="RecipientItem__Avatar">
-              <img src={recipient.avatar} alt="#" />
+              <img src={"https://dev.api.uvuv643.ru/files/avatars/" + recipient.avatar} alt="#" />
             </div>
             <div className="RecipientItem__Title">
               {recipient.name}
