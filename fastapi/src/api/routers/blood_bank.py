@@ -9,7 +9,8 @@ from src.database.models import characteristics
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import donors
-from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group
+from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group, create_pet_blood_group_for_bank, \
+    PetBloodGroupForBank
 from src.schemas.clinics import Clinic, create_clinic
 from src.schemas.donors import Donor
 from src.schemas.location import create_city, City
@@ -22,7 +23,7 @@ router = APIRouter(
 )
 
 
-@router.get('/min', response_model=PetBloodGroup)
+@router.get('/min', response_model=PetBloodGroupForBank)
 async def get_min():
     try:
         donors_bloods: List[models.DonorBlood] = \
@@ -44,14 +45,14 @@ async def get_min():
         min_id = min(total_amount.items(), key=lambda x: x[1])
         res = [blood for blood in bloods if blood[0].id == min_id]
 
-        return create_pet_blood_group(res)
+        return create_pet_blood_group_for_bank(res)
 
 
     except Exception as e:
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.get("/necessary", response_model=PetBloodGroup)
+@router.get("/necessary", response_model=PetBloodGroupForBank)
 async def get_the_most_necessary():
     try:
         all_recipients: List[models.Recipient] = \
@@ -63,7 +64,7 @@ async def get_the_most_necessary():
 
         least_common: models.PetBloodGroup = counter.most_common()[0][0]
 
-        return create_pet_blood_group(least_common)
+        return create_pet_blood_group_for_bank(least_common)
 
 
     except Exception as e:
