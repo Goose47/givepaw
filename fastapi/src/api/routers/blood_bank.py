@@ -9,9 +9,8 @@ from src.database.models import characteristics
 from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import donors
-<<<<<<< HEAD
 from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group
-=======
+
 from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group, create_pet_blood_group_for_bank, \
     PetBloodGroupForBank
 from src.schemas.clinics import Clinic, create_clinic
@@ -19,7 +18,6 @@ from src.schemas.donors import Donor
 from src.schemas.location import create_city, City
 from src.schemas.pets import create_pet
 from src.schemas.recipients import create_recipient
->>>>>>> c67ba6c6ef2e8bd57f0c0cbfe4d1585e08201818
 
 router = APIRouter(
     prefix="/blood_bank",
