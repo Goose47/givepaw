@@ -41,8 +41,10 @@ export const editSocial = async (telegram: string, vk: string) => {
     console.log(editSocial);
     console.log(response.data);
     return response.data;
-  } catch (error) {
-    console.error(error);
+  } catch (error : any) {
+    if (error.response.status === 400) {
+      alert(error.response.data.detail)
+    }
   }
 };
 

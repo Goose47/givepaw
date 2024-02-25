@@ -42,12 +42,13 @@ useEffect(() => {
       dispatch(fetchUpdateUser({ surname, name, patronymic,username, email, city_id}) as any)
       .then(dispatch(fetchUpdateSocial({telegram, vk}) as any))
       .then(
-        () => {
-          alert(telegram)
-          setError(null)
-          setTimeout(() => {
-            window.location.replace('https://uvuv643.ru/profile');
-          }, 300);
+        (res : any) => {
+          if (res.payload) {
+            setError(null)
+            setTimeout(() => {
+              window.location.replace('https://uvuv643.ru/profile');
+            }, 300);
+          }
         }
       );
   };
