@@ -6,6 +6,7 @@
 
         <title>Laravel</title>
         @livewireStyles
+        @vite('resources/css/app.css')
         <style>
             [wire\:loading], [wire\:loading\.delay], [wire\:loading\.inline-block], [wire\:loading\.inline], [wire\:loading\.block], [wire\:loading\.flex], [wire\:loading\.table], [wire\:loading\.grid], [wire\:loading\.inline-flex] {
                 display: none;
