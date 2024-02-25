@@ -46,7 +46,6 @@ async def store(data: donors.NewDonorCreate):
 
         return donors.NewDonor(id=donor.id,
                                pet=create_pet(donor.pet),
-                               city=create_city(donor.city),
                                recipient=create_recipient(donor.recipient) if donor.recipient else None,
                                clinic=clinic)
 

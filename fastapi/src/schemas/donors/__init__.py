@@ -17,13 +17,11 @@ class DonorCreate(BaseModel):
 class Donor(BaseModel):
     id: int
     pet: Pet
-    city: City
     recipient: Optional[Recipient] = None
 
 
 class NewDonorCreate(BaseModel):
     pet_id: int
-    city_id: int
     recipient_id: Optional[int] = None
     clinic_id: int
 
