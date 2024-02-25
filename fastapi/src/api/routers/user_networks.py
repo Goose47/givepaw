@@ -26,7 +26,7 @@ async def index(request: Request, auth: Auth = Depends()):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.put('/', response_model=user_networks.UserNetwork)
+@router.post('/', response_model=user_networks.UserNetwork)
 async def update(data: user_networks.UserNetworkUpdate, request: Request, auth: Auth = Depends()):
     await auth.check_access_token(request)
     try:
