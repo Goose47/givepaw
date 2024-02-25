@@ -1,3 +1,4 @@
+import datetime
 from typing import Optional
 
 from pydantic import BaseModel
@@ -24,12 +25,14 @@ class NewDonorCreate(BaseModel):
     pet_id: int
     recipient_id: Optional[int] = None
     clinic_id: int
+    date: datetime.date
 
 
 class NewDonor(BaseModel):
     id: int
     pet: Pet
     recipient: Optional[Recipient] = None
+    date: datetime.date
     clinic: Clinic
 
 def create_donor(donor):
