@@ -23,17 +23,42 @@ router = APIRouter(
 
 
 @router.get('/min', response_model=PetBloodGroup)
-async def get_min_of_blood_bank():
+async def get_min():
     try:
         donors_bloods: List[models.DonorBlood] = \
             await SqlAlchemyRepository(db_manager.get_session, model=models.DonorBlood).get_multi()
 
-        bloods: List[models.PetBloodGroup] = \
-            [donors_blood.donor.pet.blood_group for donors_blood in donors_bloods]
+        bloods: List[tuple[models.PetBloodGroup, float]] = \
+            [(donors_blood.donor.pet.blood_group, donors_blood.amount) for donors_blood in donors_bloods]
+
+        total_amount = dict()
+
+        for blood in bloods:
+            if blood[0].id not in total_amount.keys():
+                total_amount[blood[0].id] = 0
+            total_amount[blood[0].id] += blood[1]
+
+        min_id = min(total_amount.items(), key=lambda x: x[1])
+        res = [blood for blood in bloods if blood[0].id == min_id]
+
+        return create_pet_blood_group(res)
+
+
+    except Exception as e:
+        raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
+
+
+@router.get("/necessary", response_model=PetBloodGroup)
+async def get_the_most_necessary():
+    try:
+        all_recipients: List[models.Recipient] = \
+            await SqlAlchemyRepository(db_manager.get_session, model=models.Recipient).get_multi()
+
+        bloods: List[models.PetBloodGroup] = [rec.pet.blood_group for rec in all_recipients]
 
         counter = Counter(bloods)
 
-        least_common: models.PetBloodGroup = counter.most_common()[-1][0]
+        least_common: models.PetBloodGroup = counter.most_common()[0][0]
 
         return create_pet_blood_group(least_common)
 
