@@ -10,11 +10,6 @@ from src.database.session_manager import db_manager
 from src.repository.crud.base_crud_repository import SqlAlchemyRepository
 from src.schemas import donors
 from src.schemas.blood_group import PetBloodGroup, create_pet_blood_group
-from src.schemas.clinics import Clinic, create_clinic
-from src.schemas.donors import Donor
-from src.schemas.location import create_city, City
-from src.schemas.pets import create_pet
-from src.schemas.recipients import create_recipient
 
 router = APIRouter(
     prefix="/blood_bank",
