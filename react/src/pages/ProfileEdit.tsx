@@ -12,7 +12,6 @@ const ProfileEdit = () => {
 const user = useSelector(selectUser);
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
-  const [phone, setPhone] = useState();
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [name, setName] = useState('');
@@ -27,7 +26,9 @@ const user = useSelector(selectUser);
 
 useEffect(() => {
     dispatch(fetchUser() as any)
-},[dispatch]) 
+    console.log(user);
+
+},[dispatch, user]) 
 
 
   const handleSave = () => {
@@ -35,8 +36,6 @@ useEffect(() => {
     if (!username) {
       setError("Не указано имя пользователя")
     } else if (!email) {
-      setError("Не указан адрес электронной почты")
-    } else if (!phone) {
       setError("Не указан адрес электронной почты")
     } else if (!password || !passwordConfirmation) {
       setError("Не указан пароль")
@@ -119,26 +118,6 @@ useEffect(() => {
           onChange={(e) => handleChange(e, setEmail)}
         />
 
-        <label htmlFor="phone">Номер телефона</label>
-        <Input
-          size="large"
-          id="phone"
-          placeholder={'Номер телефона'}
-          value={phone}
-          type="tel"
-          onChange={(e) => handleChange(e, setPhone)}
-        />
-
-        <label htmlFor="password">Ваш пароль</label>
-        <Input
-          size="large"
-          id="password"
-          placeholder={'Пароль'}
-          value={password}
-          type="password"
-          onChange={(e) => handleChange(e, setPassword)}
-        />
-
         <label htmlFor="telegram">Telegram</label>
         <Input
           size="large"
@@ -159,7 +138,17 @@ useEffect(() => {
           onChange={(e) => handleChange(e, setVk)}
         />
 
-        <label htmlFor="password-confirm">Подтвердите пароль</label>
+        <label htmlFor="password">Новый пароль</label>
+        <Input
+          size="large"
+          id="password"
+          placeholder={'Пароль'}
+          value={password}
+          type="password"
+          onChange={(e) => handleChange(e, setPassword)}
+        />
+
+        <label htmlFor="password-confirm">Повторите пароль</label>
         <Input
         size="large"
         id="password-confirm"
