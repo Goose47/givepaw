@@ -76,6 +76,13 @@ const AnimalForm = (props: any) => {
       setError("Неверно указаны даты вакцинаций");
     } else {
       setError(undefined);
+      let vaccines = []
+      for (let i = 0; i < vaccinesDates.length; i++) {
+        vaccines.push({
+          vaccination_id: selectedVaccines[i],
+          vaccination_date: vaccinesDates[i],
+        })
+      }
       axios.post("pets/", {
         "blood_group_id": bloodGroup,
         "breed_id": breed,
@@ -85,12 +92,14 @@ const AnimalForm = (props: any) => {
         "name": petName,
         "age": age,
         "weight": weight,
-        "vaccinations": vaccinations
+        "vaccinations": vaccines
       }).then(response => {
         if (props.mode === "donor") {
           navigate("/donor/" + response.data.id);
-        } else {
+        } else if (props.mode === "recipient") {
           navigate("/recipient/" + response.data.id);
+        } else {
+          navigate("/respond/" + response.data.id);
         }
       }).catch(error => {
         if (error.response.status === 400) {
@@ -147,8 +156,10 @@ const AnimalForm = (props: any) => {
     setSelectingPetId(false);
     if (props.mode === "donor") {
       navigate("/donor/" + value);
-    } else {
+    } else if (props.mode === "recipient") {
       navigate("/recipient/" + value);
+    } else {
+      navigate("/respond/" + value);
     }
   };
 
@@ -186,9 +197,11 @@ const AnimalForm = (props: any) => {
       {
         props.mode === "donor" ? (
           <h1>Форма донора</h1>
-        ) : (
+        ) : (props.mode === 'recipient' ? (
           <h1>Форма реципиента</h1>
-        )
+        ) : (
+          <h1>Срочный сбор крови</h1>
+        ))
       }
       {
         selectingPetId && <MyPetSelect onAppend={handleAppend} onSelect={handleSelect} />
@@ -280,7 +293,7 @@ const AnimalForm = (props: any) => {
                     let currentVaccine: any = vaccinationsOptions.filter((k: any) => k.id == el)[0];
                     return (
                       <div className="Vaccines__Dates__Item">
-                        <div>{currentVaccine.title}</div>
+                        <div>{currentVaccine?.title}</div>
                         <div>
                           <input type="date" onChange={(e: any) => handleUpdateVaccineById(el, e)} />
                         </div>

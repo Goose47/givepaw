@@ -37,13 +37,7 @@ const RecipientItem = (props: RecipientProps) => {
         </div>
         <div className="RecipientItem__Footer">
           <Link
-            to="/respond-form"
-            state={{
-              bloodGroup: recipient.blood_group,
-              id: recipient.id,
-              place: recipient.place,
-              deadline: recipient.deadline,
-            }}
+            to={"/respond-form/" + recipient.id}
           >
             <Button type="primary">Откликнуться</Button>
           </Link>

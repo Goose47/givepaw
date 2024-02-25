@@ -7,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import axios from 'axios';
 import SocialForm from '../components/global/SocialForm';
+import { BiDonateBlood } from "react-icons/bi";
+import { MdHealing } from "react-icons/md";
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -42,22 +44,22 @@ const Profile = () => {
               <h2>{user.username}</h2>
               <div>{user.name + ' ' + user.surname + ' ' + user.patronymic}</div>
               <div>{user.email}</div>
-              {user.user_network?.telegram && <div>Telegram: {user.user_network.telegram}</div> }
+              {user.user_network?.telegram && <div>Telegram: {user.user_network.telegram}</div>}
               {user.user_network?.vk && <div>VK: {user.user_network.vk}</div>}
               <div className='Profile__Header__Buttons'>
                 <div>
                   <Link to={"/profile-edit"}>
-                  <Button type="primary" {...user}>
-                    Редактировать профиль
-                  </Button>
+                    <Button type="primary" {...user}>
+                      Редактировать профиль
+                    </Button>
                   </Link>
                 </div>
-                <SocialForm/>
+                <SocialForm />
                 <div>
                   <Link to={"/social-edit"}>
-                  <Button type="primary">
-                    Редактировать соц.сети
-                  </Button>
+                    <Button type="primary">
+                      Редактировать соц.сети
+                    </Button>
                   </Link>
                 </div>
                 <div>
@@ -71,7 +73,7 @@ const Profile = () => {
         </div>
         {pets.length > 0 ? (
           <div className="Profile__Pets">
-            <h3>Мои питомцы: </h3>
+            <h3>Мои питомцы:</h3>
             <div className="Profile__Row">
               {pets.map((pet: Pet) => (
                 <div className="Profile__Item">
@@ -79,6 +81,7 @@ const Profile = () => {
                 </div>
               ))}
             </div>
+
           </div>
         ) : (
           <h4>
@@ -86,6 +89,29 @@ const Profile = () => {
             <Link to="/recipient-form">оставить заявку, если он нуждается в этом</Link>
           </h4>
         )}
+
+        <div className="HomeHeader__Buttons">
+          <Link to={'donor-form'}>
+            <div className="HomeHeader__Button">
+              <div>
+                <div className="HomeHeader__Button__Icon">
+                  <BiDonateBlood />
+                </div>
+                <div>Стать донором</div>
+              </div>
+            </div>
+          </Link>
+          <Link to={'recipient-form'}>
+            <div className="HomeHeader__Button">
+              <div>
+                <div className="HomeHeader__Button__Icon">
+                  <MdHealing />
+                </div>
+                <div>Нужна кровь</div>
+              </div>
+            </div>
+          </Link>
+        </div>
       </div>
     )
   );

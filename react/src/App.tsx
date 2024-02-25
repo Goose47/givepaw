@@ -54,18 +54,18 @@ function App() {
       ),
     },
     {
-      path: '/respond-form',
-      element: (
-        <RouterWrapper>
-          <RespondForm />
-        </RouterWrapper>
-      ),
-    },
-    {
       path: '/donor-form',
       element: (
         <RouterWrapper>
           <AnimalForm mode="donor" />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/respond-form/:id',
+      element: (
+        <RouterWrapper>
+          <AnimalForm mode="respond" />
         </RouterWrapper>
       ),
     },
@@ -82,6 +82,14 @@ function App() {
       element: (
         <RouterWrapper>
           <RecipientForm />
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/respond/:pet/:id',
+      element: (
+        <RouterWrapper>
+          <RespondForm />
         </RouterWrapper>
       ),
     },

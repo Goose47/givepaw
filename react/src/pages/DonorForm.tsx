@@ -5,12 +5,12 @@ import Radio from "antd/es/radio";
 import { Button, notification, Select } from "antd";
 import DateSelector from "../components/global/DateSelector";
 
-interface BloodComponent {
+export interface BloodComponent {
   "id": 0,
   "title": "string"
 }
 
-interface Clinic {
+export interface Clinic {
   "id": 0,
   "title": "string",
   "address": "string",

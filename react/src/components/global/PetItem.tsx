@@ -46,6 +46,10 @@ const PetItem = (props: PetItemProps) => {
             <span>Порода</span>
             <span>{pet.breed_title}</span>
           </div>
+          <div className="Pet__Field">
+            <span>Прививки</span>
+            <span>{ pet.vaccinations.length ? pet.vaccinations.join(", ") : "-" }</span>
+          </div>
         </div>
       </div>
     </div>
