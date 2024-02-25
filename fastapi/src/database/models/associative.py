@@ -152,8 +152,10 @@ class Donor(Base):
     recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), nullable=True)
     recipient: Mapped["Recipient"] = relationship(lazy="selectin", uselist=False)
 
-    city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
-    city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
+    clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
+    clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
+
+    date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
 class Recipient(Base):
