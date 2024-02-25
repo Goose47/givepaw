@@ -187,10 +187,10 @@ class Clinic(Base):
     extend_existing = True
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
-    title: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    address: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    email: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    phone: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
+    title: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    address: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    email: Mapped[str] = mapped_column(String, index=True, nullable=False)
+    phone: Mapped[str] = mapped_column(String, index=True, nullable=False)
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
     city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
