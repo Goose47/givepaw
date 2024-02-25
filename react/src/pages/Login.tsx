@@ -29,11 +29,11 @@ const Login = () => {
     <>
       <div className="Form">
         <h1>Войти в аккаунт</h1>
-        <label htmlFor="email">Ваш email</label>
+        <label htmlFor="username">Имя пользователя</label>
         <Input
-          id="email"
+          id="username"
           size="large"
-          placeholder={'Email'}
+          placeholder={'Имя пользователя'}
           value={username}
           type="text"
           onChange={(e) => handleChange(e, setUsername)}
