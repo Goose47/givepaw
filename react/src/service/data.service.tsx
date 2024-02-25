@@ -64,9 +64,9 @@ export const editUser = async (surname: string, name: string, patronymic: string
   }
 };
 
-export const editPassword = async () => {
+export const editPassword = async (password: string) => {
   try {
-    const response = await axios.put('users/user/change_password');
+    const response = await axios.put('users/user/change_password', {password});
     return response.data;
   } catch (error) {
     console.error(error);

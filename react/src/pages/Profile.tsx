@@ -55,6 +55,13 @@ const Profile = () => {
                   </Link>
                 </div>
                 <div>
+                  <Link to={"/password-edit"}>
+                    <Button type="primary" {...user}>
+                      Изменить пароль
+                    </Button>
+                  </Link>
+                </div>
+                <div>
                   <Button type="primary" onClick={handleLogout}>
                     Выйти из аккаунта
                   </Button>

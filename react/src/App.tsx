@@ -13,8 +13,8 @@ import Profile from './pages/Profile';
 import RecipientsLibrary from './components/Recipient/RecipientsLibrary';
 import RespondForm from './pages/RespondForm';
 import AnimalForm from "./pages/AnimalForm";
-import UploadPhoto from "./components/global/UploadPhoto";
 import ProfileEdit from './pages/ProfileEdit';
+import ChangePasswordForm from './pages/ChangePasswordForm';
 
 axios.defaults.baseURL = 'https://dev.api.uvuv643.ru';
 axios.defaults.withCredentials = true;
@@ -42,6 +42,14 @@ function App() {
       element: (
         <RouterWrapper>
           <ProfileEdit/>
+        </RouterWrapper>
+      ),
+    },
+    {
+      path: '/password-edit',
+      element: (
+        <RouterWrapper>
+          <ChangePasswordForm/>
         </RouterWrapper>
       ),
     },
