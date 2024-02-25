@@ -44,7 +44,7 @@ async def store(data: donors.NewDonorCreate):
         return donors.NewDonor(id=donor.id,
                                pet=create_pet(donor.pet),
                                recipient=create_recipient(donor.recipient) if donor.recipient else None,
-                               clinic=donor.clinic,
+                               clinic=create_clinic(donor.clinic) if donor.clinic else None,
                                date=donor.date)
 
     except Exception as e:
