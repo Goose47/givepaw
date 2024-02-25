@@ -16,10 +16,12 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    dispatch(fetchLogin({ username, password }) as any).then(() => {
-      setTimeout(() => {
-        window.location.replace('https://uvuv643.ru/profile');
-      }, 300);
+    dispatch(fetchLogin({ username, password }) as any).then((res : any) => {
+      if (res.payload) {
+        setTimeout(() => {
+          window.location.replace('https://uvuv643.ru/profile');
+        }, 300);
+      }
     });
   };
 

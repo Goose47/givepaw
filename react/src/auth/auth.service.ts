@@ -43,6 +43,7 @@ export const login = async (username: string, password: string) => {
     const response = await axios.post('auth/login', { username, password });
     return response.data;
   } catch (error) {
-    console.error(error);
+    alert("Некорректный логин или пароль");
+    return null;
   }
 };
