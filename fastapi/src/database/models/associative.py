@@ -153,10 +153,6 @@ class Donor(Base):
     recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), nullable=True)
     recipient: Mapped["Recipient"] = relationship(lazy="selectin", uselist=False)
 
-    clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=False)
-    clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
-
-    date: Mapped[datetime.date] = mapped_column(nullable=False)
 
 
 class Recipient(Base):
