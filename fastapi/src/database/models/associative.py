@@ -191,3 +191,22 @@ class Clinic(Base):
 
     city_id: Mapped[int] = mapped_column(ForeignKey("cities.id"), nullable=False)
     city: Mapped["City"] = relationship(uselist=False, lazy="selectin")
+
+
+class DonorBlood(Base):
+    __tablename__ = "donors__bloods"
+    extend_existing = True
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, nullable=False)
+
+    donor_id: Mapped[int] = mapped_column(ForeignKey("donors.id"), nullable=False)
+    donor: Mapped["Donor"] = relationship(lazy="selectin", uselist=False)
+
+    recipient_id: Mapped[int] = mapped_column(ForeignKey("recipient.id"), nullable=True)
+    recipient: Mapped["Recipient"] = relationship(lazy="selectin", uselist=False)
+
+    clinic_id: Mapped[int] = mapped_column(ForeignKey("clinics.id"), nullable=True)
+    clinic: Mapped["Clinic"] = relationship(uselist=False, lazy="selectin")
+
+    date: Mapped[datetime.date] = mapped_column(nullable=False)
+    blood_amount: Mapped[float] = mapped_column(nullable=False, default=0)
