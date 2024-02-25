@@ -5,33 +5,30 @@ import { Button } from 'antd';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CitySelect from '../components/global/CitySelect';
-import UploadPhoto from "../components/global/UploadPhoto";
 import { fetchUpdateSocial } from '../redux/slices/SocialSlice';
 
-interface User {
-    surname: string, name: string, patronymic: string, username: string, email: string, city_id: number
-  }
-  
 
-const ProfileEdit = (props: User) => {
-  const [username, setUsername] = useState(props.username);
-  const [email, setEmail] = useState(props.email);
+const ProfileEdit = () => {
+const user = useSelector(selectUser);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState();
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [name, setName] = useState('');
-  const [surname, setSurname] = useState(props.surname);
-  const [patronymic, setPatronymic] = useState(props.patronymic);
-  const [city_id, setCity] = useState<number>(props.city_id);
+  const [surname, setSurname] = useState(user.surname);
+  const [patronymic, setPatronymic] = useState(user.patronymic);
+  const [city_id, setCity] = useState<number>(user.city_id);
   const [telegram, setTelegram] = useState('');
   const [vk, setVk] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState<any>()
 
-  useEffect(()=> {
-    console.log(props);
-  })
+useEffect(() => {
+    dispatch(fetchUser() as any)
+},[dispatch]) 
+
 
   const handleSave = () => {
 
