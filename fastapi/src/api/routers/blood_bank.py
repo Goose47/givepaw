@@ -46,7 +46,8 @@ async def get_min():
 
             total_amount[pet_blood_group_id] += blood[1]
 
-        min_id = min(total_amount.items(), key=lambda x: x[1])[0]
+        min_id = min(total_amount.items(), key=lambda x: x[1])
+        raise HTTPException(detail=min_id)
         res = [blood for blood in bloods if blood[0].id == min_id]
 
         return create_pet_blood_group_for_bank(res)
