@@ -37,7 +37,7 @@ export const getVaccines = async () => {
 
 export const editSocial = async (telegram: string, vk: string) => {
   try {
-    const response = await axios.put('user_networks', {telegram, vk});
+    const response = await axios.put('user_networks/', {telegram, vk});
     console.log(editSocial);
     console.log(response.data);
     return response.data;
@@ -48,7 +48,7 @@ export const editSocial = async (telegram: string, vk: string) => {
 
 export const getSocial = async () => {
   try {
-    const response = await axios.get('user_networks');
+    const response = await axios.get('user_networks/');
     return response.data;
   } catch (error) {
     console.error(error);
