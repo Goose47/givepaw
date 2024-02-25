@@ -45,7 +45,7 @@ const MostNecessary = () => {
                           width: 20,
                           height: 20,
                           marginRight: 5,
-                        }} src={necessary.pet_type.icon} alt="#" />
+                        }} src={"https://dev.api.uvuv643.ru/files/assets/" + necessary.pet_type.icon} alt="#" />
         </div>
         <div style={{display: 'flex'
       }}>
@@ -61,7 +61,7 @@ const MostNecessary = () => {
                           width: 20,
                           height: 20,
                           marginRight: 5,
-                        }} src={min.pet_type.icon} alt="#" />
+                        }} src={"https://dev.api.uvuv643.ru/files/assets/" + min.pet_type.icon} alt="#" />
                         </div>
     </div>)
 }
