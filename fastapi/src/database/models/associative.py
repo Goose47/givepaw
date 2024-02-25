@@ -74,6 +74,7 @@ class Pet(Base):
 
     avatar_id: Mapped[int] = mapped_column(ForeignKey("avatars.id"), nullable=True)
     avatar: Mapped["Avatar"] = relationship(uselist=False, lazy="selectin")
+
     @property
     def avatar_link(self):
         return (settings_app.APP_URL + '/files/avatars/' + self.avatar.photo_path) if self.avatar_id else None
