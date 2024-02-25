@@ -34,6 +34,7 @@ export const register = async (
     } else if (error.response.status === 422) {
       alert("Некорректный e-mail адрес")
     }
+    return null;
   }
 };
 
