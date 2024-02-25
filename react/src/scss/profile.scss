@@ -3,10 +3,16 @@
   padding-bottom: 100px;
   h4 {
     margin-top: 30px;
+    margin-bottom: 30px;
+    
     a {
       color: $medium;
       text-decoration: none;
     }
+  }
+  h2 {
+    text-align: left;
+    color: $medium;
   }
   &__Header {
     display: flex;
