@@ -70,7 +70,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        {pets.length > 0 ? (
+        {pets?.length > 0 ? (
           <div className="Profile__Pets">
             <h3>Мои питомцы:</h3>
             <div className="Profile__Row">

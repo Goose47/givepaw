@@ -152,7 +152,7 @@ const RecipientForm = () => {
       <Input
         id="reason"
         size="large"
-        placeholder={'Причина сбора кров'}
+        placeholder={'Причина сбора крови'}
         value={reason}
         type="text"
         onChange={(e) => handleChange(e, setReason)}
