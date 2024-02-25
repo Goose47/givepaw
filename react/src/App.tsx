@@ -38,6 +38,14 @@ function App() {
       ),
     },
     {
+      path: '/profile-edit',
+      element: (
+        <RouterWrapper>
+          <ProfileEdit/>
+        </RouterWrapper>
+      ),
+    },
+    {
       path: '/register',
       element: (
         <RouterWrapper>

@@ -5,33 +5,29 @@ import { Button } from 'antd';
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CitySelect from '../components/global/CitySelect';
-import UploadPhoto from "../components/global/UploadPhoto";
 import { fetchUpdateSocial } from '../redux/slices/SocialSlice';
 
-interface User {
-    surname: string, name: string, patronymic: string, username: string, email: string, city_id: number
-  }
-  
 
-const ProfileEdit = (props: User) => {
-  const [username, setUsername] = useState(props.username);
-  const [email, setEmail] = useState(props.email);
-  const [phone, setPhone] = useState();
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState(props.surname);
-  const [patronymic, setPatronymic] = useState(props.patronymic);
-  const [city_id, setCity] = useState<number>(props.city_id);
-  const [telegram, setTelegram] = useState('');
-  const [vk, setVk] = useState('');
+const ProfileEdit = () => {
+const user = useSelector(selectUser);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [name, setName] = useState(user.name);
+  const [surname, setSurname] = useState(user.surname);
+  const [patronymic, setPatronymic] = useState(user.patronymic);
+  const [city_id, setCity] = useState<number>(user.city.id);
+  const [telegram, setTelegram] = useState(user.user_network.telegram);
+  const [vk, setVk] = useState(user.user_network.vk);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState<any>()
 
-  useEffect(()=> {
-    console.log(props);
-  })
+useEffect(() => {
+    dispatch(fetchUser() as any)
+    console.log(user);
+
+},[dispatch]) 
+
 
   const handleSave = () => {
 
@@ -39,12 +35,6 @@ const ProfileEdit = (props: User) => {
       setError("Не указано имя пользователя")
     } else if (!email) {
       setError("Не указан адрес электронной почты")
-    } else if (!phone) {
-      setError("Не указан адрес электронной почты")
-    } else if (!password || !passwordConfirmation) {
-      setError("Не указан пароль")
-    } else if (password !== passwordConfirmation) {
-      setError("Подтверждение пароля не совпадает")
     } else if (!name || !surname || !patronymic) {
       setError("Не указано ФИО")
     } else {
@@ -53,7 +43,7 @@ const ProfileEdit = (props: User) => {
       .then(dispatch(fetchUpdateSocial({telegram, vk}) as any))
       .then(
         () => {
-          alert("AAAAAAAA")
+          alert(telegram)
           setError(null)
           setTimeout(() => {
             window.location.replace('https://uvuv643.ru/profile');
@@ -122,26 +112,6 @@ const ProfileEdit = (props: User) => {
           onChange={(e) => handleChange(e, setEmail)}
         />
 
-        <label htmlFor="phone">Номер телефона</label>
-        <Input
-          size="large"
-          id="phone"
-          placeholder={'Номер телефона'}
-          value={phone}
-          type="tel"
-          onChange={(e) => handleChange(e, setPhone)}
-        />
-
-        <label htmlFor="password">Ваш пароль</label>
-        <Input
-          size="large"
-          id="password"
-          placeholder={'Пароль'}
-          value={password}
-          type="password"
-          onChange={(e) => handleChange(e, setPassword)}
-        />
-
         <label htmlFor="telegram">Telegram</label>
         <Input
           size="large"
@@ -160,16 +130,6 @@ const ProfileEdit = (props: User) => {
           value={vk}
           type="text"
           onChange={(e) => handleChange(e, setVk)}
-        />
-
-        <label htmlFor="password-confirm">Подтвердите пароль</label>
-        <Input
-        size="large"
-        id="password-confirm"
-        placeholder={'Пароль'}
-        value={passwordConfirmation}
-        type="password"
-        onChange={(e) => handleChange(e, setPasswordConfirmation)}
         />
 
         <label htmlFor="city_id">Ваш город</label>

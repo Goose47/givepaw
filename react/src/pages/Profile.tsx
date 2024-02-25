@@ -38,7 +38,7 @@ const Profile = () => {
         <div className="Profile__Info">
           <div className="Profile__Header">
             <div className="Profile__Header__Avatar">
-              {/* <img src="https://http.cat/502" alt="#" /> */}
+              <img src="https://http.cat/502" alt="#" />
             </div>
             <div>
               <h2>{user.username}</h2>
@@ -51,14 +51,6 @@ const Profile = () => {
                   <Link to={"/profile-edit"}>
                     <Button type="primary" {...user}>
                       Редактировать профиль
-                    </Button>
-                  </Link>
-                </div>
-                <SocialForm />
-                <div>
-                  <Link to={"/social-edit"}>
-                    <Button type="primary">
-                      Редактировать соц.сети
                     </Button>
                   </Link>
                 </div>
