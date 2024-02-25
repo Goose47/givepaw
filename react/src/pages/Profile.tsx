@@ -47,7 +47,7 @@ const Profile = () => {
               <div className='Profile__Header__Buttons'>
                 <div>
                   <Link to={"/profile-edit"}>
-                  <Button type="primary">
+                  <Button type="primary" {...user}>
                     Редактировать профиль
                   </Button>
                   </Link>

@@ -8,23 +8,25 @@ import CitySelect from '../components/global/CitySelect';
 import UploadPhoto from "../components/global/UploadPhoto";
 import { fetchUpdateSocial } from '../redux/slices/SocialSlice';
 
-const ProfileEdit = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+interface User {
+    surname: string, name: string, patronymic: string, username: string, email: string, city_id: number
+  }
+  
+
+const ProfileEdit = (props: User) => {
+  const [username, setUsername] = useState(props.username);
+  const [email, setEmail] = useState(props.email);
+  const [phone, setPhone] = useState();
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [patronymic, setPatronymic] = useState('');
-  const [city_id, setCity] = useState<number>(1);
+  const [surname, setSurname] = useState(props.surname);
+  const [patronymic, setPatronymic] = useState(props.patronymic);
+  const [city_id, setCity] = useState<number>(props.city_id);
   const [telegram, setTelegram] = useState('');
   const [vk, setVk] = useState('');
-  const [image, setImage] = useState(undefined);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const [avatar, setAvatar] = useState<any>()
   const [error, setError] = useState<any>()
 
   const handleSave = () => {
@@ -41,8 +43,6 @@ const ProfileEdit = () => {
       setError("Подтверждение пароля не совпадает")
     } else if (!name || !surname || !patronymic) {
       setError("Не указано ФИО")
-    } else if (!avatar) {
-      setError("Вы должны выбрать корректный аватар")
     } else {
       setError(null)
       dispatch(fetchUpdateUser({ surname, name, patronymic,username, email, city_id}) as any)
@@ -61,11 +61,6 @@ const ProfileEdit = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, set: Dispatch<SetStateAction<any>>) => {
     set(e.target.value);
-  };
-
-  const handleImageChange = (event: any) => {
-    const file = event.target.files[0];
-    setImage(file);
   };
 
   return (
