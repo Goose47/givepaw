@@ -31,6 +31,9 @@ async def get_min():
         bloods: List[tuple[models.PetBloodGroup, float]] = \
             [(donors_blood.donor.pet.blood_group, donors_blood.amount) for donors_blood in donors_bloods]
 
+        if not len(donors_bloods):
+            raise HTTPException(status_code=HTTPStatus.IM_A_TEAPOT, detail="no blood")
+
         total_amount = dict()
 
         for blood in bloods:
