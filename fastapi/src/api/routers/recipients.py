@@ -60,6 +60,8 @@ async def store(data: recipients.RecipientCreate):
     try:
         recipient: model.Recipient = await SqlAlchemyRepository(db_manager.get_session, model=model.Recipient).create(
             data)
+
+        recipient = create_recipient(recipient)
         return recipient
 
     except Exception as e:
