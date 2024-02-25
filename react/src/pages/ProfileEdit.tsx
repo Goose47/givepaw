@@ -40,7 +40,7 @@ useEffect(() => {
     } else {
       setError(null)
       dispatch(fetchUpdateUser({ surname, name, patronymic,username, email, city_id}) as any)
-      dispatch(fetchUpdateSocial({telegram, vk}) as any)
+      // dispatch(fetchUpdateSocial({telegram, vk}) as any)
       .then(
         (res : any) => {
           if (res.payload) {
