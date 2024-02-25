@@ -43,7 +43,7 @@ useEffect(() => {
       .then(dispatch(fetchUpdateSocial({telegram, vk}) as any))
       .then(
         () => {
-          alert("AAAAAAAA")
+          alert(telegram)
           setError(null)
           setTimeout(() => {
             window.location.replace('https://uvuv643.ru/profile');
