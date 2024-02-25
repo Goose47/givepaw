@@ -124,8 +124,8 @@ async def get_all(request: Request):
         raise HTTPException(status_code=HTTPStatus.BAD_REQUEST, detail=str(e))
 
 
-@router.get('/{pet_id}', response_model=List[MyPetResponse])
-async def get_all(pet_id: int, request: Request):
+@router.get('/{pet_id}', response_model=MyPetResponse)
+async def get_pet_by_id(pet_id: int):
     try:
         pet: models.Pet = await SqlAlchemyRepository(db_manager.get_session, model=models.Pet) \
             .get_single(id=pet_id)
